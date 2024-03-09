@@ -1,0 +1,82 @@
+[gd_scene load_steps=10 format=3 uid="uid://dt2byywu0shev"]
+
+[ext_resource type="Script" path="res://addons/ridiculous_stream/games/physics_editor/RSPhysics.gd" id="1_qtnnc"]
+[ext_resource type="PackedScene" uid="uid://cc7snq8wu8h2p" path="res://addons/ridiculous_stream/games/physics_editor/label_renderer.tscn" id="2_xsgfm"]
+[ext_resource type="Material" uid="uid://duqwqqiacok4r" path="res://addons/ridiculous_stream/shaders/radial_progress.material" id="3_28pqn"]
+[ext_resource type="Texture2D" uid="uid://dpyn121ra1pa" path="res://addons/ridiculous_stream/ui/sprites/close.png" id="4_3rdwc"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dxay2"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mf5qu"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_vk7ow"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1ad5p"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ljelq"]
+radius = 15.0
+
+[node name="PhysicEditorScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_qtnnc")
+
+[node name="label_renderer" parent="." instance=ExtResource("2_xsgfm")]
+
+[node name="tmr_disable" type="Timer" parent="."]
+one_shot = true
+
+[node name="tmr_kill" type="Timer" parent="."]
+one_shot = true
+
+[node name="boundaries" type="StaticBody2D" parent="."]
+
+[node name="e" type="CollisionShape2D" parent="boundaries"]
+position = Vector2(1142, 648)
+shape = SubResource("WorldBoundaryShape2D_dxay2")
+
+[node name="n" type="CollisionShape2D" parent="boundaries"]
+shape = SubResource("WorldBoundaryShape2D_mf5qu")
+disabled = true
+
+[node name="w" type="CollisionShape2D" parent="boundaries"]
+shape = SubResource("WorldBoundaryShape2D_vk7ow")
+
+[node name="s" type="CollisionShape2D" parent="boundaries"]
+position = Vector2(1142, 648)
+shape = SubResource("WorldBoundaryShape2D_1ad5p")
+
+[node name="pick_dummy" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="coll" type="CollisionShape2D" parent="pick_dummy"]
+visible = false
+shape = SubResource("CircleShape2D_ljelq")
+
+[node name="bodies" type="Node2D" parent="."]
+
+[node name="btn_kill" type="Button" parent="."]
+material = ExtResource("3_28pqn")
+layout_mode = 1
+anchors_preset = -1
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 100.0
+offset_bottom = 101.0
+icon = ExtResource("4_3rdwc")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="timeout" from="tmr_disable" to="." method="disable_boundaries"]
+[connection signal="timeout" from="tmr_kill" to="." method="kill"]
+[connection signal="pressed" from="btn_kill" to="." method="kill"]

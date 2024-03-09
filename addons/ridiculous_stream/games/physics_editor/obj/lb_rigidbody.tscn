@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://bt1yj8fktnfm6"]
+
+[ext_resource type="Script" path="res://addons/ridiculous_stream/games/physics_editor/obj/lb_rigidbody.gd" id="1_he81n"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3de8c"]
+friction = 0.97
+bounce = 0.01
+absorbent = true
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_euipx"]
+viewport_path = NodePath("view")
+
+[node name="lb_rigidbody" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 5
+physics_material_override = SubResource("PhysicsMaterial_3de8c")
+gravity_scale = 3.0
+script = ExtResource("1_he81n")
+
+[node name="poly" type="Polygon2D" parent="."]
+texture = SubResource("ViewportTexture_euipx")
+polygon = PackedVector2Array(0, 0, 493, 0, 493, 64, 0, 64)
+
+[node name="coll" type="CollisionShape2D" parent="."]
+visible = false
+rotation = 1.5708

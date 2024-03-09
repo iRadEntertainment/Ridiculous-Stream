@@ -1,0 +1,215 @@
+[gd_scene load_steps=13 format=3 uid="uid://dagv0scp1nluf"]
+
+[ext_resource type="Script" path="res://addons/ridiculous_stream/instances/pnl_co_pilot.gd" id="1_wysmf"]
+[ext_resource type="Texture2D" uid="uid://03d7hycvt6ym" path="res://addons/ridiculous_stream/ui/sprites/led.png" id="2_4wef3"]
+[ext_resource type="StyleBox" uid="uid://c0aj4762xvg73" path="res://addons/ridiculous_stream/ui/editor_light_panel.stylebox" id="3_pdh33"]
+[ext_resource type="Texture2D" uid="uid://bkyv1dkrcxf34" path="res://addons/ridiculous_stream/ui/sprites/flare_01_0.png" id="3_ugx0a"]
+[ext_resource type="Texture2D" uid="uid://mijaq0gueewe" path="res://addons/ridiculous_stream/ui/bootstrap_icons/chevron-compact-down.svg" id="4_m3h46"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_atbkp"]
+blend_mode = 1
+
+[sub_resource type="Animation" id="Animation_xso1v"]
+resource_name = "alert"
+length = 0.5
+loop_mode = 1
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.175, 0.475),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.0, 0.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.175),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.174533, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_mj7kh"]
+resource_name = "on"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.174533]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_aso64"]
+_data = {
+"alert": SubResource("Animation_xso1v"),
+"on": SubResource("Animation_mj7kh")
+}
+
+[sub_resource type="Gradient" id="Gradient_42bl8"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.310559, 0.847826, 1)
+colors = PackedColorArray(0.140966, 0.531073, 0.513367, 1, 0.224109, 0.700438, 0.40952, 1, 0.985201, 0, 0.0241763, 1, 0.785872, 0.413688, 0.0677313, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3wora"]
+gradient = SubResource("Gradient_42bl8")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_urs0b"]
+texture = SubResource("GradientTexture1D_3wora")
+
+[node name="pnl_co_pilot" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wysmf")
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+
+[node name="led" type="TextureRect" parent="vb/hb"]
+self_modulate = Color(0.788235, 0.105882, 0.0941176, 1)
+texture_filter = 2
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("2_4wef3")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="cntr" type="CenterContainer" parent="vb/hb/led"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="p" type="Control" parent="vb/hb/led/cntr"]
+layout_mode = 2
+
+[node name="light" type="Sprite2D" parent="vb/hb/led/cntr/p"]
+unique_name_in_owner = true
+self_modulate = Color(1.62294, 0.31943, 0.241432, 1)
+material = SubResource("CanvasItemMaterial_atbkp")
+position = Vector2(1, -1)
+rotation = 0.174533
+texture = ExtResource("3_ugx0a")
+
+[node name="anim" type="AnimationPlayer" parent="vb/hb/led/cntr/p/light"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_aso64")
+}
+
+[node name="ck_copilot" type="CheckButton" parent="vb/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "CoPilot"
+
+[node name="progress_time_left" type="ProgressBar" parent="vb"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxTexture_urs0b")
+max_value = 300.0
+step = 0.1
+value = 210.0
+show_percentage = false
+
+[node name="sep" type="HSeparator" parent="vb"]
+layout_mode = 2
+
+[node name="btn_expand" type="Button" parent="vb"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+icon = ExtResource("4_m3h46")
+icon_alignment = 1
+expand_icon = true
+
+[node name="pnl_copilot_settings" type="PanelContainer" parent="vb"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = ExtResource("3_pdh33")
+
+[node name="grid" type="GridContainer" parent="vb/pnl_copilot_settings"]
+layout_mode = 2
+columns = 2
+
+[node name="ck_code" type="CheckButton" parent="vb/pnl_copilot_settings/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "!code"
+
+[node name="ck_replace" type="CheckButton" parent="vb/pnl_copilot_settings/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "!replace"
+
+[node name="ck_goto" type="CheckButton" parent="vb/pnl_copilot_settings/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "!goto"
+
+[node name="ck_enter" type="CheckButton" parent="vb/pnl_copilot_settings/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "!enter"
+
+[node name="ck_erase" type="CheckButton" parent="vb/pnl_copilot_settings/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "!erase"
+
+[node name="ck_indent" type="CheckButton" parent="vb/pnl_copilot_settings/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "!indent"
+
+[node name="ck_shift" type="CheckButton" parent="vb/pnl_copilot_settings/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "!shift"
+
+[node name="ck_undo" type="CheckButton" parent="vb/pnl_copilot_settings/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "!undo"
+
+[node name="sfx" type="AudioStreamPlayer" parent="."]
+
+[connection signal="toggled" from="vb/hb/ck_copilot" to="." method="_on_ck_copilot_toggled"]
+[connection signal="pressed" from="vb/btn_expand" to="." method="_on_btn_expand_pressed"]
+[connection signal="toggled" from="vb/pnl_copilot_settings/grid/ck_code" to="." method="_on_ck_code_toggled"]
+[connection signal="toggled" from="vb/pnl_copilot_settings/grid/ck_replace" to="." method="_on_ck_replace_toggled"]
+[connection signal="toggled" from="vb/pnl_copilot_settings/grid/ck_goto" to="." method="_on_ck_goto_toggled"]
+[connection signal="toggled" from="vb/pnl_copilot_settings/grid/ck_enter" to="." method="_on_ck_enter_toggled"]
+[connection signal="toggled" from="vb/pnl_copilot_settings/grid/ck_erase" to="." method="_on_ck_erase_toggled"]
+[connection signal="toggled" from="vb/pnl_copilot_settings/grid/ck_indent" to="." method="_on_ck_indent_toggled"]
+[connection signal="toggled" from="vb/pnl_copilot_settings/grid/ck_shift" to="." method="_on_ck_shift_toggled"]
+[connection signal="toggled" from="vb/pnl_copilot_settings/grid/ck_undo" to="." method="_on_ck_undo_toggled"]

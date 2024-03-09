@@ -1,0 +1,68 @@
+[gd_scene load_steps=6 format=3 uid="uid://cai08v17ca5ek"]
+
+[ext_resource type="Script" path="res://addons/ridiculous_stream/instances/RSDock.gd" id="1_p2d3n"]
+[ext_resource type="Texture2D" uid="uid://ctpfh3qqwicqq" path="res://addons/ridiculous_stream/ui/sprites/btn_settings.png" id="2_xtj43"]
+[ext_resource type="PackedScene" uid="uid://dagv0scp1nluf" path="res://addons/ridiculous_stream/instances/pnl_co_pilot.tscn" id="3_miis1"]
+[ext_resource type="PackedScene" uid="uid://bbi521t8ayr48" path="res://addons/ridiculous_stream/instances/pnl_chat.tscn" id="3_xew1i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xm7kp"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+
+[node name="Ridiculous Stream Dock" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -786.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_xm7kp")
+script = ExtResource("1_p2d3n")
+
+[node name="chat_msg" type="AudioStreamPlayer" parent="."]
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="top" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+
+[node name="btn_test_stuff" type="Button" parent="vb/top"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Test Stuff"
+
+[node name="btn_hot_reload_plugin" type="Button" parent="vb/top"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Reload Plugin"
+
+[node name="btn_start_gift_connections" type="Button" parent="vb/top"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Connect Gift"
+
+[node name="btn_open_sett_wind" type="Button" parent="vb/top"]
+layout_mode = 2
+focus_mode = 0
+theme_override_constants/icon_max_width = 32
+icon = ExtResource("2_xtj43")
+flat = true
+icon_alignment = 1
+
+[node name="pnl_co_pilot" parent="vb" instance=ExtResource("3_miis1")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="pnl_chat" parent="vb" instance=ExtResource("3_xew1i")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="pressed" from="vb/top/btn_test_stuff" to="." method="_on_btn_test_stuff_pressed"]
+[connection signal="pressed" from="vb/top/btn_hot_reload_plugin" to="." method="_on_btn_hot_reload_plugin_pressed"]
+[connection signal="pressed" from="vb/top/btn_start_gift_connections" to="." method="_on_btn_start_gift_connections_pressed"]
+[connection signal="pressed" from="vb/top/btn_open_sett_wind" to="." method="_on_btn_open_sett_wind_pressed"]

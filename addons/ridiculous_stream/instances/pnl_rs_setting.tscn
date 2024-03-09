@@ -1,0 +1,75 @@
+[gd_scene load_steps=2 format=3 uid="uid://gi6k83qtu4y2"]
+
+[ext_resource type="Script" path="res://addons/ridiculous_stream/instances/pnl_rs_setting.gd" id="1_mw25e"]
+
+[node name="pnl_rs_settings" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_mw25e")
+
+[node name="scr" type="ScrollContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="vb" type="VBoxContainer" parent="scr"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="btn_reload_plugin" type="Button" parent="scr/vb"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Reload Plugin"
+
+[node name="ck_show_time" type="CheckButton" parent="scr/vb"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 0
+text = "show time"
+
+[node name="ck_co_pilot" type="CheckButton" parent="scr/vb"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 0
+text = "co-pilot"
+
+[node name="btn_reload_commands" type="Button" parent="scr/vb"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "reload commands"
+
+[node name="btn_reload_gift" type="Button" parent="scr/vb"]
+layout_mode = 2
+text = "Reload Gift"
+
+[node name="btn_reconnect_gift_signals" type="Button" parent="scr/vb"]
+layout_mode = 2
+text = "Reconnect Gift signals"
+
+[node name="btn_silent" type="Button" parent="scr/vb"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Silent page"
+
+[node name="btn_open_data_dir" type="Button" parent="scr/vb"]
+layout_mode = 2
+text = "Data Dir"
+
+[node name="btn_open_user_dir" type="Button" parent="scr/vb"]
+layout_mode = 2
+text = "Open Data Folder"
+
+[connection signal="pressed" from="scr/vb/btn_reload_plugin" to="." method="_on_btn_reload_plugin_pressed"]
+[connection signal="toggled" from="scr/vb/ck_show_time" to="." method="_on_ck_show_time_toggled"]
+[connection signal="toggled" from="scr/vb/ck_co_pilot" to="." method="_on_ck_co_pilot_toggled"]
+[connection signal="pressed" from="scr/vb/btn_reload_commands" to="." method="_on_btn_reload_commands_pressed"]
+[connection signal="pressed" from="scr/vb/btn_reload_gift" to="." method="_on_btn_reload_gift_pressed"]
+[connection signal="pressed" from="scr/vb/btn_reconnect_gift_signals" to="." method="_on_btn_reconnect_gift_signals_pressed"]
+[connection signal="pressed" from="scr/vb/btn_silent" to="." method="_on_btn_silent_pressed"]
+[connection signal="pressed" from="scr/vb/btn_open_data_dir" to="." method="_on_data_dir_pressed"]

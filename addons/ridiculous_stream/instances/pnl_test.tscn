@@ -1,0 +1,108 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmm5f6140s4jm"]
+
+[ext_resource type="Script" path="res://addons/ridiculous_stream/instances/pnl_test.gd" id="1_iou6m"]
+[ext_resource type="Texture2D" uid="uid://cmsu5qohfa1an" path="res://addons/ridiculous_stream/ui/bootstrap_icons/cloud-download-fill.svg" id="2_cvl0s"]
+
+[node name="pnl_test" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_iou6m")
+
+[node name="scr" type="ScrollContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="vb" type="VBoxContainer" parent="scr"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="grid_games" type="HFlowContainer" parent="scr/vb"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="btn_beans" type="Button" parent="scr/vb/grid_games"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Beans!"
+
+[node name="btn_pickles" type="Button" parent="scr/vb/grid_games"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Pickles!"
+
+[node name="btn_laser" type="Button" parent="scr/vb/grid_games"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Laser!"
+
+[node name="btn_names" type="Button" parent="scr/vb/grid_games"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Names!"
+
+[node name="btn_crt" type="Button" parent="scr/vb/grid_games"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "CRT!"
+
+[node name="btn_old" type="Button" parent="scr/vb/grid_games"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Old movie!"
+
+[node name="btn_speed" type="Button" parent="scr/vb/grid_games"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Speed!"
+
+[node name="sep" type="HSeparator" parent="scr/vb"]
+visible = false
+layout_mode = 2
+
+[node name="grid_gift" type="GridContainer" parent="scr/vb"]
+visible = false
+layout_mode = 2
+
+[node name="sep2" type="HSeparator" parent="scr/vb"]
+layout_mode = 2
+
+[node name="vb" type="VBoxContainer" parent="scr/vb"]
+layout_mode = 2
+
+[node name="btn_find_live_streamers" type="Button" parent="scr/vb/vb"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "find live streamers"
+
+[node name="btn_load_image" type="Button" parent="scr/vb/vb"]
+layout_mode = 2
+text = "Load random userpic"
+icon = ExtResource("2_cvl0s")
+expand_icon = true
+
+[node name="prev_load_image" type="TextureRect" parent="scr/vb/vb"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="pressed" from="scr/vb/grid_games/btn_beans" to="." method="_on_btn_beans_pressed"]
+[connection signal="pressed" from="scr/vb/grid_games/btn_pickles" to="." method="_on_btn_pickles_pressed"]
+[connection signal="pressed" from="scr/vb/grid_games/btn_laser" to="." method="_on_btn_laser_pressed"]
+[connection signal="pressed" from="scr/vb/grid_games/btn_names" to="." method="_on_btn_names_pressed"]
+[connection signal="pressed" from="scr/vb/grid_games/btn_crt" to="." method="_on_btn_crt_pressed"]
+[connection signal="pressed" from="scr/vb/grid_games/btn_old" to="." method="_on_btn_old_pressed"]
+[connection signal="pressed" from="scr/vb/grid_games/btn_speed" to="." method="_on_btn_speed_pressed"]
+[connection signal="pressed" from="scr/vb/vb/btn_find_live_streamers" to="." method="_on_btn_find_live_streamers_pressed"]
+[connection signal="pressed" from="scr/vb/vb/btn_load_image" to="." method="_on_btn_load_image_pressed"]

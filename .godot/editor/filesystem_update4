@@ -1,0 +1,11 @@
+res://addons/ridiculous_stream/instances/RSDock.tscn
+res://addons/ridiculous_coding/font.tres
+res://addons/ridiculous_stream/shaders/radial_progress.gdshader
+res://addons/ridiculous_stream/shaders/crt.gdshader
+res://addons/ridiculous_stream/shaders/crt.material
+res://addons/ridiculous_stream/shaders/old_movie.gdshader
+res://addons/ridiculous_stream/shaders/old_movie.material
+res://addons/ridiculous_stream/shaders/speed_lines.gdshader
+res://addons/ridiculous_stream/ui/editor_light_panel.stylebox
+res://addons/ridiculous_stream/ui/editor_overlay_panel.stylebox
+res://addons/ridiculous_stream/instances/pnl_connect_to_gift.tscn

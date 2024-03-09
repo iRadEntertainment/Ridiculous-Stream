@@ -1,0 +1,73 @@
+[gd_scene load_steps=8 format=3 uid="uid://cbuj57b0j3cqq"]
+
+[ext_resource type="Texture2D" uid="uid://1ndihbuunqkm" path="res://addons/ridiculous_stream/ui/bootstrap_icons/megaphone-fill.svg" id="1_4vx60"]
+[ext_resource type="Script" path="res://addons/ridiculous_stream/instances/btn_user.gd" id="1_uxmoy"]
+[ext_resource type="Texture2D" uid="uid://bwsg8be7ife7b" path="res://addons/ridiculous_stream/ui/sprites/twitch_user_profile_pic.png" id="2_hunba"]
+[ext_resource type="Texture2D" uid="uid://eowifokyak3b" path="res://addons/ridiculous_stream/ui/bootstrap_icons/megaphone.svg" id="2_rng5j"]
+[ext_resource type="Texture2D" uid="uid://sleoevcdhxgh" path="res://addons/ridiculous_stream/ui/bootstrap_icons/record2-fill.svg" id="3_mqpmi"]
+[ext_resource type="Texture2D" uid="uid://hqibc1sfinhq" path="res://addons/ridiculous_stream/ui/bootstrap_icons/stars.svg" id="4_8vciy"]
+[ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://addons/ridiculous_stream/ui/bootstrap_icons/arrow-repeat.svg" id="5_ga51h"]
+
+[node name="btn_user" type="HBoxContainer"]
+script = ExtResource("1_uxmoy")
+
+[node name="user_pic" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("2_hunba")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="btn_user" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "GoodVibesDevelops"
+
+[node name="led" type="Sprite2D" parent="btn_user"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(0.796078, 0.164706, 0.239216, 1)
+position = Vector2(6, 6)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("3_mqpmi")
+
+[node name="tmr_led" type="Timer" parent="btn_user"]
+unique_name_in_owner = true
+wait_time = 2.0
+one_shot = true
+
+[node name="btn_shoutout" type="Button" parent="."]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("1_4vx60")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_promote" type="Button" parent="."]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("2_rng5j")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_special" type="Button" parent="."]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("4_8vciy")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_reload" type="Button" parent="."]
+visible = false
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("5_ga51h")
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="pressed" from="btn_user" to="." method="_on_btn_user_pressed"]
+[connection signal="timeout" from="btn_user/tmr_led" to="." method="_on_tmr_led_timeout"]
+[connection signal="pressed" from="btn_shoutout" to="." method="_on_btn_shoutout_pressed"]
+[connection signal="pressed" from="btn_promote" to="." method="_on_btn_promote_pressed"]
+[connection signal="pressed" from="btn_special" to="." method="_on_btn_special_pressed"]
+[connection signal="pressed" from="btn_reload" to="." method="_on_btn_reload_pressed"]

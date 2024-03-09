@@ -1,0 +1,252 @@
+[gd_scene load_steps=5 format=3 uid="uid://0ki7ffdtdy1k"]
+
+[ext_resource type="StyleBox" uid="uid://c0aj4762xvg73" path="res://addons/ridiculous_stream/ui/editor_light_panel.stylebox" id="1_8c388"]
+[ext_resource type="Script" path="res://addons/ridiculous_stream/instances/param_inspector.gd" id="1_xolwj"]
+[ext_resource type="Texture2D" uid="uid://cookac16wgmgq" path="res://addons/ridiculous_stream/ui/bootstrap_icons/file-earmark-plus.svg" id="2_q5itb"]
+[ext_resource type="Texture2D" uid="uid://c23twk8ui0g11" path="res://addons/ridiculous_stream/ui/bootstrap_icons/trash.svg" id="3_o1w8y"]
+
+[node name="param_inspector" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -236.0
+offset_bottom = -238.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("1_8c388")
+script = ExtResource("1_xolwj")
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+
+[node name="pnl_texture" type="PanelContainer" parent="vb/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="vb_list" type="VBoxContainer" parent="vb/hb/pnl_texture"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="lb" type="Label" parent="vb/hb/pnl_texture/vb_list"]
+layout_mode = 2
+text = "Textures"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="tex_list" type="VBoxContainer" parent="vb/hb/pnl_texture/vb_list"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="vb/hb/pnl_texture/vb_list"]
+layout_mode = 2
+
+[node name="btn_add_tex" type="Button" parent="vb/hb/pnl_texture/vb_list/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " "
+icon = ExtResource("2_q5itb")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_remove_tex" type="Button" parent="vb/hb/pnl_texture/vb_list/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " "
+icon = ExtResource("3_o1w8y")
+icon_alignment = 1
+expand_icon = true
+
+[node name="pnl_sfx" type="PanelContainer" parent="vb/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="vb_list" type="VBoxContainer" parent="vb/hb/pnl_sfx"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="vb/hb/pnl_sfx/vb_list"]
+layout_mode = 2
+text = "Sfx"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="sfx_vol" type="HBoxContainer" parent="vb/hb/pnl_sfx/vb_list"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="vb/hb/pnl_sfx/vb_list/sfx_vol"]
+layout_mode = 2
+text = "sfx volume "
+
+[node name="sl_sfx_vol" type="HSlider" parent="vb/hb/pnl_sfx/vb_list/sfx_vol"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -72.0
+max_value = 12.0
+step = 0.1
+
+[node name="sfx_vol_val" type="Label" parent="vb/hb/pnl_sfx/vb_list/sfx_vol"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+text = "-12"
+horizontal_alignment = 2
+
+[node name="sfx_list" type="VBoxContainer" parent="vb/hb/pnl_sfx/vb_list"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="vb/hb/pnl_sfx/vb_list"]
+layout_mode = 2
+
+[node name="btn_add_sfx" type="Button" parent="vb/hb/pnl_sfx/vb_list/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = " "
+icon = ExtResource("2_q5itb")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_remove_sfx" type="Button" parent="vb/hb/pnl_sfx/vb_list/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = " "
+icon = ExtResource("3_o1w8y")
+icon_alignment = 1
+expand_icon = true
+
+[node name="sep1" type="HSeparator" parent="vb"]
+layout_mode = 2
+
+[node name="hb3" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+
+[node name="grid_flags" type="VBoxContainer" parent="vb/hb3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ck_is_pickable" type="CheckButton" parent="vb/hb3/grid_flags"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "pickable"
+
+[node name="ck_is_destroy" type="CheckButton" parent="vb/hb3/grid_flags"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "destroy"
+
+[node name="ck_is_fracture" type="CheckButton" parent="vb/hb3/grid_flags"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "fracture"
+
+[node name="grid" type="GridContainer" parent="vb/hb3"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 4
+
+[node name="lb" type="Label" parent="vb/hb3/grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "scale.x"
+horizontal_alignment = 2
+
+[node name="sb_scale_x" type="SpinBox" parent="vb/hb3/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.01
+select_all_on_focus = true
+
+[node name="lb3" type="Label" parent="vb/hb3/grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "spawn min"
+horizontal_alignment = 2
+
+[node name="sb_spawn_min" type="SpinBox" parent="vb/hb3/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+select_all_on_focus = true
+
+[node name="lb2" type="Label" parent="vb/hb3/grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "scale.y"
+horizontal_alignment = 2
+
+[node name="sb_scale_y" type="SpinBox" parent="vb/hb3/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.01
+select_all_on_focus = true
+
+[node name="lb4" type="Label" parent="vb/hb3/grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "spawn max"
+horizontal_alignment = 2
+
+[node name="sb_spawn_max" type="SpinBox" parent="vb/hb3/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+select_all_on_focus = true
+
+[node name="lb5" type="Label" parent="vb/hb3/grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "collision layer"
+horizontal_alignment = 2
+
+[node name="sb_coll_layer" type="SpinBox" parent="vb/hb3/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+select_all_on_focus = true
+
+[node name="lb6" type="Label" parent="vb/hb3/grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "collision mask"
+horizontal_alignment = 2
+
+[node name="sb_coll_mask" type="SpinBox" parent="vb/hb3/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+select_all_on_focus = true
+
+[node name="sep2" type="HSeparator" parent="vb"]
+layout_mode = 2
+
+[node name="hb2" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+
+[node name="ck_shard" type="CheckButton" parent="vb/hb2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Add Shards"
+
+[node name="sub_res" type="PanelContainer" parent="vb"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[connection signal="pressed" from="vb/hb/pnl_texture/vb_list/hb/btn_add_tex" to="." method="_on_btn_add_tex_pressed"]
+[connection signal="pressed" from="vb/hb/pnl_texture/vb_list/hb/btn_remove_tex" to="." method="_on_btn_remove_tex_pressed"]
+[connection signal="value_changed" from="vb/hb/pnl_sfx/vb_list/sfx_vol/sl_sfx_vol" to="." method="_on_sl_sfx_vol_value_changed"]
+[connection signal="pressed" from="vb/hb/pnl_sfx/vb_list/hb/btn_add_sfx" to="." method="_on_btn_add_sfx_pressed"]
+[connection signal="pressed" from="vb/hb/pnl_sfx/vb_list/hb/btn_remove_sfx" to="." method="_on_btn_remove_sfx_pressed"]
+[connection signal="toggled" from="vb/hb2/ck_shard" to="." method="_on_ck_shard_toggled"]

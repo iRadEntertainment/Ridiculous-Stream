@@ -1,0 +1,67 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbi521t8ayr48"]
+
+[ext_resource type="Theme" uid="uid://s7hlwwefuhgh" path="res://addons/ridiculous_stream/ui/chat_message.theme" id="1_wix21"]
+[ext_resource type="Script" path="res://addons/ridiculous_stream/instances/pnl_chat.gd" id="1_x2vuy"]
+[ext_resource type="PackedScene" uid="uid://bnvfuklj58uqa" path="res://addons/ridiculous_stream/instances/pnl_connect_to_gift.tscn" id="3_u4hw6"]
+
+[node name="pnl_chat" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_wix21")
+script = ExtResource("1_x2vuy")
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="lb_chat" type="RichTextLabel" parent="vb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 2
+bbcode_enabled = true
+text = "TheYagich"
+scroll_following = true
+threaded = true
+selection_enabled = true
+
+[node name="hb_msg" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+
+[node name="ln_msg" type="LineEdit" parent="vb/hb_msg"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.160784, 0.764706, 0.65098, 1)
+placeholder_text = "chat"
+
+[node name="btn_command" type="Button" parent="vb/hb_msg"]
+layout_mode = 2
+text = "!command"
+
+[node name="hb" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+
+[node name="sl_font_size" type="HSlider" parent="vb/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 12.0
+max_value = 72.0
+value = 28.0
+
+[node name="lb_font_size" type="Label" parent="vb/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "15"
+
+[node name="chat_msg" type="AudioStreamPlayer" parent="."]
+
+[node name="pnl_connect_to_gift" parent="." instance=ExtResource("3_u4hw6")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="text_submitted" from="vb/hb_msg/ln_msg" to="." method="_on_ln_msg_text_submitted"]
+[connection signal="pressed" from="vb/hb_msg/btn_command" to="." method="_on_btn_command_pressed"]
+[connection signal="value_changed" from="vb/hb/sl_font_size" to="." method="_on_sl_font_size_value_changed"]

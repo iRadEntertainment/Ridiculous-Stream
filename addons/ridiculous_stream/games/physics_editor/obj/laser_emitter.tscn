@@ -1,0 +1,80 @@
+[gd_scene load_steps=13 format=3 uid="uid://cgfsmadnui1ru"]
+
+[ext_resource type="Texture2D" uid="uid://45yeungtmxeu" path="res://addons/ridiculous_stream/games/physics_editor/sprites/laser_emitter_ico.png" id="1_8kuue"]
+[ext_resource type="Script" path="res://addons/ridiculous_stream/games/physics_editor/obj/laser_emitter.gd" id="1_jjfv8"]
+[ext_resource type="Texture2D" uid="uid://cf08bglhkxl7i" path="res://addons/ridiculous_stream/ui/sprites/line_dashed.png" id="2_41dh3"]
+[ext_resource type="Texture2D" uid="uid://cnf5eroctdqt2" path="res://addons/ridiculous_stream/ui/sprites/line_dotted.png" id="3_0f0ba"]
+
+[sub_resource type="Shader" id="Shader_hltqo"]
+code = "shader_type canvas_item;
+
+
+void fragment() {
+	COLOR = texture(TEXTURE, vec2(UV.x - TIME, UV.y));
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jmwy2"]
+shader = SubResource("Shader_hltqo")
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_8kb7a"]
+frames = 2
+frame_0/texture = ExtResource("2_41dh3")
+frame_0/duration = 0.2
+frame_1/texture = ExtResource("3_0f0ba")
+frame_1/duration = 0.2
+
+[sub_resource type="Gradient" id="Gradient_042s6"]
+offsets = PackedFloat32Array(0, 0.490085, 0.994334)
+colors = PackedColorArray(1, 1, 1, 1, 0.796803, 0.531307, 7.70092e-07, 1, 0.054902, 0.054902, 0.054902, 0.768627)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3wf0h"]
+gradient = SubResource("Gradient_042s6")
+
+[sub_resource type="Curve" id="Curve_ag2oi"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.512355), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_htw8j"]
+curve = SubResource("Curve_ag2oi")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lyrti"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 30.704
+initial_velocity_min = 216.27
+initial_velocity_max = 334.65
+gravity = Vector3(0, 980, 0)
+scale_min = 5.0
+scale_max = 20.0
+scale_curve = SubResource("CurveTexture_htw8j")
+color_ramp = SubResource("GradientTexture1D_3wf0h")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+
+[node name="laser_emitter" type="Node2D"]
+script = ExtResource("1_jjfv8")
+
+[node name="laser_cannon" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_8kuue")
+
+[node name="line" type="Line2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_jmwy2")
+position = Vector2(-10, -9)
+points = PackedVector2Array(0, 0, 0, 382)
+width = 30.0
+default_color = Color(1, 0.760784, 0.776471, 1)
+texture = SubResource("AnimatedTexture_8kb7a")
+texture_mode = 1
+
+[node name="impact_particles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_lyrti")
+
+[node name="ray" type="RayCast2D" parent="."]
+visible = false
+position = Vector2(-10, -9)
+target_position = Vector2(0, 3000)

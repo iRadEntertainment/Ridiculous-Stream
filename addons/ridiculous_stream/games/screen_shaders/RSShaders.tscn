@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cpciblr1iovav"]
+
+[ext_resource type="Material" uid="uid://brtj2odoewo3r" path="res://addons/ridiculous_stream/shaders/crt.material" id="1_pxq5w"]
+[ext_resource type="Script" path="res://addons/ridiculous_stream/games/screen_shaders/RSShaders.gd" id="2_oslx2"]
+
+[node name="rs_shaders" type="Control"]
+z_index = 100
+material = ExtResource("1_pxq5w")
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_oslx2")
