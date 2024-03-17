@@ -51,19 +51,20 @@ unique_name_in_owner = true
 stream = ExtResource("3_t6sdp")
 volume_db = -5.115
 
+[node name="tmr_progress" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 10.0
+one_shot = true
+
 [node name="stop_stream_bar" type="PanelContainer" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 112.0
 grow_horizontal = 2
 theme = SubResource("Theme_qsox0")
-
-[node name="tmr_stop_stream" type="Timer" parent="stop_stream_bar"]
-unique_name_in_owner = true
-wait_time = 10.0
-one_shot = true
 
 [node name="vb" type="VBoxContainer" parent="stop_stream_bar"]
 layout_mode = 2
@@ -111,37 +112,59 @@ size_flags_vertical = 6
 value = 37.4
 show_percentage = false
 
-[node name="random_raid" type="HBoxContainer" parent="."]
+[node name="random_raid" type="PanelContainer" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 27.0
+offset_bottom = 112.0
 grow_horizontal = 2
+theme = SubResource("Theme_qsox0")
 
 [node name="vb" type="VBoxContainer" parent="random_raid"]
 layout_mode = 2
+alignment = 1
 
 [node name="hb" type="HBoxContainer" parent="random_raid/vb"]
 layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
 
-[node name="user" type="Label" parent="random_raid/vb/hb"]
+[node name="user_start_raid" type="Label" parent="random_raid/vb/hb"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.968627, 0.215686, 0.815686, 1)
-text = "Giganzo"
+text = "PandaCoder"
 
 [node name="lb" type="Label" parent="random_raid/vb/hb"]
 layout_mode = 2
-text = " will forcefully end the stream in"
+text = "started the raid to"
 
-[node name="seconds_left" type="Label" parent="random_raid/vb/hb"]
+[node name="raided_username" type="Label" parent="random_raid/vb/hb"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.968627, 0.215686, 0.815686, 1)
-text = "10 s"
+text = "xXxCRAZYMIKExXx"
 
-[node name="time left" type="ProgressBar" parent="random_raid/vb"]
+[node name="empty" type="Control" parent="random_raid/vb/hb"]
 layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="btn_close" type="Button" parent="random_raid/vb/hb"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("4_5itbb")
+icon_alignment = 1
+expand_icon = true
+
+[node name="progress_time_left_raid" type="ProgressBar" parent="random_raid/vb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+value = 37.4
 show_percentage = false
 
 [connection signal="pressed" from="stop_stream_bar/vb/hb/btn_close" to="." method="_on_btn_close_pressed"]
+[connection signal="pressed" from="random_raid/vb/hb/btn_close" to="." method="_on_btn_close_pressed"]

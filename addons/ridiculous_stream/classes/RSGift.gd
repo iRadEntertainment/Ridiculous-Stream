@@ -82,6 +82,7 @@ func auth():
 		RSGlobals.TwScope.FOLLOWERS,
 		RSGlobals.TwScope.REDEMPTIONS,
 		RSGlobals.TwScope.POLLS,
+		RSGlobals.TwScope.RAIDS,
 		RSGlobals.TwScope.BITS,
 	]
 	#scope = ["chat:read", "chat:edit"]

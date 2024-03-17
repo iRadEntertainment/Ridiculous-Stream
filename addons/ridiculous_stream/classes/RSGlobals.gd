@@ -20,6 +20,7 @@ const TwScope := {
 	"POLLS": "channel:manage:polls",
 	"SUBS": "channel:read:subscriptions",
 	"BITS": "bits:read",
+	"RAIDS": "channel:manage:raids",
 }
 
 const dock_pack = preload("res://addons/ridiculous_stream/instances/RSDock.tscn")

@@ -1,4 +1,3 @@
-res://addons/ridiculous_stream/instances/alert_overlay.gd
 res://addons/ridiculous_stream/instances/alert_overlay.tscn
 res://addons/ridiculous_coding/font.tres
 res://addons/ridiculous_stream/shaders/radial_progress.gdshader
@@ -10,3 +9,4 @@ res://addons/ridiculous_stream/shaders/speed_lines.gdshader
 res://addons/ridiculous_stream/ui/editor_light_panel.stylebox
 res://addons/ridiculous_stream/ui/ridiculous_stream_main.theme
 res://addons/ridiculous_stream/ui/editor_overlay_panel.stylebox
+res://addons/ridiculous_stream/instances/alert_overlay.gd

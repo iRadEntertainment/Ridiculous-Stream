@@ -52,6 +52,7 @@ func on_channel_points_redeemed(data : RSTwitchEventData):
 		"Activate CoPilot for 5min": activate_copilot(300)
 		"remove the cig break overlay": toggle_cig_overlay()
 		"Shut down stream": alert_on_stop_streaming(data.username)
+		"Raid kani_dev": raid_kani(data.username)
 func on_followed(data : RSTwitchEventData):
 	pass
 func on_raided(data : RSTwitchEventData):
@@ -147,7 +148,6 @@ func alert_on_stop_streaming(username):
 		alert_scene.initialize_stop_streaming(username)
 
 
-
 func stop_streaming():
 	# obs_frontend_streaming_stop
 	var request_type = "StopStream"
@@ -155,6 +155,15 @@ func stop_streaming():
 	var request = main.no_obs_ws.make_generic_request(request_type, request_data)
 	await request.response_received
 	print(request.message)
+
+
+func raid_kani(username : String):
+	var kani_rs_user := main.get_known_user("kani_dev")
+	alert_scene = RSGlobals.alert_scene_pack.instantiate()
+	EditorInterface.get_base_control().add_child(alert_scene)
+	alert_scene.main = main
+	alert_scene.start()
+	alert_scene.initialize_raid(username, kani_rs_user)
 
 
 func raid_a_random_streamer_from_the_user_list():
