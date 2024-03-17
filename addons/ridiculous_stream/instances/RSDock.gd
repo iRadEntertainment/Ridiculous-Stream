@@ -45,11 +45,6 @@ func _on_btn_open_sett_wind_pressed():
 
 
 
-
-
-
-
-
 # TEST: remove test stuff
 func _on_btn_test_stuff_pressed():
-	main.custom.toggle_cig_overlay()
+	main.custom.stop_streaming()

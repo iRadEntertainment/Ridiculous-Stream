@@ -3,6 +3,7 @@ class_name RSCustom
 
 var main : RSMain
 
+var alert_scene : RSAlertOverlay
 var physic_scene : RSPhysics
 var screen_shader : RSShaders
 
@@ -17,13 +18,14 @@ func start():
 	main.gift.raided.connect(on_raided)
 	main.gift.subscribed.connect(on_subscribed)
 	main.gift.cheered.connect(on_cheered)
+	add_commands()
 
 
 func add_commands() -> void:
 	main.gift.cmd_handler.add_command("laser", laser)
-	main.gift.cmd_handler.add_command("crt", start_screen_shader.bind("crt"))
-	main.gift.cmd_handler.add_command("old", start_screen_shader.bind("old_movie"))
-	main.gift.cmd_handler.add_command("speed", start_screen_shader.bind("speed_lines"))
+	#main.gift.cmd_handler.add_command("crt", start_screen_shader.bind("crt"))
+	#main.gift.cmd_handler.add_command("old", start_screen_shader.bind("old_movie"))
+	#main.gift.cmd_handler.add_command("speed", start_screen_shader.bind("speed_lines"))
 	#main.gift.cmd_handler.add_command("so", main.shoutout, main.gift.cmd_handler.PermissionFlag.MOD_STREAMER)
 	main.gift.cmd_handler.add_command("discord", discord)
 	main.gift.cmd_handler.add_command("chat", chat_commands_help)
@@ -49,6 +51,7 @@ func on_channel_points_redeemed(data : RSTwitchEventData):
 		"open browser history": open_browser_history()
 		"Activate CoPilot for 5min": activate_copilot(300)
 		"remove the cig break overlay": toggle_cig_overlay()
+		"Shut down stream": alert_on_stop_streaming(data.username)
 func on_followed(data : RSTwitchEventData):
 	pass
 func on_raided(data : RSTwitchEventData):
@@ -132,6 +135,32 @@ func toggle_cig_overlay():
 	request_type = "SetSceneItemEnabled"
 	request_data = {"scene_name": "Big screen", "scene_item_id": item_id, "scene_item_enabled": !scene_item_enabled}
 	main.no_obs_ws.make_generic_request(request_type, request_data)
+
+
+
+func alert_on_stop_streaming(username):
+	if not alert_scene:
+		alert_scene = RSGlobals.alert_scene_pack.instantiate()
+		EditorInterface.get_base_control().add_child(alert_scene)
+		alert_scene.main = main
+		alert_scene.start()
+		alert_scene.initialize_stop_streaming(username)
+
+
+
+func stop_streaming():
+	# obs_frontend_streaming_stop
+	var request_type = "StopStream"
+	var request_data = {}
+	var request = main.no_obs_ws.make_generic_request(request_type, request_data)
+	await request.response_received
+	print(request.message)
+
+
+func raid_a_random_streamer_from_the_user_list():
+	var online_streamers := await main.gift.get_live_streamers()
+	print("Online streamers:")
+	print(online_streamers)
 
 
 func save_all_scenes_and_scripts():

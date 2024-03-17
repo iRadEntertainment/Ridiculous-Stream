@@ -1,0 +1,147 @@
+[gd_scene load_steps=9 format=3 uid="uid://dregwshpiqg8j"]
+
+[ext_resource type="Theme" uid="uid://b7xrw7crccrr7" path="res://addons/ridiculous_stream/ui/ridiculous_stream_main.theme" id="1_dg235"]
+[ext_resource type="Script" path="res://addons/ridiculous_stream/instances/alert_overlay.gd" id="2_2r8d2"]
+[ext_resource type="AudioStream" uid="uid://d06co3aldqpok" path="res://addons/ridiculous_stream/local_res/sfx_alert_digital_clock_bip.wav" id="3_t6sdp"]
+[ext_resource type="Texture2D" uid="uid://dpyn121ra1pa" path="res://addons/ridiculous_stream/ui/sprites/close.png" id="4_5itbb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5j5d1"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.188235, 0.215686, 0.262745, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.113725, 0.133333, 0.160784, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tljqv"]
+bg_color = Color(0.129412, 0.14902, 0.180392, 1)
+border_color = Color(0.270588, 0.435294, 0.580392, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nxmtj"]
+bg_color = Color(0.858824, 0.215686, 0.737255, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.270588, 0.435294, 0.580392, 1)
+
+[sub_resource type="Theme" id="Theme_qsox0"]
+default_font_size = 25
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_5j5d1")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_tljqv")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_nxmtj")
+
+[node name="AlertOverlay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_dg235")
+script = ExtResource("2_2r8d2")
+
+[node name="alert" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("3_t6sdp")
+volume_db = -5.115
+
+[node name="stop_stream_bar" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 112.0
+grow_horizontal = 2
+theme = SubResource("Theme_qsox0")
+
+[node name="tmr_stop_stream" type="Timer" parent="stop_stream_bar"]
+unique_name_in_owner = true
+wait_time = 10.0
+one_shot = true
+
+[node name="vb" type="VBoxContainer" parent="stop_stream_bar"]
+layout_mode = 2
+alignment = 1
+
+[node name="hb" type="HBoxContainer" parent="stop_stream_bar/vb"]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+
+[node name="user_stopped_stream" type="Label" parent="stop_stream_bar/vb/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.968627, 0.215686, 0.815686, 1)
+text = "Seano4D"
+
+[node name="lb" type="Label" parent="stop_stream_bar/vb/hb"]
+layout_mode = 2
+text = " will forcefully end the stream in"
+
+[node name="seconds_left" type="Label" parent="stop_stream_bar/vb/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.968627, 0.215686, 0.815686, 1)
+text = "10 s"
+
+[node name="empty" type="Control" parent="stop_stream_bar/vb/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="btn_close" type="Button" parent="stop_stream_bar/vb/hb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("4_5itbb")
+icon_alignment = 1
+expand_icon = true
+
+[node name="progress_time_left" type="ProgressBar" parent="stop_stream_bar/vb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+value = 37.4
+show_percentage = false
+
+[node name="random_raid" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 27.0
+grow_horizontal = 2
+
+[node name="vb" type="VBoxContainer" parent="random_raid"]
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="random_raid/vb"]
+layout_mode = 2
+
+[node name="user" type="Label" parent="random_raid/vb/hb"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.968627, 0.215686, 0.815686, 1)
+text = "Giganzo"
+
+[node name="lb" type="Label" parent="random_raid/vb/hb"]
+layout_mode = 2
+text = " will forcefully end the stream in"
+
+[node name="seconds_left" type="Label" parent="random_raid/vb/hb"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.968627, 0.215686, 0.815686, 1)
+text = "10 s"
+
+[node name="time left" type="ProgressBar" parent="random_raid/vb"]
+layout_mode = 2
+show_percentage = false
+
+[connection signal="pressed" from="stop_stream_bar/vb/hb/btn_close" to="." method="_on_btn_close_pressed"]

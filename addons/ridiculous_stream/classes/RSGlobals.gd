@@ -33,6 +33,7 @@ const btn_user_pack = preload("res://addons/ridiculous_stream/instances/btn_user
 const screen_shader_pack = preload("res://addons/ridiculous_stream/games/screen_shaders/RSShaders.tscn")
 
 const physic_scene_pack = preload("res://addons/ridiculous_stream/games/physics_editor/RSPhysics.tscn")
+const alert_scene_pack = preload("res://addons/ridiculous_stream/instances/alert_overlay.tscn")
 const lb_body_pack = preload("res://addons/ridiculous_stream/games/physics_editor/obj/lb_rigidbody.tscn")
 const laser_scene_pack = preload("res://addons/ridiculous_stream/games/physics_editor/obj/laser_emitter.tscn")
 
