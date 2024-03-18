@@ -2,34 +2,46 @@
 
 Welcome to **Ridiculous Stream for Godot**, a groundbreaking plugin that integrates Twitch chat directly into the **Godot 4.x** game development environment. Created by Dario "iRad" De Vita, a passionate game developer and [Twitch streamer](https://twitch.tv/iraddev), this plugin is inspired by the concept of **[Ridiculous Coding for Godot](https://github.com/jotson/ridiculous_coding)** implemented by **jotson** and aims to inject an unparalleled level of interaction and *fun* into your game development process.
 
+<!-- ![Demo](media/demo.mp4) -->
+<!-- <p align="center"><video src="media/demo.mp4"></p> -->
+<video><source src="media/demo.mp4"></source></video>
 
 ## Key Features
 
 RS is a *silly little plugin*, **quite dangerous** if you ask me. You can have your editor crash while coding (*so save often!*) because the Twitch chat can spawn rigid bodies running at runtime within the editor.
 
 
-- **Twitch chat integration within the ditor**: Connect to your Twitch account and have the stream chat all the time in front of you when game devving in Godot4!
-![Dock screenshot](media/screenshot01.png)
+- **Twitch chat integration within the editor**: Connect to your Twitch account and have the stream chat all the time in front of you when game dev in Godot4!
+
+<p align="center"><img src="media/screenshot01.png"></p>
 
 - **Interactive Rigid Bodies**: Spawn interactive rigid bodies, such as cans of beans, within the Godot editor. Streamers can drag (*left-click*) or destroy (*right-click*) these objects. The first chat message from any user spawns their username in the editor, which can be interacted with in the same way. Destroyed usernames produce shards, adding a visually engaging element to your stream.
-![Rigid bodies](media/screenshot03.png)
+
+<p align="center"><img src="media/screenshot03.png"></p>
 
 - **Chat Co-Pilot**: If you hate or love backsitting, let your viewers to write code directly inside the editor from the chat. It's not annoying or dangerous at all. Your Godot project will surely benefits from it!
-![Co-Pilot](media/screenshot04.png)
+
+<p align="center"><img src="media/screenshot04.png"></p>
 
 - **BBCode injections in the chat**: Let your viewers decorate their text with BBcode injections.
 
-- **customize your known user list**: ![Settings](media/screenshot02.png)
+- **customize your known user list**:
     - Create auto-shoutout for your fellow streamers
     - Customize the RigidBody that your viewer can spawn in the editor
+
+<p align="center"><img src="media/screenshot02.png"></p>
 
 ## Customization
 
 - **Chat Redeems to Custom Functions**: Connect Twitch chat redeems to custom functions within Godot. This feature allows for creative and silly interactions, such as **stopping the stream** or **initiating a raid** on another streamer from a custom list of users currently streaming.
 
+<p align="center"><img src="media/vid_shut_down_in_godot.gif"></p>
+
 - **OBS Integration**: Control OBS directly from Godot. Implement redeems that can, for example, stop the stream entirely or raid a streamer, adding a layer of unpredictability and fun.
 
 - **Adaptive 2D Colliders**: The bounding box for the rigid bodies is defined by 2D plane colliders on three sides (left, down, right) that adjust to the editor window size, ensuring the interactions remain contained within the visible area.
+
+
 
 ## Getting Started
 
