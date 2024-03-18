@@ -19,9 +19,10 @@ func start():
 	if parent is Control:
 		parent.resized.connect(resize_boundaries)
 		#parent.gui_input.connect(gui_input)
-	code_edit = EditorInterface.get_script_editor().get_current_editor().get_base_editor()
-	if code_edit:
-		code_edit.caret_changed.connect(shuffle_bodies)
+	if EditorInterface.get_script_editor().get_current_editor():
+		code_edit = EditorInterface.get_script_editor().get_current_editor().get_base_editor()
+		if code_edit:
+			code_edit.caret_changed.connect(shuffle_bodies)
 	is_closing = false
 	resize_boundaries(true)
 	reset_timers()
