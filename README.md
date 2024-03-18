@@ -2,9 +2,7 @@
 
 Welcome to **Ridiculous Stream for Godot**, a groundbreaking plugin that integrates Twitch chat directly into the **Godot 4.x** game development environment. Created by Dario "iRad" De Vita, a passionate game developer and [Twitch streamer](https://twitch.tv/iraddev), this plugin is inspired by the concept of **[Ridiculous Coding for Godot](https://github.com/jotson/ridiculous_coding)** implemented by **jotson** and aims to inject an unparalleled level of interaction and *fun* into your game development process.
 
-<!-- ![Demo](media/demo.mp4) -->
-<!-- <p align="center"><video src="media/demo.mp4"></p> -->
-<video><source src="media/demo.mp4"></source></video>
+https://github.com/iRadEntertainment/Ridiculous-Stream/blob/main/media/demo.mp4
 
 ## Key Features
 
