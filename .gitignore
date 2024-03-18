@@ -14,5 +14,5 @@ export_presets.cfg
 data_*/
 
 # Ridiculous Stream ignore
-media/
+media/*.import
 addons/ridiculous_coding/
