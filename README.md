@@ -9,17 +9,17 @@ RS is a *silly little plugin*, **quite dangerous** if you ask me. You can have y
 
 
 - **Twitch chat integration within the ditor**: Connect to your Twitch account and have the stream chat all the time in front of you when game devving in Godot4!
-![Dock screenshot](media\screenshot01.png)
+![Dock screenshot](media/screenshot01.png)
 
 - **Interactive Rigid Bodies**: Spawn interactive rigid bodies, such as cans of beans, within the Godot editor. Streamers can drag (*left-click*) or destroy (*right-click*) these objects. The first chat message from any user spawns their username in the editor, which can be interacted with in the same way. Destroyed usernames produce shards, adding a visually engaging element to your stream.
-![Rigid bodies](media\screenshot03.png)
+![Rigid bodies](media/screenshot03.png)
 
 - **Chat Co-Pilot**: If you hate or love backsitting, let your viewers to write code directly inside the editor from the chat. It's not annoying or dangerous at all. Your Godot project will surely benefits from it!
-![Co-Pilot](media\screenshot04.png)
+![Co-Pilot](media/screenshot04.png)
 
 - **BBCode injections in the chat**: Let your viewers decorate their text with BBcode injections.
 
-- **customize your known user list**: ![Settings](media\screenshot02.png)
+- **customize your known user list**: ![Settings](media/screenshot02.png)
     - Create auto-shoutout for your fellow streamers
     - Customize the RigidBody that your viewer can spawn in the editor
 
