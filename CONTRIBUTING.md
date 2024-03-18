@@ -49,7 +49,7 @@ Once you've made your changes:
 
 For more detailed information on creating a pull request, see GitHub's documentation on [Creating a pull request from a fork](https://help.github.com/articles/creating-a-pull-request-from-a-fork/).
 
-### 56. Stay Involved
+### 5. Stay Involved
 
 After submitting your pull request, stay engaged in the conversation. Reviewers may ask for changes or further clarification. Your contributions are a valuable part of the project's continued growth and improvement.
 
