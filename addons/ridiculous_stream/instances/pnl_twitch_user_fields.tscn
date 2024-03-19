@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dc02d6u648u1j"]
+[gd_scene load_steps=11 format=3 uid="uid://dc02d6u648u1j"]
 
 [ext_resource type="Script" path="res://addons/ridiculous_stream/instances/pnl_twitch_user_fields.gd" id="1_t6b5i"]
 [ext_resource type="Texture2D" uid="uid://dqxomv5pykt6i" path="res://addons/ridiculous_stream/ui/bootstrap_icons/search-heart.svg" id="2_iqcnk"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://boqo7e7i8rips" path="res://addons/ridiculous_stream/ui/bootstrap_icons/filetype-exe.svg" id="5_qr2m6"]
 [ext_resource type="Texture2D" uid="uid://b0ojmkb42pnot" path="res://addons/ridiculous_stream/ui/bootstrap_icons/folder2-open.svg" id="6_1qe2s"]
 [ext_resource type="PackedScene" uid="uid://bnvfuklj58uqa" path="res://addons/ridiculous_stream/instances/pnl_connect_to_gift.tscn" id="6_jv0c3"]
+[ext_resource type="Texture2D" uid="uid://dbpv7xe18l2r6" path="res://addons/ridiculous_stream/ui/sprites/raid_icon.png" id="7_ayv7u"]
 
 [node name="pnl_twitch_user_fields" type="PanelContainer"]
 anchors_preset = 15
@@ -55,24 +56,6 @@ placeholder_text = "search"
 
 [node name="twitch_info" type="HBoxContainer" parent="vb/top/vb"]
 layout_mode = 2
-
-[node name="pnl_live" type="PanelContainer" parent="vb/top/vb/twitch_info"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_styles/panel = ExtResource("4_18mwm")
-
-[node name="scr" type="ScrollContainer" parent="vb/top/vb/twitch_info/pnl_live"]
-layout_mode = 2
-
-[node name="vb" type="VBoxContainer" parent="vb/top/vb/twitch_info/pnl_live/scr"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="vb/top/vb/twitch_info/pnl_live/scr/vb"]
-layout_mode = 2
-text = "Stream title"
 
 [node name="tex_profile_pic" type="TextureRect" parent="vb/top/vb/twitch_info"]
 unique_name_in_owner = true
@@ -131,7 +114,83 @@ color = Color(0, 0, 0, 1)
 
 [node name="pnl_connect_to_gift" parent="vb/top" instance=ExtResource("6_jv0c3")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
+
+[node name="pnl_live" type="PanelContainer" parent="vb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+theme_override_styles/panel = ExtResource("4_18mwm")
+
+[node name="stream_thumbnail" type="TextureRect" parent="vb/pnl_live"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="pnl" type="PanelContainer" parent="vb/pnl_live/stream_thumbnail"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+
+[node name="stream_title" type="Label" parent="vb/pnl_live/stream_thumbnail/pnl"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Stream title"
+autowrap_mode = 3
+
+[node name="hb" type="HBoxContainer" parent="vb/pnl_live/stream_thumbnail"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="btn_raid_current" type="Button" parent="vb/pnl_live/stream_thumbnail/hb"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+text = "Raid!"
+icon = ExtResource("7_ayv7u")
+expand_icon = true
+
+[node name="empty" type="Control" parent="vb/pnl_live/stream_thumbnail/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="pnl" type="PanelContainer" parent="vb/pnl_live/stream_thumbnail/hb"]
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="vb/pnl_live/stream_thumbnail/hb/pnl"]
+layout_mode = 2
+
+[node name="stream_time" type="Label" parent="vb/pnl_live/stream_thumbnail/hb/pnl/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "00:15:32"
+
+[node name="icon" type="TextureRect" parent="vb/pnl_live/stream_thumbnail/hb/pnl/hb"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = ExtResource("3_6ldp6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="stream_viewer_count" type="Label" parent="vb/pnl_live/stream_thumbnail/hb/pnl/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "15"
 
 [node name="sep" type="HSeparator" parent="vb"]
 layout_mode = 2
@@ -286,6 +345,7 @@ expand_icon = true
 unique_name_in_owner = true
 
 [connection signal="text_submitted" from="vb/top/vb/search/ln_search" to="." method="_on_ln_search_text_submitted"]
+[connection signal="pressed" from="vb/pnl_live/stream_thumbnail/hb/btn_raid_current" to="." method="_on_btn_raid_current_pressed"]
 [connection signal="item_selected" from="vb/hb2/grid_custom/opt_custom_sfx" to="." method="_on_opt_custom_sfx_item_selected"]
 [connection signal="pressed" from="vb/scroll/vb/hb/btn_test_beans" to="." method="_on_btn_test_beans_pressed"]
 [connection signal="toggled" from="vb/scroll/vb/hb/btn_add_custom_beans" to="." method="_on_btn_add_custom_beans_toggled"]

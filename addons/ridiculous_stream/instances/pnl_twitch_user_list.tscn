@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cqlaadcvsfhpq"]
+[gd_scene load_steps=4 format=3 uid="uid://cqlaadcvsfhpq"]
 
 [ext_resource type="Script" path="res://addons/ridiculous_stream/instances/pnl_twitch_user_list.gd" id="1_5rx57"]
 [ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://addons/ridiculous_stream/ui/bootstrap_icons/arrow-repeat.svg" id="2_y1dcg"]
 [ext_resource type="Texture2D" uid="uid://boa5ns6c4c07k" path="res://addons/ridiculous_stream/ui/bootstrap_icons/twitch.svg" id="3_q20ft"]
-[ext_resource type="Texture2D" uid="uid://sleoevcdhxgh" path="res://addons/ridiculous_stream/ui/bootstrap_icons/record2-fill.svg" id="4_tymu1"]
 
 [node name="pnl_twitch_user_list" type="PanelContainer"]
 anchors_preset = 15
@@ -23,38 +22,26 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="hb/vb"]
+[node name="hb" type="HBoxContainer" parent="hb/vb"]
 layout_mode = 2
 
-[node name="ln_filter" type="LineEdit" parent="hb/vb/HBoxContainer"]
+[node name="ln_filter" type="LineEdit" parent="hb/vb/hb"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "filter"
 
-[node name="btn_reload" type="Button" parent="hb/vb/HBoxContainer"]
+[node name="btn_reload" type="Button" parent="hb/vb/hb"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 icon = ExtResource("2_y1dcg")
 expand_icon = true
 
-[node name="btn_check_live" type="Button" parent="hb/vb/HBoxContainer"]
+[node name="btn_filter_live" type="Button" parent="hb/vb/hb"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 icon = ExtResource("3_q20ft")
 expand_icon = true
-
-[node name="led" type="Sprite2D" parent="hb/vb/HBoxContainer/btn_check_live"]
-unique_name_in_owner = true
-modulate = Color(0.447059, 0.447059, 0.447059, 1)
-position = Vector2(24, 24)
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("4_tymu1")
-
-[node name="tmr_led" type="Timer" parent="hb/vb/HBoxContainer/btn_check_live"]
-unique_name_in_owner = true
-wait_time = 2.0
-one_shot = true
 
 [node name="scroll" type="ScrollContainer" parent="hb/vb"]
 layout_mode = 2
@@ -66,7 +53,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[connection signal="text_changed" from="hb/vb/HBoxContainer/ln_filter" to="." method="_on_ln_filter_text_changed"]
-[connection signal="pressed" from="hb/vb/HBoxContainer/btn_reload" to="." method="_on_btn_reload_pressed"]
-[connection signal="pressed" from="hb/vb/HBoxContainer/btn_check_live" to="." method="_on_btn_check_live_pressed"]
-[connection signal="timeout" from="hb/vb/HBoxContainer/btn_check_live/tmr_led" to="." method="_on_tmr_led_timeout"]
+[connection signal="text_changed" from="hb/vb/hb/ln_filter" to="." method="_on_ln_filter_text_changed"]
+[connection signal="pressed" from="hb/vb/hb/btn_reload" to="." method="_on_btn_reload_pressed"]
+[connection signal="pressed" from="hb/vb/hb/btn_filter_live" to="." method="_on_btn_filter_live_pressed"]

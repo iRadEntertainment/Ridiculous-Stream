@@ -1,17 +1,44 @@
+# pgorley is the best
 @tool
+#download carbrix now
+
 extends PanelContainer
 
 var main : RSMain
-var gl_user : RSTwitchUser
+var user : RSTwitchUser
+var live_data : RSStreamerInfo
+
+var pnl_live
+var stream_title
+var stream_thumbnail
+var stream_time
+var stream_viewer_count
+
+
+func _ready():
+	set_process(false)
+
 
 func start():
 	update_dropdown_fields()
+	pnl_live = %pnl_live
+	stream_title = %stream_title
+	stream_thumbnail = %stream_thumbnail
+	stream_time = %stream_time
+	stream_viewer_count = %stream_viewer_count
 	%pnl_connect_to_gift.main = main
 	%pnl_connect_to_gift.start()
+	pnl_live.hide()
 
 
-func populate_fields(user : RSTwitchUser):
-	gl_user = user
+func populate_fields(_user : RSTwitchUser, _live_data : RSStreamerInfo):
+	user = _user
+	live_data = _live_data
+	update_user_fields()
+	update_live_fields()
+
+
+func update_user_fields():
 	%tex_profile_pic.texture = await main.loader.load_texture_from_url(user.profile_image_url)
 	%ln_username.text = user.username
 	%ln_display_name.text = user.display_name
@@ -32,9 +59,40 @@ func populate_fields(user : RSTwitchUser):
 	if user.custom_beans_params != {}:
 		%btn_add_custom_beans.button_pressed = true
 		
-	
 	%te_so.text = user.shoutout_description
 	%te_promote.text = user.promotion_description
+	
+
+
+func update_live_fields():
+	set_process(live_data != null)
+	pnl_live.visible = live_data != null
+	if not live_data: return
+	
+	stream_title.text = live_data.title
+	stream_viewer_count.text = str(live_data.viewer_count)
+	stream_thumbnail.texture = await main.loader.load_texture_from_url(live_data.get_thumbnail_url(1280, 720), false)
+
+
+var ticks := 0
+func process_stream_time_elapsed():
+	if not live_data:
+		set_process(false)
+		return
+	
+	ticks += 1
+	if ticks < 30: return
+	ticks = 0
+	
+	var system_unix = Time.get_unix_time_from_system()
+	var stream_start_unix = Time.get_unix_time_from_datetime_dict(live_data.started_at)
+	var time_elapsed_string = Time.get_datetime_string_from_unix_time((system_unix - stream_start_unix), true)
+	stream_time.text = time_elapsed_string.split(" ")[1]
+
+
+func _process(_d):
+	process_stream_time_elapsed()
+
 
 func check_param_and_add_inspector(params):
 	clear_param_inspector()
@@ -103,7 +161,7 @@ func search_user(username : String):
 func gather_username_info_from_api():
 	var possible_username = %ln_search.text
 	if possible_username in main.globals.known_users.keys():
-		populate_fields(main.globals.known_users[possible_username])
+		populate_fields(main.globals.known_users[possible_username], null)
 	else:
 		clear_custom_fields()
 	var user = await main.gift.gather_user_info(possible_username)
@@ -160,6 +218,10 @@ func _on_btn_open_file_pressed():
 func _on_btn_open_folder_pressed():
 	OS.shell_open(main.loader.get_users_path())
 
+func _on_btn_raid_current_pressed():
+	if not live_data: return
+	main.gift.start_raid(live_data.user_id)
+
 
 # ==============================================================================
 #func set_do_it(val):
@@ -201,8 +263,8 @@ func _on_btn_open_folder_pressed():
 func add_param_inspector():
 	print("here")
 	if %sub_res.get_child_count() > 0: return
-	if gl_user.custom_beans_params != {}:
-		check_param_and_add_inspector(gl_user.custom_beans_params)
+	if user.custom_beans_params != {}:
+		check_param_and_add_inspector(user.custom_beans_params)
 	else:
 		check_param_and_add_inspector(RSGlobals.params_can)
 	#var param_inspector : RSParamInspector = RSGlobals.param_inspector_pack.instantiate()
@@ -229,3 +291,5 @@ func _on_btn_test_beans_pressed():
 	var user := user_from_fields()
 	if !user.username.is_empty():
 		main.custom.beans(user.username)
+
+

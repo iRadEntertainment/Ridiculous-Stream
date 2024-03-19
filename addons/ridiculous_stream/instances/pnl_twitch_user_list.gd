@@ -3,8 +3,9 @@
 extends PanelContainer
 
 var main : RSMain
+var streamers_live_data : Dictionary
 
-signal user_selected(user)
+signal user_selected(user, live_data)
 
 
 func start():
@@ -14,6 +15,7 @@ func start():
 func populate_user_button_list():
 	%ln_filter.text = ""
 	await get_tree().create_timer(0.5).timeout
+	streamers_live_data = await main.gift.get_live_streamers_data()
 	for btn in %user_list.get_children():
 		btn.queue_free()
 	#main.load_known_user()
@@ -25,26 +27,31 @@ func populate_user_button_list():
 		btn_user_instance.user = user
 		var profile_pic = await main.loader.load_texture_from_url(user.profile_image_url)
 		btn_user_instance.profile_pic = profile_pic
-		btn_user_instance.start()
 		btn_user_instance.user_selected.connect(user_selected_pressed)
 		%user_list.add_child(btn_user_instance)
+		if username in streamers_live_data.keys():
+			btn_user_instance.live_data = streamers_live_data[username]
+		btn_user_instance.start()
 
 
 ## Called by btn_user_instance
-func user_selected_pressed(user : RSTwitchUser):
+func user_selected_pressed(user : RSTwitchUser, live_data : RSStreamerInfo):
 	%ln_filter.text = ""
-	user_selected.emit(user)
+	user_selected.emit(user, live_data)
 
 
-func _on_btn_check_live_pressed():
-	var check_usernames = main.globals.known_users.keys()
-	var live = await main.gift.get_live_streamers(check_usernames)
-	print(live)
+func _on_btn_filter_live_pressed():
 	for user_button in %user_list.get_children():
-		user_button.is_live = user_button.user.username in live
-	%tmr_led.start()
-	%led.modulate = Color("#c63a00")
-
+		user_button.visible = user_button.user.username in streamers_live_data.keys()
+#func _on_btn_check_live_pressed():
+	#var live_data := await main.gift.get_live_streamers_data()
+	#
+	#for user_button in %user_list.get_children():
+		#user_button.visible = user_button.user.username in live_data.keys()
+		#if user_button.user.username in live_data.keys():
+			#user_button.live_data = live_data[user_button.user.username]
+		#else:
+			#user_button.live_data = null
 
 func _on_btn_reload_pressed():
 	populate_user_button_list()
@@ -52,16 +59,6 @@ func _on_ln_filter_text_changed(new_text : String):
 	new_text = new_text.to_lower()
 	for user_line in %user_list.get_children():
 		user_line.visible = user_line.user.username.find(new_text) != -1 or new_text.is_empty()
-
-func _on_tmr_led_timeout():
-	%led.modulate = Color("#727272")
-
-
-
-
-
-
-
 
 
 

@@ -136,7 +136,7 @@ func _on_sl_font_size_value_changed(value):
 
 func _on_btn_command_pressed():
 	var msg = %ln_msg.text
-	var send = SenderData.new("iraddev", "", {})
+	var send = SenderData.new(main.settings.channel, "", {})
 	main.gift.cmd_handler.handle_command(send, msg)
 	%ln_msg.text = ""
 

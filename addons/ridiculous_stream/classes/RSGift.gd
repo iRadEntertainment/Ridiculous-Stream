@@ -100,14 +100,13 @@ func auth():
 
 
 func connect_to_irc():
-	if(!await(irc.connect_to_irc("iraddev"))):
-	#if(!await(irc.connect_to_irc(main.settings.channel))):
+	if(!await(irc.connect_to_irc(main.settings.channel))):
 		# Authentication failed. Abort.
 		return
 	# Request the capabilities. By default only twitch.tv/commands and twitch.tv/tags are used.
 	# Refer to https://dev.twitch.tv/docs/irc/capabilities/ for all available capabilities.
 	irc.request_capabilities()
-	irc.join_channel("iraddev")#(main.settings.channel)
+	irc.join_channel(main.settings.channel)
 	
 	# We also have to forward the messages to the command handler to handle them.
 	irc.chat_message.connect(cmd_handler.handle_command)
@@ -174,40 +173,42 @@ func start_raid(to_id : int):
 	var res = await api.request(HTTPClient.METHOD_POST, query, headers)
 
 
-func get_live_streamers(usernames : PackedStringArray = [], user_ids : PackedInt32Array = []) -> PackedStringArray:
+func get_live_streamers_data(user_names_or_ids : Array = main.globals.known_users.keys()) -> Dictionary:
 	var url := "/helix/streams"
-	var param = ""
-	if usernames.is_empty() and user_ids.is_empty():
-		return []
-	
-	var first_iter := true
-	for i in usernames.size():
-		var username = usernames[i]
-		param += "?" if first_iter else "&"
-		param += "user_login=%s"%username
-		first_iter = false
-	for i in user_ids.size():
-		var user_id = user_ids[i]
-		param += "?" if first_iter else "&"
-		param += "user_id=%s"%user_id
-		first_iter = false
-	
-	
-	var query = url + param
-	#print(query)
 	var headers : PackedStringArray = [
 		"Authorization: Bearer %s" % api.id_conn.last_token.token,
 		"Client-Id: %s" % api.id_conn.last_token.last_client_id,
 	]
-	var response : Dictionary = await api.request(HTTPClient.METHOD_GET, query, headers)
-	if !response.has("data"):
-		return []
-	var live_streamers : PackedStringArray = []
-	for dic : Dictionary in response.data:
-		if dic.has("user_login"):
-			live_streamers.append(dic.user_login)
-	return live_streamers
-
+	var param = ""
+	
+	var live_streamers_data := {}
+	var first_iter := true
+	
+	var max_user_query = 50
+	while not user_names_or_ids.is_empty():
+		var count = 0
+		for i in range(user_names_or_ids.size()-1, -1, -1):
+			var user_name_id = user_names_or_ids[i]
+			user_names_or_ids.remove_at(i)
+			param += "?" if first_iter else "&"
+			if user_name_id is String:
+				param += "user_login=%s"%user_name_id
+			elif user_name_id is int:
+				param += "user_id=%s"%user_name_id
+			first_iter = false
+			if count > max_user_query:
+				var query = url + param
+				var response : Dictionary = await api.request(HTTPClient.METHOD_GET, query, headers)
+				if !response.has("data"):
+					break
+				for data in response.data:
+					if data.user_login == "coderadgames":
+						print("YESSSSSS")
+					live_streamers_data[data.user_login] = RSStreamerInfo.from_data(data)
+				break
+			count += 1
+	
+	return live_streamers_data
 
 
 func gather_user_info(username : String) -> RSTwitchUser:

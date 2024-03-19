@@ -167,9 +167,10 @@ func raid_kani(username : String):
 
 
 func raid_a_random_streamer_from_the_user_list():
-	var online_streamers := await main.gift.get_live_streamers()
-	print("Online streamers:")
-	print(online_streamers)
+	return
+	#var online_streamers := await main.gift.get_live_streamers()
+	#print("Online streamers:")
+	#print(online_streamers)
 
 
 func save_all_scenes_and_scripts():

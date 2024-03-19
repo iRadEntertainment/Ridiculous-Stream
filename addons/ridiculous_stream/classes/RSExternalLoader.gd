@@ -57,8 +57,8 @@ func load_sfx_from_sfx_folder(sfx_name : String) -> AudioStreamOggVorbis:
 	return audio
 
 
-func load_texture_from_url(url : String) -> ImageTexture:
-	if url in cached.keys():
+func load_texture_from_url(url : String, use_cached := true) -> ImageTexture:
+	if url in cached.keys() and use_cached:
 		return cached[url]
 	var file_type = url.get_extension()
 	if not file_type in ["png", "jpeg", "jpg", "bmp", "webp", "svg"]: return
