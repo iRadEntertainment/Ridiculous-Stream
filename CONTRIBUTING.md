@@ -53,9 +53,17 @@ For more detailed information on creating a pull request, see GitHub's documenta
 
 After submitting your pull request, stay engaged in the conversation. Reviewers may ask for changes or further clarification. Your contributions are a valuable part of the project's continued growth and improvement.
 
+## 6. Libraries included
+
+The following libraries are included in the `addon/libraries/` folder and will be kapt up-to-date locally:
+- **[GIFT](https://github.com/issork/gift) by Issork**: The backbone for Twitch IRC chat functionality. Will be kept for its handling of chat commands in future versions.
+- **[Twitcher](https://github.com/kanimaru/twitcher) by Kanimaru**: Will replace the IRC and API functionalities currently handled by Gift in future versions.
+- **[no-obs-ws](https://github.com/Yagich/no-obs-ws) by Yagich**: Integrating OBS control for a seamless development and streaming experience.
+- **[godot-polygon2d-fracture](https://github.com/SoloByte/godot-polygon2d-fracture) by SoloByte**: Handles the polygon fractures of the interactive rigid bodies generated.
+
 ## Questions?
 
-If you have any questions or need further assistance, feel free to open an issue for general questions or reach out directly to **Dario "iRad" De Vita** via [GitHub](https://github.com/iraddev) or check any ongoing live stream at https://www.twitch.tv/iraddev.
+If you have any questions or need further assistance, feel free to open an issue for general questions or reach out directly to **Dario "iRad" De Vita** via [GitHub](https://github.com/iraddev), join [Discord](https://discord.gg/4YhKaHkcMb) or check any ongoing live stream at [twitch.tv/iraddev](https://www.twitch.tv/iraddev).
 
 ---
 

@@ -1,5 +1,9 @@
 # Ridiculous Stream for Godot
 
+![Static Badge](https://img.shields.io/badge/Godot-4.0+-478cbf?logo=godotengine&logoColor=ffffff&style=flat-square&labelColor=121821)
+![Static Badge](https://img.shields.io/badge/License-MIT-750014?style=flat-square&labelColor=121821)
+[![Static Badge](https://img.shields.io/badge/Discord-%20-121821?logo=discord&style=flat-square&labelColor=121821&color=7289da)](https://discord.gg/4YhKaHkcMb)
+
 Welcome to **Ridiculous Stream for Godot**, a groundbreaking plugin that integrates Twitch chat directly into the **Godot 4.x** game development environment. Created by Dario "iRad" De Vita, a passionate game developer and [Twitch streamer](https://twitch.tv/iraddev), this plugin is inspired by the concept of **[Ridiculous Coding for Godot](https://github.com/jotson/ridiculous_coding)** implemented by **jotson** and aims to inject an unparalleled level of interaction and *fun* into your game development process.
 
 <p align="center"><img src="media/demo.gif"></p>
@@ -9,25 +13,23 @@ Welcome to **Ridiculous Stream for Godot**, a groundbreaking plugin that integra
 RS is a *silly little plugin*, **quite dangerous** if you ask me. You can have your editor crash while coding (*so save often!*) because the Twitch chat can spawn rigid bodies running at runtime within the editor.
 
 
-- **Twitch chat integration within the editor**: Connect to your Twitch account and have the stream chat all the time in front of you when game dev in Godot4!
+- **Twitch chat integration within the editor**:
+  > Connect to your Twitch account and have the stream chat all the time in front of you when game dev in Godot4!<details><p align="center"><img src="media/screenshot01.png"></p></details>
 
-<p align="center"><img src="media/screenshot01.png"></p>
+- **Interactive Rigid Bodies**:
+  > Spawn interactive rigid bodies, such as cans of beans, within the Godot editor. Streamers can drag (*left-click*) or destroy (*right-click*) these objects. The first chat message from any user spawns their username in the editor, which can be interacted with in the same way. Destroyed usernames produce shards, adding a visually engaging element to your stream.<details><p align="center"><img src="media/screenshot03.png"></p></details>
 
-- **Interactive Rigid Bodies**: Spawn interactive rigid bodies, such as cans of beans, within the Godot editor. Streamers can drag (*left-click*) or destroy (*right-click*) these objects. The first chat message from any user spawns their username in the editor, which can be interacted with in the same way. Destroyed usernames produce shards, adding a visually engaging element to your stream.
+- **Chat Co-Pilot**:
+  > If you hate or love backsitting, let your viewers to write code directly inside the editor from the chat. It's not annoying or dangerous at all. Your Godot project will surely benefits from it!<details><p align="center"><img src="media/screenshot04.png"></p></details>
 
-<p align="center"><img src="media/screenshot03.png"></p>
 
-- **Chat Co-Pilot**: If you hate or love backsitting, let your viewers to write code directly inside the editor from the chat. It's not annoying or dangerous at all. Your Godot project will surely benefits from it!
-
-<p align="center"><img src="media/screenshot04.png"></p>
-
-- **BBCode injections in the chat**: Let your viewers decorate their text with BBcode injections.
+- **BBCode injections in the chat**:
+  > Let your viewers decorate their text with BBcode injections.
 
 - **customize your known user list**:
-    - Create auto-shoutout for your fellow streamers
-    - Customize the RigidBody that your viewer can spawn in the editor
-
-<p align="center"><img src="media/screenshot02.png"></p>
+  > - Create auto-shoutout for your fellow streamers
+  > - Customize the RigidBody that your viewer can spawn in the editor
+  > <details><p align="center"><img src="media/screenshot02.png"></p></details>
 
 ## Customization
 
