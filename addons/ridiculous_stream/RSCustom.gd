@@ -45,7 +45,7 @@ func on_channel_points_redeemed(data : RSTwitchEventData):
 			beans(data.username)
 		"activate copilot for 10 minutes":
 			pass
-		"crt": start_screen_shader(RSShaders.FxType.CRT, 5.0)
+		"crt": start_screen_shader(RSShaders.FxType.CRT, 24.0)
 		"speed": start_screen_shader(RSShaders.FxType.SPEED, 120.0)
 		"old movie": start_screen_shader(RSShaders.FxType.OLD, 60.0)
 		"open useless website": open_useless_website()
@@ -174,9 +174,9 @@ func raid_a_random_streamer_from_the_user_list():
 		wheel_of_random = RSGlobals.wheel_of_random_pack.instantiate()
 		EditorInterface.get_base_control().add_child(wheel_of_random)
 		wheel_of_random.main = main
+		wheel_of_random.streamers_live_data = streamers_live_data
 		wheel_of_random.start()
-		wheel_of_random.spin_for_streamers(streamers_live_data)
-		#alert_scene.initialize_stop_streaming(username)
+		wheel_of_random.spin_for_streamers()
 
 
 func save_all_scenes_and_scripts():

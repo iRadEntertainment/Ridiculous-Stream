@@ -71,7 +71,7 @@ func update_live_fields():
 	
 	stream_title.text = live_data.title
 	stream_viewer_count.text = str(live_data.viewer_count)
-	stream_thumbnail.texture = await main.loader.load_texture_from_url(live_data.get_thumbnail_url(1280, 720), false)
+	stream_thumbnail.texture = await main.loader.load_texture_from_url(live_data.get_thumbnail_url(640, 360), false)
 
 
 var ticks := 0

@@ -13,53 +13,70 @@ const colours = [
 ]
 
 var main : RSMain
-var wheel_center : Control
+var center_node : Control
+var wheel : Control
 
 var wheel_radius : float = 384
 var angle_init = -PI/2
 const RES_TOTAL = 100
 var streamers_live_data : Dictionary
 
+
 func start() -> void:
-	wheel_center = %wheel_center
+	center_node = %center_node
+	wheel = %wheel
+	build_arrow_indicator()
+	build_entire_wheel()
 
 
-func spin_for_streamers(_streamers_live_data : Dictionary = {}) -> void:
-	if not _streamers_live_data.is_empty():
-		streamers_live_data = _streamers_live_data
-	wheel_center.rotation = 0
+func spin_for_streamers() -> void:
+	var rand_angle = randf() * TAU
+	rand_angle += TAU * 1
+	
+	var tw = create_tween()
+	tw.finished.connect(select_winner_from_wheel)
+	tw.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUINT)
+	tw.tween_property(wheel, "rotation", -rand_angle, 2)
+
+
+func select_winner_from_wheel():
+	var streamers : Array = streamers_live_data.keys()
+	var final_angle = wrap(-wheel.rotation, 0, TAU)
+	var selected := floor((final_angle/TAU) * streamers.size() )
+	var winner : RSStreamerInfo = streamers_live_data[streamers[selected]]
+	main.gift.start_raid(winner.user_id)
+
+
+func build_entire_wheel() -> void:
+	center_node.rotation = 0
+	wheel.rotation = 0
 	var angle_size = TAU/(streamers_live_data.size())
 	#@warning_ignore("integer_division")
 	var res = RES_TOTAL/(streamers_live_data.size())
 	var i = 0
-	var users : Array = streamers_live_data.keys()
-	for key in users:
+	var streamers : Array = streamers_live_data.keys()
+	for key in streamers:
 		var streamer_info : RSStreamerInfo = streamers_live_data[key]
 		var angle = angle_init + angle_size * i
-		var sector := wheel_sector(streamer_info, angle, angle_size, wheel_radius, res)
-		sector.color = colours[wrap(i, 0, colours.size())]
-		wheel_center.add_child(sector)
-		
+		var sector := await wheel_sector(streamer_info, angle, angle_size, wheel_radius, res)
+		sector.color = Color(randf(), randf(), randf())#colours[wrap(i, 0, colours.size())]
+		wheel.add_child(sector)
 		i += 1
-	
-	var rand_angle = randf_range(0, TAU)
-	var lerping = lerp(0, users.size(), rand_angle/TAU)
-	var selected := int(lerping)
-	var winner : RSStreamerInfo = streamers_live_data[users[selected]]
-	
-	print("users: ", users)
-	print("rand_angle: ", rand_angle)
-	print("lerping: ", lerping)
-	print("selected: ", selected)
-	print("winner: ", winner.user_login)
-	
-	rand_angle += TAU * 1
-	rand_angle += angle_init
-	var tw = create_tween()
-	tw.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-	tw.tween_property(wheel_center, "rotation", rand_angle, 2)
-	#tw.finished.connect(main.gift.start_raid.bind(winner.user_id))
 
+
+func build_arrow_indicator():
+	var arrow_poly := Polygon2D.new()
+	arrow_poly.color = Color.CRIMSON
+	var arrow_radius = 30
+	var points = []
+	for i in 3:
+		var angle = PI + (TAU/3)*i
+		var p =  Vector2.from_angle(angle) * arrow_radius
+		p += Vector2.RIGHT * wheel_radius
+		points.append(p)
+	arrow_poly.polygon = points
+	arrow_poly.rotation = angle_init
+	center_node.add_child(arrow_poly)
 
 func spin_values(values : Array[String], callable : Callable) -> void:
 	
@@ -84,7 +101,18 @@ func wheel_sector(_streamer_info : RSStreamerInfo, _angle_init : float, _angle_s
 		points.append(p)
 	new_polygon.polygon = points
 	
-	#TODO: add a label as a child
+	#var user : RSTwitchUser = main.globals.known_users[_streamer_info.user_login]
+	#new_polygon.texture = await main.loader.load_texture_from_url(user.profile_image_url)
+	#new_polygon.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+	
+	var line := Line2D.new()
+	line.points = points
+	line.width = 10 #px
+	line.closed = true
+	line.antialiased = true
+	line.default_color = Color.WHITE_SMOKE
+	new_polygon.add_child(line)
+	
 	var lb := Label.new()
 	lb.text = _streamer_info.user_name
 	lb.rotation = _angle_init + _angle_size/2

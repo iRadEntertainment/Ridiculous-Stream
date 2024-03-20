@@ -1,0 +1,80 @@
+[gd_scene load_steps=2 format=3 uid="uid://e5ovyj5cnwle"]
+
+[ext_resource type="Script" path="res://wheel_test.gd" id="1_tol15"]
+
+[node name="wheel_test" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tol15")
+metadata/_edit_lock_ = true
+
+[node name="center" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -2.13121
+
+[node name="pnl" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 248.0
+grow_vertical = 2
+
+[node name="vb" type="VBoxContainer" parent="pnl"]
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="pnl/vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="pnl/vb/hb"]
+layout_mode = 2
+text = "Wheel angle"
+
+[node name="wheel_angle" type="Label" parent="pnl/vb/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "-122"
+
+[node name="hb2" type="HBoxContainer" parent="pnl/vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="pnl/vb/hb2"]
+layout_mode = 2
+text = "selected index"
+
+[node name="selected_winner" type="Label" parent="pnl/vb/hb2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "-2"
+
+[node name="hb3" type="HBoxContainer" parent="pnl/vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="pnl/vb/hb3"]
+layout_mode = 2
+text = "selected index"
+
+[node name="selected_inde" type="Label" parent="pnl/vb/hb3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "-2"
+
+[node name="list" type="TextEdit" parent="pnl/vb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 516)
+layout_mode = 2
+
+[connection signal="text_changed" from="pnl/vb/list" to="." method="_on_list_text_changed"]

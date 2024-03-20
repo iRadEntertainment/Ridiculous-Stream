@@ -173,18 +173,24 @@ func start_raid(to_id : int):
 	var res = await api.request(HTTPClient.METHOD_POST, query, headers)
 
 
-func get_live_streamers_data(user_names_or_ids : Array = main.globals.known_users.keys()) -> Dictionary:
+func get_live_streamers_data(user_names_or_ids : Array = []) -> Dictionary:
 	var url := "/helix/streams"
 	var headers : PackedStringArray = [
 		"Authorization: Bearer %s" % api.id_conn.last_token.token,
 		"Client-Id: %s" % api.id_conn.last_token.last_client_id,
 	]
-	var param = ""
+	
+	if user_names_or_ids.is_empty():
+		for key in main.globals.known_users.keys():
+			var user : RSTwitchUser = main.globals.known_users[key]
+			if user.is_streamer:
+				user_names_or_ids.append(key)
 	
 	var live_streamers_data := {}
 	var first_iter := true
 	
-	var max_user_query = 50
+	var param = ""
+	var max_user_query = 10
 	while not user_names_or_ids.is_empty():
 		var count = 0
 		for i in range(user_names_or_ids.size()-1, -1, -1):

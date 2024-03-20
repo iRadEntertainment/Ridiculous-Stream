@@ -15,7 +15,7 @@ mouse_filter = 2
 script = ExtResource("1_5ce5g")
 metadata/_edit_lock_ = true
 
-[node name="wheel_center" type="Control" parent="."]
+[node name="center_node" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -26,8 +26,26 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Polygon2D" type="Polygon2D" parent="wheel_center"]
-position = Vector2(-576, -324)
+[node name="wheel" type="Control" parent="center_node"]
+unique_name_in_owner = true
+anchors_preset = 0
+
+[node name="btn_spin" type="Button" parent="center_node"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -431.0
+offset_top = -18.5
+offset_right = -394.0
+offset_bottom = 18.5
+grow_horizontal = 2
+grow_vertical = 2
+icon = ExtResource("3_rd0xh")
+icon_alignment = 1
+expand_icon = true
 
 [node name="btn_kill" type="Button" parent="."]
 layout_mode = 1
@@ -43,19 +61,5 @@ icon = ExtResource("2_xhdku")
 icon_alignment = 1
 expand_icon = true
 
-[node name="btn_spin" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -959.0
-offset_top = 278.0
-offset_right = -922.0
-offset_bottom = 315.0
-grow_horizontal = 0
-icon = ExtResource("3_rd0xh")
-icon_alignment = 1
-expand_icon = true
-
+[connection signal="pressed" from="center_node/btn_spin" to="." method="spin_for_streamers"]
 [connection signal="pressed" from="btn_kill" to="." method="_on_btn_kill_pressed"]
-[connection signal="pressed" from="btn_spin" to="." method="spin_for_streamers"]
