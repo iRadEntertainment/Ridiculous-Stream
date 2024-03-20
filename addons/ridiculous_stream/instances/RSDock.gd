@@ -47,4 +47,4 @@ func _on_btn_open_sett_wind_pressed():
 
 # TEST: remove test stuff
 func _on_btn_test_stuff_pressed():
-	main.custom.stop_streaming()
+	main.custom.raid_a_random_streamer_from_the_user_list()

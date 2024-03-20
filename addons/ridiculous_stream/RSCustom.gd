@@ -6,6 +6,7 @@ var main : RSMain
 var alert_scene : RSAlertOverlay
 var physic_scene : RSPhysics
 var screen_shader : RSShaders
+var wheel_of_random : RSWheelOfRandom
 
 
 func start():
@@ -53,6 +54,7 @@ func on_channel_points_redeemed(data : RSTwitchEventData):
 		"remove the cig break overlay": toggle_cig_overlay()
 		"Shut down stream": alert_on_stop_streaming(data.username)
 		"Raid kani_dev": raid_kani(data.username)
+		"Force raid a random streamer": raid_a_random_streamer_from_the_user_list()
 func on_followed(data : RSTwitchEventData):
 	pass
 func on_raided(data : RSTwitchEventData):
@@ -167,10 +169,14 @@ func raid_kani(username : String):
 
 
 func raid_a_random_streamer_from_the_user_list():
-	return
-	#var online_streamers := await main.gift.get_live_streamers()
-	#print("Online streamers:")
-	#print(online_streamers)
+	var streamers_live_data = await main.gift.get_live_streamers_data()
+	if not wheel_of_random:
+		wheel_of_random = RSGlobals.wheel_of_random_pack.instantiate()
+		EditorInterface.get_base_control().add_child(wheel_of_random)
+		wheel_of_random.main = main
+		wheel_of_random.start()
+		wheel_of_random.spin_for_streamers(streamers_live_data)
+		#alert_scene.initialize_stop_streaming(username)
 
 
 func save_all_scenes_and_scripts():

@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3 uid="uid://bx227yojtu2d5"]
+
+[ext_resource type="Script" path="res://addons/ridiculous_stream/games/wheel_random/the_wheel_of_random.gd" id="1_5ce5g"]
+[ext_resource type="Texture2D" uid="uid://dpyn121ra1pa" path="res://addons/ridiculous_stream/ui/sprites/close.png" id="2_xhdku"]
+[ext_resource type="Texture2D" uid="uid://b2mtooi658yq0" path="res://addons/ridiculous_stream/ui/sprites/loading.png" id="3_rd0xh"]
+
+[node name="the_wheel_of_random" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_5ce5g")
+metadata/_edit_lock_ = true
+
+[node name="wheel_center" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Polygon2D" type="Polygon2D" parent="wheel_center"]
+position = Vector2(-576, -324)
+
+[node name="btn_kill" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -62.0
+offset_top = 23.0
+offset_right = -25.0
+offset_bottom = 60.0
+grow_horizontal = 0
+icon = ExtResource("2_xhdku")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_spin" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -959.0
+offset_top = 278.0
+offset_right = -922.0
+offset_bottom = 315.0
+grow_horizontal = 0
+icon = ExtResource("3_rd0xh")
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="pressed" from="btn_kill" to="." method="_on_btn_kill_pressed"]
+[connection signal="pressed" from="btn_spin" to="." method="spin_for_streamers"]

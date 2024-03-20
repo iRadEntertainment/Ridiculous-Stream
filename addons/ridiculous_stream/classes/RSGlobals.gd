@@ -35,6 +35,7 @@ const screen_shader_pack = preload("res://addons/ridiculous_stream/games/screen_
 
 const physic_scene_pack = preload("res://addons/ridiculous_stream/games/physics_editor/RSPhysics.tscn")
 const alert_scene_pack = preload("res://addons/ridiculous_stream/instances/alert_overlay.tscn")
+const wheel_of_random_pack = preload("res://addons/ridiculous_stream/games/wheel_random/the_wheel_of_random.tscn")
 const lb_body_pack = preload("res://addons/ridiculous_stream/games/physics_editor/obj/lb_rigidbody.tscn")
 const laser_scene_pack = preload("res://addons/ridiculous_stream/games/physics_editor/obj/laser_emitter.tscn")
 
