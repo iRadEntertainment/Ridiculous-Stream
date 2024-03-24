@@ -28,6 +28,10 @@ func _on_btn_speed_pressed():
 	main.custom.start_screen_shader(RSShaders.FxType.SPEED, 10)
 func _on_btn_re_add_gift_commands_pressed():
 	main.custom.add_commands()
+func _on_btn_send_message_to_pressed():
+	var msg = %message_to_channel.text
+	var channel = %channel_name.text
+	main.gift.irc.chat(msg, channel)
 func _on_btn_load_image_pressed():
 	var url = ""
 	while url == "":
@@ -37,6 +41,8 @@ func _on_btn_load_image_pressed():
 			url = user.profile_image_url
 	var tex := await main.loader.load_texture_from_url(url)
 	%prev_load_image.texture = tex
+
+
 
 
 

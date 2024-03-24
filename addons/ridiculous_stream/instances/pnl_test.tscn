@@ -98,6 +98,23 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Re-add GIFT commands"
 
+[node name="hb" type="HBoxContainer" parent="scr/vb/vb"]
+layout_mode = 2
+
+[node name="btn_send_message_to" type="Button" parent="scr/vb/vb/hb"]
+layout_mode = 2
+text = "Send to"
+
+[node name="channel_name" type="LineEdit" parent="scr/vb/vb/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="message_to_channel" type="TextEdit" parent="scr/vb/vb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+
 [node name="btn_load_image" type="Button" parent="scr/vb/vb"]
 layout_mode = 2
 text = "Load random userpic"
@@ -118,4 +135,5 @@ layout_mode = 2
 [connection signal="pressed" from="scr/vb/grid_games/btn_speed" to="." method="_on_btn_speed_pressed"]
 [connection signal="pressed" from="scr/vb/vb/btn_find_live_streamers" to="." method="_on_btn_find_live_streamers_pressed"]
 [connection signal="pressed" from="scr/vb/vb/btn_re_add_gift_commands" to="." method="_on_btn_re_add_gift_commands_pressed"]
+[connection signal="pressed" from="scr/vb/vb/hb/btn_send_message_to" to="." method="_on_btn_send_message_to_pressed"]
 [connection signal="pressed" from="scr/vb/vb/btn_load_image" to="." method="_on_btn_load_image_pressed"]
