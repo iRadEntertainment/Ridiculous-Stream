@@ -151,18 +151,6 @@ func add_image_bodies(params : Dictionary, pos = null, linear_velocity = null, a
 		add_rigid(body, final_pos, linear_velocity, angular_velocity, true)
 
 
-#func add_cans(quantity := 1, type := Type.BEAN_CANS):
-	#for i in quantity:
-		#var lin_vel = Vector2((randf()-0.5)*30, (randf()-0.5)*30)
-		#var ang_vel = (randf()-0.5)*30
-		#var body := can_pack.instantiate() as RigidBody2D
-		#match type:
-			#Type.BEAN_CANS: body.type = body.Type.BEAN_CANS
-			#Type.PICKLES: body.type = body.Type.PICKLES
-			#Type.PRACTICAL_EYES: body.type = body.Type.PRACTICAL_EYES
-		#add_rigid(body, Vector2(), lin_vel, ang_vel, true)
-
-
 func add_laser():
 	if not laser_scene:
 		laser_scene = main.globals.laser_scene_pack.instantiate()
@@ -221,8 +209,6 @@ func kill():
 	queue_free()
 
 
-
-
 func start_physics():
 	if not main.globals.physics_space_rid:
 		main.globals.physics_space_rid = activate_new_space()
@@ -267,6 +253,12 @@ func set_new_space_default_param(space_rid : RID):
 	PhysicsServer2D.area_set_param(space_rid, PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR, Vector2.DOWN)
 	PhysicsServer2D.area_set_param(space_rid, PhysicsServer2D.AREA_PARAM_LINEAR_DAMP, 0.5)
 	PhysicsServer2D.area_set_param(space_rid, PhysicsServer2D.AREA_PARAM_ANGULAR_DAMP, 0.5)
+
+
+func set_space_gravity(gravity : int = 4410):
+	var space_rid = main.globals.physics_space_rid
+	var dir_state := PhysicsServer2D.space_get_direct_state(space_rid)
+	PhysicsServer2D.area_set_param(space_rid, PhysicsServer2D.AREA_PARAM_GRAVITY, gravity)
 
 
 func add_body_to_space(body : PhysicsBody2D):

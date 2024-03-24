@@ -12,6 +12,8 @@ func start():
 
 func _on_btn_beans_pressed():
 	main.custom.beans("redston4d")
+func _on_btn_zero_g_pressed():
+	main.custom.zero_g()
 func _on_btn_pickles_pressed():
 	main.custom.beans("jakeblade")
 func _on_btn_names_pressed():
@@ -24,6 +26,8 @@ func _on_btn_old_pressed():
 	main.custom.start_screen_shader(RSShaders.FxType.OLD, 10)
 func _on_btn_speed_pressed():
 	main.custom.start_screen_shader(RSShaders.FxType.SPEED, 10)
+func _on_btn_re_add_gift_commands_pressed():
+	main.custom.add_commands()
 func _on_btn_load_image_pressed():
 	var url = ""
 	while url == "":
@@ -33,6 +37,10 @@ func _on_btn_load_image_pressed():
 			url = user.profile_image_url
 	var tex := await main.loader.load_texture_from_url(url)
 	%prev_load_image.texture = tex
+
+
+
+
 
 
 

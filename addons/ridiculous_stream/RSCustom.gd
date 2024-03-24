@@ -19,11 +19,12 @@ func start():
 	main.gift.raided.connect(on_raided)
 	main.gift.subscribed.connect(on_subscribed)
 	main.gift.cheered.connect(on_cheered)
-	add_commands()
+	main.gift.connected_to_twitch.connect(add_commands)
 
 
 func add_commands() -> void:
 	main.gift.cmd_handler.add_command("laser", laser)
+	main.gift.cmd_handler.add_command("zeroG", zero_g)
 	#main.gift.cmd_handler.add_command("crt", start_screen_shader.bind("crt"))
 	#main.gift.cmd_handler.add_command("old", start_screen_shader.bind("old_movie"))
 	#main.gift.cmd_handler.add_command("speed", start_screen_shader.bind("speed_lines"))
@@ -119,11 +120,11 @@ func get_advice(data : RSTwitchEventData) -> void:
 	main.gift.chat(format_string.format(advice_dic) )
 
 
-func discord(cmd_info : CommandInfo):
+func discord(cmd_info : CommandInfo, args = []):
 	var msg = "Join Discord: https://discord.gg/4YhKaHkcMb"
 	main.gift.chat(msg)
 
-func chat_commands_help(cmd_info : CommandInfo):
+func chat_commands_help(cmd_info : CommandInfo, args = []):
 	var msg = "Use a combination of ![command] for chat: hl (highlight), hd(hidden), rb(rainbow), big, small, wave, pulse, tornado, shake"
 	main.gift.chat(msg)
 
@@ -147,8 +148,15 @@ func beans(username : String):
 	
 	physic_scene.add_image_bodies(RSGlobals.params_can)
 
+func zero_g(cmd_info : CommandInfo = null, args = []):
+	if not physic_scene:
+		return
+	var tw = main.create_tween()
+	tw.tween_method(physic_scene.set_space_gravity, 4410, 0, 2.0)
+	tw.tween_method(physic_scene.set_space_gravity, 0, 4410, 5.0).set_delay(10.0)
 
-func laser(cmd_info : CommandInfo = null):
+
+func laser(cmd_info : CommandInfo = null, args = []):
 	add_physic_scene()
 	if physic_scene.is_closing: return
 	physic_scene.add_laser()

@@ -32,6 +32,12 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Beans!"
 
+[node name="btn_zeroG" type="Button" parent="scr/vb/grid_games"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "!zeroG"
+
 [node name="btn_pickles" type="Button" parent="scr/vb/grid_games"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -87,6 +93,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "find live streamers"
 
+[node name="btn_re_add_gift_commands" type="Button" parent="scr/vb/vb"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Re-add GIFT commands"
+
 [node name="btn_load_image" type="Button" parent="scr/vb/vb"]
 layout_mode = 2
 text = "Load random userpic"
@@ -98,6 +109,7 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [connection signal="pressed" from="scr/vb/grid_games/btn_beans" to="." method="_on_btn_beans_pressed"]
+[connection signal="pressed" from="scr/vb/grid_games/btn_zeroG" to="." method="_on_btn_zero_g_pressed"]
 [connection signal="pressed" from="scr/vb/grid_games/btn_pickles" to="." method="_on_btn_pickles_pressed"]
 [connection signal="pressed" from="scr/vb/grid_games/btn_laser" to="." method="_on_btn_laser_pressed"]
 [connection signal="pressed" from="scr/vb/grid_games/btn_names" to="." method="_on_btn_names_pressed"]
@@ -105,4 +117,5 @@ layout_mode = 2
 [connection signal="pressed" from="scr/vb/grid_games/btn_old" to="." method="_on_btn_old_pressed"]
 [connection signal="pressed" from="scr/vb/grid_games/btn_speed" to="." method="_on_btn_speed_pressed"]
 [connection signal="pressed" from="scr/vb/vb/btn_find_live_streamers" to="." method="_on_btn_find_live_streamers_pressed"]
+[connection signal="pressed" from="scr/vb/vb/btn_re_add_gift_commands" to="." method="_on_btn_re_add_gift_commands_pressed"]
 [connection signal="pressed" from="scr/vb/vb/btn_load_image" to="." method="_on_btn_load_image_pressed"]
