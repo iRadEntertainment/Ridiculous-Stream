@@ -174,6 +174,7 @@ func start_raid(to_id : int):
 
 
 func get_live_streamers_data(user_names_or_ids : Array = []) -> Dictionary:
+	if not is_connected_to_twitch: return {}
 	var url := "/helix/streams"
 	var headers : PackedStringArray = [
 		"Authorization: Bearer %s" % api.id_conn.last_token.token,
