@@ -8,7 +8,7 @@ var main : RSMain
 
 var parent
 var code_edit : CodeEdit
-var duration = 15.0 #s
+var duration = 30.0 #s
 var joint_rid : RID
 
 var is_closing := false
@@ -185,12 +185,16 @@ func obj_input(event, obj : RigidBody2D): # input event rigid body
 func shuffle_bodies():
 	if not code_edit: return
 	var pos : Vector2 = code_edit.get_caret_draw_pos()
-	for body in get_tree().get_nodes_in_group("editor_bodies"):
-		body = body as RigidBody2D
+	for body : RigidBody2D in get_tree().get_nodes_in_group("editor_bodies"):
 		var diff : Vector2 = body.position - pos
 		var force = 10000/(diff).length_squared() * body.mass * 40 * diff.normalized()
 		body.apply_impulse(force)
 
+
+func shake_bodies():
+	for body : RigidBody2D in get_tree().get_nodes_in_group("editor_bodies"):
+		var force = Vector2.from_angle(randf_range(-PI, PI)) * 100
+		body.apply_impulse(force)
 
 func toggle_top_boundary(val : bool):
 	$boundaries/n.set_deferred("disabled", !val)
@@ -200,8 +204,11 @@ func disable_boundaries():
 	is_closing = true
 	$boundaries.collision_layer = 0
 	$boundaries.collision_mask  = 0
+	set_all_bodies_sleeping(false)
+
+func set_all_bodies_sleeping(val : bool):
 	for body in get_tree().get_nodes_in_group("editor_bodies"):
-		body.sleeping = false
+		body.sleeping = val
 
 
 func kill():

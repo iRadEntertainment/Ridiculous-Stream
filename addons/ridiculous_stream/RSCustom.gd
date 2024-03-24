@@ -156,14 +156,17 @@ func beans(username : String):
 	
 	physic_scene.add_image_bodies(RSGlobals.params_can)
 
-func zero_g(cmd_info : CommandInfo = null, args = []):
+func zero_g(cmd_info := CommandInfo.new(SenderData.new("iRadDev", "", {}), "", false), args = []):
 	if not physic_scene:
 		main.gift.chat("Wait for the physic scene to be in first!")
 		return
 	main.gift.chat("%s initiated zero_g"%cmd_info.sender_data.user)
+	#physic_scene.shake_bodies()
 	var tw = main.create_tween()
 	tw.tween_method(physic_scene.set_space_gravity, 4410, 0, 2.0)
-	tw.tween_method(physic_scene.set_space_gravity, 0, 4410, 5.0).set_delay(10.0)
+	tw.tween_callback(physic_scene.shake_bodies)
+	tw.tween_callback(physic_scene.shake_bodies).set_delay(10.0)
+	tw.tween_method(physic_scene.set_space_gravity, 0, 4410, 5.0)
 
 
 func laser(cmd_info : CommandInfo = null, args = []):
