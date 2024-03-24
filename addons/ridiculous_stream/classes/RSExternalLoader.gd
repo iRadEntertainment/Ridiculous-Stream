@@ -18,6 +18,16 @@ func save_settings(settings : RSSettings):
 	var path = get_config_path() + RSGlobals.rs_settings_file_name
 	ResourceSaver.save(settings, path)
 
+func save_to_json(file_path: String, variant) -> void:
+	var file = FileAccess.open(file_path, FileAccess.WRITE)
+	file.store_string(JSON.stringify(variant))
+	file.close()
+func load_json(file_path: String):
+	var file = FileAccess.open(file_path, FileAccess.READ)
+	var content = file.get_as_text()
+	file.close()
+	return JSON.parse_string(content)
+
 
 #func load_rigid_body_instance_from_obj_folder(rigid_body_scn_name : String) -> RigidBody2D:
 	#if rigid_body_scn_name in cached.keys():

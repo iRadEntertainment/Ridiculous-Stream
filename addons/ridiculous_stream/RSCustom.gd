@@ -52,6 +52,8 @@ func on_channel_points_redeemed(data : RSTwitchEventData):
 		"open browser history": open_browser_history()
 		"Activate CoPilot for 5min": activate_copilot(300)
 		"remove the cig break overlay": toggle_cig_overlay()
+		"Give advice": give_advice(data)
+		"Get advice": get_advice(data)
 		"Shut down stream": alert_on_stop_streaming(data.username)
 		"Raid kani_dev": raid_kani(data.username)
 		"Force raid a random streamer": raid_a_random_streamer_from_the_user_list()
@@ -65,6 +67,56 @@ func on_cheered(data : RSTwitchEventData):
 	pass
 
 
+func give_advice(data : RSTwitchEventData) -> void:
+	var folder_path = main.loader.get_config_path()
+	var advice_file = folder_path + "advice_collection.json"
+	var advice_list : Array = []
+	check_if_advice_file_exists(advice_file)
+	advice_list = main.loader.load_json(advice_file)
+	var new_advice = {
+		"adviser" : data.display_name,
+		"advice" : data.user_input,
+	}
+	advice_list.append(new_advice)
+	main.loader.save_to_json(advice_file, advice_list)
+
+func check_if_advice_file_exists(advice_file : String):
+	if not FileAccess.file_exists(advice_file):
+		var advice_list = [
+				{
+					"adviser" : "iRadDev",
+					"advice" : "We don't have enough beans! MORE BEANS!"
+				},
+				{
+					"adviser" : "robmblind",
+					"advice" : "If you want to go fast, go alone. If you want to go far, go together."
+				},
+			]
+		main.loader.save_to_json(advice_file, advice_list)
+
+func get_advice(data : RSTwitchEventData) -> void:
+	var folder_path = main.loader.get_config_path()
+	var advice_file = folder_path + "advice_collection.json"
+	var advice_list : Array
+	check_if_advice_file_exists(advice_file)
+	advice_list = main.loader.load_json(advice_file)
+	
+	var advice = advice_list.pick_random()
+	
+	var advice_dic = {
+		"user" : data.display_name,
+		"adviser" : advice.adviser,
+		"advice" : advice.advice,
+	}
+	var format_string : String = [
+		'{user} you know what {adviser} said once? "{advice}"',
+		'{user} you should listen to {adviser}: "{advice}"',
+		'What {adviser} said to {user} resonated with him/her/they: "{advice}"',
+		'{user} was reluctant to learn from {adviser}, but now he enjoys it: "{advice}"',
+		'{user} attentively listen to {adviser}: "{advice}"',
+		].pick_random()
+	
+	main.gift.chat(format_string.format(advice_dic) )
 
 
 func discord(cmd_info : CommandInfo):
