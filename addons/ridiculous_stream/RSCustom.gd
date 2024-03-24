@@ -58,6 +58,7 @@ func on_channel_points_redeemed(data : RSTwitchEventData):
 		"Shut down stream": alert_on_stop_streaming(data.username)
 		"Raid kani_dev": raid_kani(data.username)
 		"Force raid a random streamer": raid_a_random_streamer_from_the_user_list()
+		"Impersonate iRadDev": impersonate_iRad(data)
 func on_followed(data : RSTwitchEventData):
 	pass
 func on_raided(data : RSTwitchEventData):
@@ -67,6 +68,13 @@ func on_subscribed(data : RSTwitchEventData):
 func on_cheered(data : RSTwitchEventData):
 	pass
 
+
+func impersonate_iRad(data : RSTwitchEventData):
+	var channel = data.user_input.split(" ", false, 1)[0].to_lower()
+	#var msg = data.username + " wants me to tell you: "
+	#msg += data.user_input.split(" ", false, 1)[1]
+	var msg = data.user_input.split(" ", false, 1)[1]
+	main.gift.irc.chat(msg, channel)
 
 func give_advice(data : RSTwitchEventData) -> void:
 	var folder_path = main.loader.get_config_path()
@@ -150,7 +158,9 @@ func beans(username : String):
 
 func zero_g(cmd_info : CommandInfo = null, args = []):
 	if not physic_scene:
+		main.gift.chat("Wait for the physic scene to be in first!")
 		return
+	main.gift.chat("%s initiated zero_g"%cmd_info.sender_data.user)
 	var tw = main.create_tween()
 	tw.tween_method(physic_scene.set_space_gravity, 4410, 0, 2.0)
 	tw.tween_method(physic_scene.set_space_gravity, 0, 4410, 5.0).set_delay(10.0)
