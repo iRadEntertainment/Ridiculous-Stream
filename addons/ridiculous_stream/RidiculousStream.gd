@@ -26,13 +26,74 @@ signal gift_reloaded
 
 #region INIT
 # ================================ INIT ========================================
+
+const TWITCH_SERVICE_AUTOLOAD_NAME: String = "TwitchService"
+const HTTP_CLIENT_MANAGER_AUTOLOAD_NAME: String = "HttpClientManager"
+
+var twitch_service : TwitchService
+var http_client_manager : HttpClientManager
+
+
+var twitch_settings: TwitchSetting
+var gif_importer_imagemagick: GifImporterImagemagick = GifImporterImagemagick.new();
+var gif_importer_native: GifImporterNative = GifImporterNative.new();
+var generator: TwitchAPIGenerator = TwitchAPIGenerator.new();
+
+func add_ui():
+	add_tool_menu_item("Regenerate Twitch REST Api", generator.generate_rest_api);
+
+func is_magick_available() -> bool:
+	var transformer = MagicImageTransformer.new()
+	return transformer.is_supported()
+
+
+
 func _enter_tree() -> void:
 	print("=================================== RIDICULOS STREAMING STARTED ===================================")
 	load_rs_settings()
 	load_known_user()
+	connect_twitcher()
 	reload_gift()
 	add_nodes()
 	reload_dock()
+
+func connect_twitcher():
+	#print("=================================== TWITCHER STARTED ===================================")
+	#print("Twitch Plugin loading...")
+	add_ui()
+	add_import_plugin(gif_importer_native)
+	if is_magick_available():
+		add_import_plugin(gif_importer_imagemagick)
+	
+	twitch_settings = TwitchSetting.new()
+	# !!! Change following in the project settings that the example works !!!
+	twitch_settings.broadcaster_id = str(settings.streamer_id)
+	# twitch/auth/broadcaster_id 	< Your broadcaster id you can convert it here https://www.streamweasels.com/tools/convert-twitch-username-to-user-id/
+	twitch_settings.client_id = str(RSGlobals.client_id)
+	# twitch/auth/client_id 		< you find while registering the application see readme for howto
+	twitch_settings.client_secret = settings.client_secret
+	# twitch/auth/client_secret		< you find while registering the application see readme for howto
+	twitch_settings.irc_username = settings.channel
+	# twitch/websocket/irc/username < Your username needed for IRC
+	
+	# twitch/auth/scopes/chat		< Add both Scopes chat_read, chat_edit
+	
+	var chat_bit_field = TwitchScopes.CHAT_READ.bit_value | TwitchScopes.CHAT_EDIT.bit_value
+	var channel_bit_field = TwitchScopes.CHANNEL_MANAGE_GUEST_STAR.bit_value | TwitchScopes.CHAT_EDIT.bit_value
+	ProjectSettings.set_setting("twitch/auth/scopes/chat", chat_bit_field)
+	ProjectSettings.set_setting("twitch/auth/scopes/channel", channel_bit_field)
+	TwitchSetting.setup()
+	
+	twitch_service = TwitchService.new()
+	add_child(twitch_service)
+	http_client_manager = HttpClientManager.new()
+	add_child(http_client_manager)
+	
+	twitch_service.main = self
+	twitch_service.setup()
+	
+	print("Twitch Plugin loading ended")
+
 
 
 func add_nodes():
@@ -161,6 +222,13 @@ func reload_plugin():
 	EditorInterface.call_deferred("set_plugin_enabled", "ridiculous_stream", true)
 
 func _exit_tree() -> void:
+	remove_import_plugin(gif_importer_native)
+	if is_magick_available():
+		remove_import_plugin(gif_importer_imagemagick)
+	#remove_autoload_singleton(TWITCH_SERVICE_AUTOLOAD_NAME);
+	#remove_autoload_singleton(HTTP_CLIENT_MANAGER_AUTOLOAD_NAME);
+	print("=================================== TWITCHER EXITING ===================================")
+	
 	save_rs_settings()
 	#if settings: settings.queue_free()
 	#if globals: globals.queue_free()

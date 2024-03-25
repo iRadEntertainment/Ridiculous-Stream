@@ -26,6 +26,20 @@ enabled=PackedStringArray("res://addons/ridiculous_coding/plugin.cfg", "res://ad
 
 import/blender/enabled=false
 
+[twitch]
+
+auth/authorization_flow="DeviceCodeGrantFlow"
+auth/scopes/chat=3
+auth/scopes/analytics=0
+auth/scopes/bits=0
+auth/scopes/channel=18
+auth/broadcaster_id="443367221"
+auth/client_id="qyiobpgrmc8hqr2qtzkrxkac5a9wjr"
+auth/client_secret="+fkAd27BKwUDlwTNSTNjgBrmgE3P6J8KK1sVDYSpQO8="
+websocket/irc/username="iraddev"
+general/images/image_magic="magick"
+general/images/image_transformer="MagicImageTransformer"
+
 [twitch_chat]
 
 font_size=24

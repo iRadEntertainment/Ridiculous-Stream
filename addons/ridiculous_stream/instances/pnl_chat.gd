@@ -46,8 +46,8 @@ func put_chat(senderdata : SenderData, msg : String):
 			var data : Array = emote.split(":")
 			for d in data[1].split(","):
 				var start_end = d.split("-")
-				locations.append(EmoteLocation.new(data[0], int(start_end[0]), int(start_end[1])))
-	locations.sort_custom(EmoteLocation.smaller)
+				locations.append(TwitchIRC.EmoteLocation.new(data[0], int(start_end[0]), int(start_end[1])))
+	locations.sort_custom(TwitchIRC.EmoteLocation.smaller)
 	var offset = 0
 	for loc in locations:
 		var result = await(main.gift.iconloader.get_emote(loc.id))

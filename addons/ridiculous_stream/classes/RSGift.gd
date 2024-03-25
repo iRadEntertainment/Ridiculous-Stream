@@ -51,7 +51,6 @@ func update_streamer_id() -> int:
 
 
 func connect_signals():
-	# TODO use frikinn lambda func please, this is so ugly
 	irc.whisper_message.connect(emit_whisper_message)
 	irc.chat_message.connect(emit_chat_message)
 	irc.user_joined.connect(emit_user_joined)

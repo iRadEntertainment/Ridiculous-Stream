@@ -4,7 +4,8 @@ class_name RSSettings
 
 ## GIFT settings
 @export var bot_name : String = ""
-@export var streamer_id : int = 0
+@export var streamer_id : int = 443367221
+@export var client_secret : String = ""
 @export var channel : String  = ""
 @export var scope := [
 	RSGlobals.TwScope.CHAT_READ,

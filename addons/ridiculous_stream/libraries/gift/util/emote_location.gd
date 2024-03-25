@@ -1,5 +1,5 @@
 extends RefCounted
-class_name EmoteLocation
+#class_name EmoteLocation
 
 var id : String
 var start : int
@@ -10,5 +10,5 @@ func _init(emote_id, start_idx, end_idx):
 	self.start = start_idx
 	self.end = end_idx
 
-static func smaller(a : EmoteLocation, b : EmoteLocation):
-	return a.start < b.start
+#static func smaller(a : EmoteLocation, b : EmoteLocation):
+	#return a.start < b.start
