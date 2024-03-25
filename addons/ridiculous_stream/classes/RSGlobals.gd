@@ -16,6 +16,7 @@ const TwScope := {
 	"CHAT_EDIT": "chat:edit",
 	"SO": "moderator:manage:shoutouts",
 	"FOLLOWERS": "moderator:read:followers",
+	"REDEMPTIONS_READ": "channel:read:redemptions",
 	"REDEMPTIONS": "channel:manage:redemptions",
 	"POLLS": "channel:manage:polls",
 	"SUBS": "channel:read:subscriptions",

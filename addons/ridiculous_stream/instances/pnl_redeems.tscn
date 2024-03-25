@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://rvb1iyen7vu3"]
+
+[ext_resource type="Script" path="res://addons/ridiculous_stream/instances/pnl_redeems.gd" id="1_rspau"]
+
+[node name="pnl_redeems" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rspau")
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="top" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="vb/top"]
+layout_mode = 2
+
+[node name="btn_update_list" type="Button" parent="vb/top"]
+layout_mode = 2
+
+[node name="list_pnl" type="PanelContainer" parent="vb"]
+layout_mode = 2
+
+[node name="list" type="VBoxContainer" parent="vb/list_pnl"]
+layout_mode = 2
+
+[node name="entry" type="HBoxContainer" parent="vb/list_pnl/list"]
+layout_mode = 2

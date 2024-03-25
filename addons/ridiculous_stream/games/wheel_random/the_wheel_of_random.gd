@@ -22,6 +22,9 @@ const RES_TOTAL = 100
 var streamers_live_data : Dictionary
 
 
+func _ready():
+	set_process(false)
+
 func start() -> void:
 	center_node = %center_node
 	wheel = %wheel
@@ -33,13 +36,18 @@ func spin_for_streamers() -> void:
 	var rand_angle = randf() * TAU
 	rand_angle += TAU * 1
 	
+	set_process(true)
 	var tw = create_tween()
 	tw.finished.connect(select_winner_from_wheel)
 	tw.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUINT)
-	tw.tween_property(wheel, "rotation", -rand_angle, 2)
+	tw.tween_property(wheel, "rotation", -rand_angle, 15)
 
+
+func _process(delta):
+	pass
 
 func select_winner_from_wheel():
+	set_process(false)
 	var streamers : Array = streamers_live_data.keys()
 	var final_angle = wrap(-wheel.rotation, 0, TAU)
 	var selected := floor((final_angle/TAU) * streamers.size() )
@@ -90,7 +98,6 @@ func build_wheel_values(values : Array[String]) -> void:
 
 func wheel_sector(_streamer_info : RSStreamerInfo, _angle_init : float, _angle_size : float, _radius : float, res : int) -> Polygon2D:
 	var new_polygon := Polygon2D.new()
-	
 	new_polygon.set_meta("streamer_info", _streamer_info)
 	var points := PackedVector2Array()
 	var angle_step = _angle_size/(res-1)

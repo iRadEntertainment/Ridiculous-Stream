@@ -229,6 +229,19 @@ func gather_user_info(username : String) -> RSTwitchUser:
 	return user
 
 
-
-
+func get_all_custom_redeems() -> Array:
+	var data = []
+	var url := "/helix/channel_points/custom_rewards"
+	var headers : PackedStringArray = [
+		"Authorization: Bearer %s" % api.id_conn.last_token.token,
+		"Client-Id: %s" % api.id_conn.last_token.last_client_id
+	]
+	var param = "?broadcaster_id=%s"%[main.settings.streamer_id]
+	
+	var query = url + param
+	var res = await api.request(HTTPClient.METHOD_GET, query, headers)
+	if not res.has("data"):
+		return res.data
+	
+	return data
 
