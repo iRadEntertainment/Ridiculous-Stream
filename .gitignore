@@ -1,3 +1,6 @@
+# VSCode-specific ignores
+.vscode/
+
 # Godot4 ignores
 .godot/
 
