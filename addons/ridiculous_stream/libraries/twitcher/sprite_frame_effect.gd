@@ -1,3 +1,4 @@
+@tool
 extends RichTextEffect
 
 ## Shows spriteframes within richtext label.
