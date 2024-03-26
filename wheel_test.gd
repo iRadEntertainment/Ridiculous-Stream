@@ -14,7 +14,7 @@ extends Control
 func _ready():
 	build_sectors()
 
-func _process(delta):
+func _process(_delta):
 	center.rotation = center.position.angle_to_point(get_global_mouse_position())
 	wheel_angle.text = "%d"%(rad_to_deg(center.rotation))
 	var selected_index = floor((-center.rotation/TAU) * users.size() )
