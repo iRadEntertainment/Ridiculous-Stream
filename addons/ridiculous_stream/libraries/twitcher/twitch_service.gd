@@ -137,7 +137,7 @@ func shoutout(user: TwitchUser) -> void:
 	api.send_a_shoutout(TwitchSetting.broadcaster_id, user.id, TwitchSetting.broadcaster_id)
 
 ## Sends a announcement message to the chat
-func announcment(message: String, color: TwitchAnnouncementColor = TwitchAnnouncementColor.PRIMARY):
+func announcement(message: String, color: TwitchAnnouncementColor = TwitchAnnouncementColor.PRIMARY):
 	var broadcaster_id = TwitchSetting.broadcaster_id;
 	var body = TwitchSendChatAnnouncementBody.new();
 	body.message = message;
