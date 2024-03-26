@@ -1,0 +1,66 @@
+[gd_scene load_steps=5 format=3 uid="uid://bnvfuklj58uqa"]
+
+[ext_resource type="Theme" uid="uid://s7hlwwefuhgh" path="res://addons/ridiculous_stream/ui/chat_message.theme" id="1_mhnqm"]
+[ext_resource type="StyleBox" uid="uid://bc1bxky84vqw4" path="res://addons/ridiculous_stream/ui/editor_overlay_panel.stylebox" id="2_esq8s"]
+[ext_resource type="Script" path="res://addons/ridiculous_stream/instances/pnl_connect.gd" id="3_mawjj"]
+[ext_resource type="Texture2D" uid="uid://boa5ns6c4c07k" path="res://addons/ridiculous_stream/ui/bootstrap_icons/twitch.svg" id="4_fgo4w"]
+
+[node name="pnl_connect_to_twitch" type="PanelContainer"]
+offset_right = 371.0
+offset_bottom = 285.0
+theme = ExtResource("1_mhnqm")
+theme_override_styles/panel = ExtResource("2_esq8s")
+script = ExtResource("3_mawjj")
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1
+
+[node name="empty3" type="Control" parent="vb"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="twitch_ico" type="TextureRect" parent="vb"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+texture = ExtResource("4_fgo4w")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="empty" type="Control" parent="vb"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="hb" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+
+[node name="lb1" type="Label" parent="vb/hb"]
+layout_mode = 2
+text = "ID"
+
+[node name="ln_broadcaster_id" type="LineEdit" parent="vb/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "your broadcaster ID"
+alignment = 1
+
+[node name="btn_connect_twitcher" type="Button" parent="vb"]
+layout_mode = 2
+text = "connect with Twitcher"
+
+[node name="btn_retrieve_id" type="Button" parent="vb"]
+layout_mode = 2
+text = "Retrieve your broadcaster ID"
+
+[node name="btn_connect_at_startup" type="CheckBox" parent="vb"]
+layout_mode = 2
+text = "connect at startup"
+
+[node name="empty2" type="Control" parent="vb"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="text_submitted" from="vb/hb/ln_broadcaster_id" to="." method="_on_ln_broadcaster_id_text_submitted"]
+[connection signal="pressed" from="vb/btn_connect_twitcher" to="." method="_on_btn_connect_twitcher_pressed"]
+[connection signal="pressed" from="vb/btn_retrieve_id" to="." method="_on_btn_retrieve_id_pressed"]
