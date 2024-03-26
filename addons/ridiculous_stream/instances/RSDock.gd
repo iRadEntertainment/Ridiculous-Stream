@@ -47,4 +47,7 @@ func _on_btn_open_sett_wind_pressed():
 
 # TEST: remove test stuff
 func _on_btn_test_stuff_pressed():
-	main.custom.raid_a_random_streamer_from_the_user_list()
+	print("Twitch service ready: ", main.twitcher.twitch_service.is_twitch_ready)
+	
+	main.twitcher.twitch_service.chat("this is a test", "iraddev")
+	#main.custom.raid_a_random_streamer_from_the_user_list()

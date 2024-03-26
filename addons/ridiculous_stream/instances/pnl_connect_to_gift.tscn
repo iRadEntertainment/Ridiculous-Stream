@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://addons/ridiculous_stream/instances/pnl_connect_to_gift.gd" id="3_xkxpm"]
 [ext_resource type="Texture2D" uid="uid://boa5ns6c4c07k" path="res://addons/ridiculous_stream/ui/bootstrap_icons/twitch.svg" id="4_vbqxq"]
 
-[node name="pnl_connect_to_gift" type="PanelContainer"]
+[node name="pnl_connect_to_twitch" type="PanelContainer"]
 offset_right = 371.0
 offset_bottom = 285.0
 theme = ExtResource("1_w2iiu")
@@ -47,22 +47,30 @@ placeholder_text = "your Twitch channel name"
 alignment = 1
 
 [node name="lb2" type="Label" parent="vb/grid"]
+visible = false
 layout_mode = 2
 text = "Bot Name"
 
 [node name="ln_bot_name" type="LineEdit" parent="vb/grid"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "bot name"
 alignment = 1
 editable = false
 
-[node name="btn_connect" type="Button" parent="vb"]
+[node name="btn_connect_gift" type="Button" parent="vb"]
+visible = false
 layout_mode = 2
-text = "connect"
+text = "connect with GIFT"
+
+[node name="btn_connect_twitcher" type="Button" parent="vb"]
+layout_mode = 2
+text = "connect with Twitcher"
 
 [node name="btn_connect_at_startup" type="CheckBox" parent="vb"]
+visible = false
 layout_mode = 2
 text = "connect at startup"
 
@@ -72,4 +80,5 @@ size_flags_vertical = 3
 
 [connection signal="text_changed" from="vb/grid/ln_channel_name" to="." method="_on_ln_channel_name_text_changed"]
 [connection signal="text_submitted" from="vb/grid/ln_channel_name" to="." method="_on_ln_channel_name_text_submitted"]
-[connection signal="pressed" from="vb/btn_connect" to="." method="_on_btn_connect_pressed"]
+[connection signal="pressed" from="vb/btn_connect_gift" to="." method="_on_btn_connect_gift_pressed"]
+[connection signal="pressed" from="vb/btn_connect_twitcher" to="." method="_on_btn_connect_twitcher_pressed"]
