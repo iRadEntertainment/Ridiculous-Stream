@@ -1,3 +1,4 @@
+@tool
 extends Node
 class_name TwitchService
 ## Access to the Twitch API. Combines all the stuff the library provides.
@@ -21,19 +22,19 @@ var api: TwitchRestAPI
 
 var is_twitch_ready: bool;
 
-func _init() -> void:
+func _init(_main : RSMain) -> void:
+	main = _main
 	# Setup Twitch setting before it is needed
 	log.i("Setup")
 	TwitchSetting.setup();
 	auth = TwitchAuth.new();
 	api = TwitchRestAPI.new(auth);
-	icon_loader = TwitchIconLoader.new(api);
+	icon_loader = TwitchIconLoader.new(api, main);
 	eventsub = TwitchEventsub.new(api);
 	eventsub_debug = TwitchEventsub.new(api, false);
 	commands = TwitchCommandHandler.new();
 	irc = TwitchIRC.new(auth);
-	
-	
+
 
 ## Call this to setup the complete Twitch integration whenever you need.
 ## It boots everything up this Lib supports.
@@ -44,7 +45,9 @@ func setup() -> void:
 	
 	log.i("Start")
 	await auth.ensure_authentication();
+	print("Twitcher: auth ensured")
 	await _init_chat();
+	print("Twitcher: chat initialized")
 	_init_eventsub();
 	if TwitchSetting.use_test_server:
 		eventsub_debug.connect_to_eventsub(TwitchSetting.eventsub_test_server_url);
@@ -81,7 +84,7 @@ func load_profile_image(user: TwitchUser) -> ImageTexture:
 	if user == null: return TwitchSetting.fallback_profile;
 	if(ResourceLoader.has_cached(user.profile_image_url)):
 		return ResourceLoader.load(user.profile_image_url);
-	var client : BufferedHTTPClient = main.http_client_manager.get_client(TwitchSetting.twitch_image_cdn_host);
+	var client : BufferedHTTPClient = main.twitcher.http_client_manager.get_client(TwitchSetting.twitch_image_cdn_host);
 	var request := client.request(user.profile_image_url, HTTPClient.METHOD_GET, BufferedHTTPClient.HEADERS, "")
 	var response_data := await client.wait_for_request(request);
 	var texture : ImageTexture = ImageTexture.new();
@@ -198,7 +201,7 @@ func get_badges(badge: Array[String], channel_id: String = "global", scale: int 
 #region Cheermotes
 
 func _init_cheermotes() -> void:
-	cheer_repository = await TwitchCheerRepository.new(api);
+	cheer_repository = await TwitchCheerRepository.new(api, main);
 
 ## Returns the complete parsed data out of a cheer word.
 func get_cheer_tier(cheer_word: String,

@@ -11,11 +11,15 @@ var client_map : Dictionary = {};
 ## Key: RequestData | value: TreeItem
 var request_map : Dictionary = {};
 
+
+func _init(_main : RSMain):
+	main = _main
+
 func _ready() -> void:
-	main.http_client_manager.client_added.connect(_new_client);
-	main.http_client_manager.client_closed.connect(_close_client);
-	for host in main.http_client_manager.http_client_map:
-		for client in main.http_client_manager.http_client_map[host]:
+	main.twitcher.http_client_manager.client_added.connect(_new_client);
+	main.twitcher.http_client_manager.client_closed.connect(_close_client);
+	for host in main.twitcher.http_client_manager.http_client_map:
+		for client in main.twitcher.http_client_manager.http_client_map[host]:
 			_new_client(client);
 
 func _new_client(client: BufferedHTTPClient):

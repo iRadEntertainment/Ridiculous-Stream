@@ -341,10 +341,10 @@ func _handle_cmd_state(command: String, channel_name: String, tags: Dictionary) 
 	log.i("Channel updated %s" % channel_name);
 
 func _create_channel(channel_name: String) -> TwitchIrcChannel:
-	var channel = TwitchIrcChannel.new();
+	var channel = TwitchIrcChannel.new(main);
 	channel.channel_name = channel_name;
 	channel_maps[channel_name] = channel;
-	main.twitch_service.add_child(channel);
+	main.twitcher.twitch_service.add_child(channel);
 	return channel;
 
 ## Tracks the channel.

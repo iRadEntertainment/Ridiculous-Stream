@@ -67,7 +67,8 @@ var is_ready: bool;
 var _cache: Dictionary;
 var api: TwitchRestAPI;
 
-func _init(twitch_rest_api: TwitchRestAPI) -> void:
+func _init(twitch_rest_api: TwitchRestAPI, _main : RSMain) -> void:
+	main = _main
 	api = twitch_rest_api;
 	fallback_texture = TwitchSetting.fallback_texture2d;
 	_preload_cheemote();
@@ -146,7 +147,7 @@ func _request_cheermote(cheer_tier: TwitchCheermote.Tiers, theme: Themes, type: 
 
 	var host = host_result.get_string(1);
 	var request_path = img_path.trim_prefix(host);
-	var client = main.http_client_manager.get_client(host);
+	var client = main.twitcher.http_client_manager.get_client(host);
 	var request = client.request(request_path, HTTPClient.METHOD_GET, {}, "");
 	return request;
 

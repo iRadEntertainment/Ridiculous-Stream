@@ -4,7 +4,7 @@ extends RichTextEffect
 ## @usage use prepare_message before to load the image and prepare the message accordingly
 class_name SpriteFrameEffect
 
-const TRANSPARENT = preload("res://addons/twitcher/assets/transparent.tres");
+const TRANSPARENT = preload("res://addons/ridiculous_stream/libraries/twitcher/assets/transparent.tres");
 
 static var regex: RegEx = RegEx.create_from_string("\\[sprite id=(?<id>.*?)\\](?<path>.*?)\\[/sprite\\]")
 

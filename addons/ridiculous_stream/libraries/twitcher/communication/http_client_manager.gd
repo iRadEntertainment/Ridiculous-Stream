@@ -1,9 +1,12 @@
+@tool
 extends Node
 class_name HttpClientManager
 
 # Handles multiple hosts.
 # Handles parralel requests.
 # Stopping Clients after X Seconds with no additional request.
+
+var main : RSMain
 
 ## This one get send when the http client gets closed to cleanup stuff
 signal client_closed(http_client: BufferedHTTPClient);
@@ -17,6 +20,10 @@ var l: TwitchLogger = TwitchLogger.new(TwitchSetting.LOGGER_NAME_HTTP_CLIENT);
 
 ## Key: url | value: array of BufferedHTTPClient
 var http_client_map: Dictionary;
+
+func _init(_main : RSMain):
+	main = _main
+
 
 func _ready() -> void:
 	var cleanup_timer = Timer.new();

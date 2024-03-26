@@ -114,7 +114,7 @@ func _start_device_login_process():
 
 func _fetch_device_code_response(scopes: String) -> DeviceCodeResponse:
 	log.i("Start login process DCF for %s" % scopes)
-	var client = main.http_client_manager.get_client(TwitchSetting.authorization_host) as BufferedHTTPClient;
+	var client = main.twitcher.http_client_manager.get_client(TwitchSetting.authorization_host) as BufferedHTTPClient;
 	var body = "client_id=%s&scopes=%s" % [TwitchSetting.client_id, scopes.uri_encode()];
 	var request = client.request(TwitchSetting.authorization_device_path, HTTPClient.METHOD_POST, {
 		"Content-Type": "application/x-www-form-urlencoded"

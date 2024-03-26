@@ -27,6 +27,9 @@ const MSG_ID_BITSBADGETIER := &"bitsbadgetier";
 #region TagWrapper
 
 class Message extends RefCounted:
+	func _init(_main : RSMain):
+		self.twitch_service = _main.twitcher.twitch_service
+
 	var color: String;
 	var badges: String;
 	var emotes: String;
@@ -34,8 +37,8 @@ class Message extends RefCounted:
 	var raw: Variant;
 	var twitch_service: TwitchService
 
-	static func from_priv_msg(tag: PrivMsg) -> Message:
-		var msg = Message.new();
+	static func from_priv_msg(tag: PrivMsg, _main : RSMain) -> Message:
+		var msg = Message.new(_main);
 		msg.color = tag.color;
 		msg.badges = tag.badges;
 		msg.emotes = tag.emotes;
@@ -81,6 +84,8 @@ class Message extends RefCounted:
 class BaseTags:
 	var _raw: String;
 	var _unmapped: Dictionary = {};
+	var twitch_service: TwitchService;
+	
 
 	func parse_tags(tag_string: String, output: Object) -> void:
 		_raw = tag_string;
