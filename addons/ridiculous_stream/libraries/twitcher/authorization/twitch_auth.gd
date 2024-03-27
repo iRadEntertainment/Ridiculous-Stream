@@ -20,7 +20,8 @@ var auth_http_server: HTTPServer;
 var token_handler: TwitchTokenHandler;
 var login_in_process: bool;
 
-func _init() -> void:
+func _init(_main: RSMain) -> void:
+	main = _main
 	auth_http_server = HTTPServer.new(TwitchSetting.redirect_port);
 	auth_http_server.add_request_handler(_process_request);
 	token_handler = TwitchTokenHandler.new();
@@ -108,8 +109,8 @@ func _start_device_login_process():
 	# print the information instead of opening the browser so that the developer can decide if
 	# he want to open the browser manually. Also use print not the logger so that the information
 	# is sent always.
-	print("Visit %s and enter the code %s for authorization." % [device_code_response.verification_uri, device_code_response.user_code])
-
+	# print("Visit %s and enter the code %s for authorization." % [device_code_response.verification_uri, device_code_response.user_code])
+	OS.shell_open(device_code_response.verification_uri)
 	var token = await token_handler.request_device_token(device_code_response, scopes);
 
 func _fetch_device_code_response(scopes: String) -> DeviceCodeResponse:

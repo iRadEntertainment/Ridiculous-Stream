@@ -27,7 +27,7 @@ func _init(_main : RSMain) -> void:
 	# Setup Twitch setting before it is needed
 	log.i("Setup")
 	TwitchSetting.setup();
-	auth = TwitchAuth.new();
+	auth = TwitchAuth.new(main);
 	api = TwitchRestAPI.new(auth);
 	icon_loader = TwitchIconLoader.new(api, main);
 	eventsub = TwitchEventsub.new(api);
