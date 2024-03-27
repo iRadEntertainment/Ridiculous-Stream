@@ -31,21 +31,21 @@ func _on_btn_hot_reload_pressed():
 	main.call_deferred("hot_reaload_wn_settings")
 	queue_free()
 func _on_btn_credits_pressed():
-	main.gift.chat("Go figure! Issork made Gift! That's what I am using: https://github.com/issork/gift")
+	main.twitcher.chat("Go figure! Issork made Gift! That's what I am using: https://github.com/issork/gift")
 
 
 func _on_btn_open_irad_twitch_pressed():
 	OS.shell_open("https://twitch.tv/iraddev")
-	main.gift.chat("Ridiculous Stream has been provided kindly by iRadDev: https://twitch.tv/iraddev")
+	main.twitcher.chat("Ridiculous Stream has been provided kindly by iRadDev: https://twitch.tv/iraddev")
 func _on_btn_open_github_pressed():
 	OS.shell_open("https://github.com/iRadEntertainment/Ridiculous-Stream")
-	main.gift.chat("Here is the repo for Ridiculous Stream, feel free to use, modify or contribute: https://github.com/iRadEntertainment/Ridiculous-Stream")
+	main.twitcher.chat("Here is the repo for Ridiculous Stream, feel free to use, modify or contribute: https://github.com/iRadEntertainment/Ridiculous-Stream")
 func _on_btn_credits_gift_pressed():
-	main.gift.chat("Issork made Gift! That's what I am using: https://github.com/issork/gift")
+	main.twitcher.chat("Issork made Gift! That's what I am using: https://github.com/issork/gift")
 func _on_btn_credits_twitcher_pressed():
-	main.gift.chat("Kanimaru made Twitcher! https://github.com/kanimaru/twitcher")
+	main.twitcher.chat("Kanimaru made Twitcher! https://github.com/kanimaru/twitcher")
 func _on_btn_credits_noobs_pressed():
-	main.gift.chat("Yagich made no-OBS-ws! https://github.com/Yagich/no-obs-ws")
+	main.twitcher.chat("Yagich made no-OBS-ws! https://github.com/Yagich/no-obs-ws")
 func _on_btn_credits_polygon_pressed():
-	main.gift.chat("SoloByte made Polygon2d fracture! https://github.com/SoloByte/godot-polygon2d-fracture")
+	main.twitcher.chat("SoloByte made Polygon2d fracture! https://github.com/SoloByte/godot-polygon2d-fracture")
 

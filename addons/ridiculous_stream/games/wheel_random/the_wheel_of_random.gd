@@ -52,7 +52,10 @@ func select_winner_from_wheel():
 	var final_angle = wrap(-wheel.rotation, 0, TAU)
 	var selected := floor((final_angle/TAU) * streamers.size() )
 	var winner : RSStreamerInfo = streamers_live_data[streamers[selected]]
-	main.gift.start_raid(winner.user_id)
+	main.twitcher.api.start_a_raid(
+		str(main.settings.broadcaster_id),
+		str(winner.user_id),
+		)
 
 
 func build_entire_wheel() -> void:

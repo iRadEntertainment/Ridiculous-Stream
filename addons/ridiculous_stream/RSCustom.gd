@@ -10,29 +10,30 @@ var wheel_of_random : RSWheelOfRandom
 
 
 func start():
-	main.gift.chat_message.connect(on_chat)
-	main.gift.whisper_message.connect(on_whisper_message)
-	main.gift.user_joined.connect(on_user_joined)
-	main.gift.user_parted.connect(on_user_parted)
-	main.gift.channel_points_redeemed.connect(on_channel_points_redeemed)
-	main.gift.followed.connect(on_followed)
-	main.gift.raided.connect(on_raided)
-	main.gift.subscribed.connect(on_subscribed)
-	main.gift.cheered.connect(on_cheered)
-	main.gift.connected_to_twitch.connect(add_commands)
+	main.twitcher.received_chat_message.connect(on_chat)
+	# main.twitcher.whisper_message.connect(on_whisper_message)
+	# main.twitcher.user_joined.connect(on_user_joined)
+	# main.twitcher.user_parted.connect(on_user_parted)
+	main.twitcher.channel_points_redeemed.connect(on_channel_points_redeemed)
+	main.twitcher.followed.connect(on_followed)
+	main.twitcher.raided.connect(on_raided)
+	main.twitcher.subscribed.connect(on_subscribed)
+	main.twitcher.cheered.connect(on_cheered)
+	main.twitcher.connected_to_twitch.connect(add_commands)
 
 
 func add_commands() -> void:
-	main.gift.cmd_handler.add_command("laser", laser)
-	main.gift.cmd_handler.add_command("zeroG", zero_g)
-	#main.gift.cmd_handler.add_command("crt", start_screen_shader.bind("crt"))
-	#main.gift.cmd_handler.add_command("old", start_screen_shader.bind("old_movie"))
-	#main.gift.cmd_handler.add_command("speed", start_screen_shader.bind("speed_lines"))
-	#main.gift.cmd_handler.add_command("so", main.shoutout, main.gift.cmd_handler.PermissionFlag.MOD_STREAMER)
-	main.gift.cmd_handler.add_command("discord", discord)
-	main.gift.cmd_handler.add_command("chat", chat_commands_help)
+	main.twitcher.commands.add_command("laser", laser)
+	main.twitcher.commands.add_command("zeroG", zero_g)
+	#main.twitcher.commands.add_command("crt", start_screen_shader.bind("crt"))
+	#main.twitcher.commands.add_command("old", start_screen_shader.bind("old_movie"))
+	#main.twitcher.commands.add_command("speed", start_screen_shader.bind("speed_lines"))
+	#main.twitcher.commands.add_command("so", main.shoutout, main.twitcher.commands.PermissionFlag.MOD_STREAMER)
+	main.twitcher.commands.add_command("discord", discord)
+	main.twitcher.commands.add_command("chat", chat_commands_help)
 
-func on_chat(sender_data : SenderData, message : String):
+# func on_chat(sender_data : SenderData, message : String):
+func on_chat(_channel_name: String, _username: String, _message: String, _tags: TwitchTags.PrivMsg):
 	pass
 func on_whisper_message(sender_data : SenderData, message : String):
 	pass
@@ -74,7 +75,7 @@ func impersonate_iRad(data : RSTwitchEventData):
 	#var msg = data.username + " wants me to tell you: "
 	#msg += data.user_input.split(" ", false, 1)[1]
 	var msg = data.user_input.split(" ", false, 1)[1]
-	main.gift.irc.chat(msg, channel)
+	main.twitcher.irc.chat(msg, channel)
 
 func give_advice(data : RSTwitchEventData) -> void:
 	var folder_path = main.loader.get_config_path()
@@ -125,16 +126,16 @@ func get_advice(data : RSTwitchEventData) -> void:
 		'{user} attentively listen to {adviser}: "{advice}"',
 		].pick_random()
 	
-	main.gift.chat(format_string.format(advice_dic) )
+	main.twitcher.chat(format_string.format(advice_dic) )
 
 
 func discord(cmd_info : CommandInfo, args = []):
 	var msg = "Join Discord: https://discord.gg/4YhKaHkcMb"
-	main.gift.chat(msg)
+	main.twitcher.chat(msg)
 
 func chat_commands_help(cmd_info : CommandInfo, args = []):
 	var msg = "Use a combination of ![command] for chat: hl (highlight), hd(hidden), rb(rainbow), big, small, wave, pulse, tornado, shake"
-	main.gift.chat(msg)
+	main.twitcher.chat(msg)
 
 func add_physic_scene():
 	if not physic_scene:
@@ -158,9 +159,9 @@ func beans(username : String):
 
 func zero_g(cmd_info := CommandInfo.new(SenderData.new("iRadDev", "", {}), "", false), args = []):
 	if not physic_scene:
-		main.gift.chat("Wait for the physic scene to be in first!")
+		main.twitcher.chat("Wait for the physic scene to be in first!")
 		return
-	main.gift.chat("%s initiated zero_g"%cmd_info.sender_data.user)
+	main.twitcher.chat("%s initiated zero_g"%cmd_info.sender_data.user)
 	#physic_scene.shake_bodies()
 	var tw = main.create_tween()
 	tw.tween_method(physic_scene.set_space_gravity, 4410, 0, 2.0)
@@ -242,7 +243,7 @@ func raid_kani(username : String):
 
 
 func raid_a_random_streamer_from_the_user_list():
-	var streamers_live_data = await main.gift.get_live_streamers_data()
+	var streamers_live_data = await main.twitcher.get_live_streamers_data()
 	if not wheel_of_random:
 		wheel_of_random = RSGlobals.wheel_of_random_pack.instantiate()
 		EditorInterface.get_base_control().add_child(wheel_of_random)

@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dpj8cbyofxney" path="res://addons/ridiculous_stream/ui/bootstrap_icons/arrow-down-circle-fill.svg" id="4_u4ajm"]
 [ext_resource type="Texture2D" uid="uid://boqo7e7i8rips" path="res://addons/ridiculous_stream/ui/bootstrap_icons/filetype-exe.svg" id="5_qr2m6"]
 [ext_resource type="Texture2D" uid="uid://b0ojmkb42pnot" path="res://addons/ridiculous_stream/ui/bootstrap_icons/folder2-open.svg" id="6_1qe2s"]
-[ext_resource type="PackedScene" uid="uid://bnvfuklj58uqa" path="res://addons/ridiculous_stream/instances/pnl_connect_to_gift.tscn" id="6_jv0c3"]
+[ext_resource type="PackedScene" uid="uid://bnvfuklj58uqa" path="res://addons/ridiculous_stream/instances/pnl_connect.tscn" id="6_jv0c3"]
 [ext_resource type="Texture2D" uid="uid://dbpv7xe18l2r6" path="res://addons/ridiculous_stream/ui/sprites/raid_icon.png" id="7_ayv7u"]
 
 [node name="pnl_twitch_user_fields" type="PanelContainer"]

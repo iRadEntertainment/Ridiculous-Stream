@@ -46,7 +46,7 @@ func _on_btn_user_pressed():
 func _on_btn_shoutout_pressed():
 	main.shoutout_mng.add_shoutout(user)
 func _on_btn_promote_pressed():
-	main.gift.chat(user.promotion_description)
+	main.twitcher.chat(user.promotion_description)
 func _on_btn_special_pressed():
 	pass # Replace with function body.
 func _on_btn_reload_pressed():

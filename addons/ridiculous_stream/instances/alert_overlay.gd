@@ -48,7 +48,10 @@ func initialize_raid(username : String, _raided_user : RSTwitchUser) -> void:
 	tmr_progress.start()
 	set_process(true)
 	await tmr_progress.timeout
-	main.gift.start_raid(_raided_user.user_id)
+	main.twitcher.api.start_a_raid(
+		str(main.settings.broadcaster_id),
+		str(_raided_user.user_id),
+		)
 	queue_free()
 
 

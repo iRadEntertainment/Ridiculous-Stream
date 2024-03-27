@@ -45,9 +45,9 @@ func start_connections() -> void:
 
 
 func update_streamer_id() -> int:
-	var user_ids : Dictionary = await( api.get_users_by_name([main.settings.channel]) )
-	main.settings.streamer_id = user_ids.data[0]["id"] as int
-	return main.settings.streamer_id
+	var user_ids : Dictionary = await( api.get_users_by_name([main.settings.channel_name]) )
+	main.settings.broadcaster_id = user_ids.data[0]["id"] as int
+	return main.settings.broadcaster_id
 
 
 func connect_signals():
@@ -99,13 +99,13 @@ func auth():
 
 
 func connect_to_irc():
-	if(!await(irc.connect_to_irc(main.settings.channel))):
+	if(!await(irc.connect_to_irc(main.settings.channel_name))):
 		# Authentication failed. Abort.
 		return
 	# Request the capabilities. By default only twitch.tv/commands and twitch.tv/tags are used.
 	# Refer to https://dev.twitch.tv/docs/irc/capabilities/ for all available capabilities.
 	irc.request_capabilities()
-	irc.join_channel(main.settings.channel)
+	irc.join_channel(main.settings.channel_name)
 	
 	# We also have to forward the messages to the command handler to handle them.
 	irc.chat_message.connect(cmd_handler.handle_command)
@@ -121,11 +121,11 @@ func connect_to_event_sub():
 	eventsub.event.connect(on_event)
 	await(eventsub.connect_to_eventsub())
 	
-	eventsub.subscribe_event("channel.channel_points_custom_reward_redemption.add", "1", {"broadcaster_user_id": str(main.settings.streamer_id)})
-	eventsub.subscribe_event("channel.raid", "1", {"to_broadcaster_user_id": str(main.settings.streamer_id)})
-	eventsub.subscribe_event("channel.subscribe", "1", {"broadcaster_user_id": str(main.settings.streamer_id)})
-	eventsub.subscribe_event("channel.cheer", "1", {"broadcaster_user_id": str(main.settings.streamer_id)})
-	eventsub.subscribe_event("channel.follow", "2", {"broadcaster_user_id": str(main.settings.streamer_id), "moderator_user_id": str(main.settings.streamer_id)})
+	eventsub.subscribe_event("channel.channel_points_custom_reward_redemption.add", "1", {"broadcaster_user_id": str(main.settings.broadcaster_id)})
+	eventsub.subscribe_event("channel.raid", "1", {"to_broadcaster_user_id": str(main.settings.broadcaster_id)})
+	eventsub.subscribe_event("channel.subscribe", "1", {"broadcaster_user_id": str(main.settings.broadcaster_id)})
+	eventsub.subscribe_event("channel.cheer", "1", {"broadcaster_user_id": str(main.settings.broadcaster_id)})
+	eventsub.subscribe_event("channel.follow", "2", {"broadcaster_user_id": str(main.settings.broadcaster_id), "moderator_user_id": str(main.settings.broadcaster_id)})
 
 
 func on_event(type : String, body : Dictionary) -> void:
@@ -148,9 +148,9 @@ func announce(user : RSTwitchUser):
 
 func send_shout_out_request(to_id : int):
 	var url := "/helix/chat/shoutouts"
-	var param = "?from_broadcaster_id=%s"%[main.settings.streamer_id]
+	var param = "?from_broadcaster_id=%s"%[main.settings.broadcaster_id]
 	param += "&to_broadcaster_id=%s"%to_id
-	param += "&moderator_id=%s"%[main.settings.streamer_id]
+	param += "&moderator_id=%s"%[main.settings.broadcaster_id]
 	var query = url + param
 	var headers : PackedStringArray = [
 		"Authorization: Bearer %s" % api.id_conn.last_token.token,
@@ -162,7 +162,7 @@ func send_shout_out_request(to_id : int):
 
 func start_raid(to_id : int):
 	var url := "/helix/raids"
-	var param = "?from_broadcaster_id=%s"%[main.settings.streamer_id]
+	var param = "?from_broadcaster_id=%s"%[main.settings.broadcaster_id]
 	param += "&to_broadcaster_id=%s"%to_id
 	var query = url + param
 	var headers : PackedStringArray = [
@@ -235,7 +235,7 @@ func get_all_custom_redeems() -> Array:
 		"Authorization: Bearer %s" % api.id_conn.last_token.token,
 		"Client-Id: %s" % api.id_conn.last_token.last_client_id
 	]
-	var param = "?broadcaster_id=%s"%[main.settings.streamer_id]
+	var param = "?broadcaster_id=%s"%[main.settings.broadcaster_id]
 	
 	var query = url + param
 	var res = await api.request(HTTPClient.METHOD_GET, query, headers)

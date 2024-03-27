@@ -8,7 +8,8 @@ func _ready():
 	set_process(false)
 
 func start():
-	main.copilot.flags_changed.connect(update_ck_buttons)
+	if !main.copilot.flags_changed.is_connected(update_ck_buttons):
+		main.copilot.flags_changed.connect(update_ck_buttons)
 	%pnl_copilot_settings.visible = false
 	set_process(false)
 	update_ck_buttons()

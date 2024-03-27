@@ -7,19 +7,19 @@ var main : RSMain
 
 
 func start():
-	# main.gift.connected_to_twitch.connect(hide)
-	visible = !main.twitcher.twitch_service.is_twitch_ready
-	main.twitcher.twitch_service.twitch_ready.connect(hide)
+	visible = !main.twitcher.is_connected_to_twitch
+	if !main.twitcher.connected_to_twitch.is_connected(hide):
+		main.twitcher.connected_to_twitch.connect(hide)
 	ln_broadcaster_id.text = str(main.settings.broadcaster_id)
 
 	# visible = !main.gift.is_connected_to_twitch
-	# %ln_channel_name.text = main.settings.channel
+	# %ln_channel_name.text = main.settings.channel_name
 	# %ln_bot_name.text = main.settings.bot_name
 
 func _on_btn_connect_twitcher_pressed():
-	# main.settings.channel = %ln_channel_name.text
+	# main.settings.channel_name = %ln_channel_name.text
 	# main.settings.bot_name = %ln_bot_name.text
-	main.twitcher.twitch_service.setup()
+	main.twitcher.connect_to_twitch()
 func _on_ln_broadcaster_id_text_submitted(new_text:String):
 	TwitchSetting.broadcaster_id = new_text
 	main.settings.broadcaster_id = int(new_text)

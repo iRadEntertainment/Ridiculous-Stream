@@ -164,7 +164,7 @@ func gather_username_info_from_api():
 		populate_fields(main.globals.known_users[possible_username], null)
 	else:
 		clear_custom_fields()
-	var user = await main.gift.gather_user_info(possible_username)
+	var user = await main.twitcher.gather_user_info(possible_username)
 	if !user: return
 	%tex_profile_pic.texture = await main.loader.load_texture_from_url(user.profile_image_url)
 	%ln_username.text = user.username
@@ -220,7 +220,10 @@ func _on_btn_open_folder_pressed():
 
 func _on_btn_raid_current_pressed():
 	if not live_data: return
-	main.gift.start_raid(live_data.user_id)
+	main.twitcher.api.start_a_raid(
+		str(main.settings.broadcaster_id),
+		str(live_data.user_id),
+		)
 
 
 # ==============================================================================

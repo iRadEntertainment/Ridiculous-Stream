@@ -31,7 +31,7 @@ func _on_btn_re_add_gift_commands_pressed():
 func _on_btn_send_message_to_pressed():
 	var msg = %message_to_channel.text
 	var channel = %channel_name.text
-	main.gift.irc.chat(msg, channel)
+	main.twitcher.irc.chat(msg, channel)
 func _on_btn_load_image_pressed():
 	var url = ""
 	while url == "":

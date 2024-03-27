@@ -35,17 +35,17 @@ func start():
 	add_child(active_timer)
 
 func add_commands_to_gift() -> void:
-	main.gift.cmd_handler.add_command("copilot", copilot_action.bind(Cmd.HELP))
-	main.gift.cmd_handler.add_command("code", copilot_action.bind(Cmd.CODE), -1, 1)
-	main.gift.cmd_handler.add_command("replace", copilot_action.bind(Cmd.REPLACE), -1, 1)
-	main.gift.cmd_handler.add_command("goto", copilot_action.bind(Cmd.GOTO), 1, 1)
-	main.gift.cmd_handler.add_command("enter", copilot_action.bind(Cmd.ENTER))
-	main.gift.cmd_handler.add_command("erase", copilot_action.bind(Cmd.ERASE))
-	main.gift.cmd_handler.add_command("indent", copilot_action.bind(Cmd.INDENT))
-	main.gift.cmd_handler.add_command("unindent", copilot_action.bind(Cmd.UNINDENT))
-	main.gift.cmd_handler.add_command("shiftup", copilot_action.bind(Cmd.SHIFT_UP))
-	main.gift.cmd_handler.add_command("shiftdown", copilot_action.bind(Cmd.SHIFT_DOWN))
-	main.gift.cmd_handler.add_command("undo", copilot_action.bind(Cmd.UNDO))
+	main.twitcher.commands.add_command("copilot", copilot_action.bind(Cmd.HELP))
+	main.twitcher.commands.add_command("code", copilot_action.bind(Cmd.CODE), -1, 1)
+	main.twitcher.commands.add_command("replace", copilot_action.bind(Cmd.REPLACE), -1, 1)
+	main.twitcher.commands.add_command("goto", copilot_action.bind(Cmd.GOTO), 1, 1)
+	main.twitcher.commands.add_command("enter", copilot_action.bind(Cmd.ENTER))
+	main.twitcher.commands.add_command("erase", copilot_action.bind(Cmd.ERASE))
+	main.twitcher.commands.add_command("indent", copilot_action.bind(Cmd.INDENT))
+	main.twitcher.commands.add_command("unindent", copilot_action.bind(Cmd.UNINDENT))
+	main.twitcher.commands.add_command("shiftup", copilot_action.bind(Cmd.SHIFT_UP))
+	main.twitcher.commands.add_command("shiftdown", copilot_action.bind(Cmd.SHIFT_DOWN))
+	main.twitcher.commands.add_command("undo", copilot_action.bind(Cmd.UNDO))
 
 
 func temp_activate(cmd_info : CommandInfo, arg_ary := PackedStringArray()):
@@ -54,7 +54,7 @@ func temp_activate(cmd_info : CommandInfo, arg_ary := PackedStringArray()):
 func copilot_action(cmd_info : CommandInfo, arg_ary := PackedStringArray(), what := Cmd.HELP):
 	#if not main.settings.co_pilot_active and not is_enabled:
 	if not is_enabled:
-		main.gift.chat("Co-pilot is turned off")
+		main.twitcher.chat("Co-pilot is turned off")
 		return
 	
 	var editor_script := EditorInterface.get_script_editor().get_current_editor()
@@ -66,13 +66,13 @@ func copilot_action(cmd_info : CommandInfo, arg_ary := PackedStringArray(), what
 	
 	if !verify_command_is_active(what):
 		var msg = "%s is not active!"%[Cmd.keys()[what]]
-		main.gift.chat(msg)
+		main.twitcher.chat(msg)
 		return
 	
 	match what:
 		Cmd.HELP:
 			var msg = "use these !commands to co-pilot: code, replace, goto, enter, erase, indent, unindent, shiftup, shiftdown" 
-			main.gift.chat(msg)
+			main.twitcher.chat(msg)
 		Cmd.CODE: compose_code_message(arg_ary, code_edit, current_line, false)
 		Cmd.REPLACE: compose_code_message(arg_ary, code_edit, current_line, true)
 		Cmd.GOTO:

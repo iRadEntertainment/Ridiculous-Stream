@@ -63,7 +63,7 @@ text = "Data Dir"
 
 [node name="btn_open_user_dir" type="Button" parent="scr/vb"]
 layout_mode = 2
-text = "Open Data Folder"
+text = "User Dir"
 
 [connection signal="pressed" from="scr/vb/btn_reload_plugin" to="." method="_on_btn_reload_plugin_pressed"]
 [connection signal="toggled" from="scr/vb/ck_show_time" to="." method="_on_ck_show_time_toggled"]
@@ -73,3 +73,4 @@ text = "Open Data Folder"
 [connection signal="pressed" from="scr/vb/btn_reconnect_gift_signals" to="." method="_on_btn_reconnect_gift_signals_pressed"]
 [connection signal="pressed" from="scr/vb/btn_silent" to="." method="_on_btn_silent_pressed"]
 [connection signal="pressed" from="scr/vb/btn_open_data_dir" to="." method="_on_data_dir_pressed"]
+[connection signal="pressed" from="scr/vb/btn_open_user_dir" to="." method="_on_btn_open_user_dir_pressed"]
