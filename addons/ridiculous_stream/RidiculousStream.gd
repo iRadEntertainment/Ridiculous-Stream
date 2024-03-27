@@ -26,7 +26,6 @@ var wn_settings : Window
 
 signal gift_reloaded
 
-#region INIT
 # ================================ INIT ========================================
 func _enter_tree() -> void:
 	print("=================================== RIDICULOS STREAMING STARTED ===================================")
@@ -69,11 +68,7 @@ func add_nodes():
 	no_obs_ws = NoOBSWS.new()
 	add_child(no_obs_ws)
 	no_obs_ws.connect_to_obsws(4455, settings.obs_websocket_password)
-	
-	# --- windows
 	hot_reaload_wn_settings()
-	#wn_welcome = RSGlobals.wn_welcome_pack.instantiate()
-	#EditorInterface.get_editor_main_screen().add_child(wn_welcome)
 
 func hot_reaload_wn_settings():
 	wn_settings = RSGlobals.wn_settings_pack.instantiate()
@@ -128,12 +123,8 @@ func get_known_user(username : String) -> RSTwitchUser:
 func load_rs_settings():
 	print("Loading settings from RSMain")
 	settings = loader.load_settings()
-	print(settings.channel)
-	print(settings.bot_name)
-	print(settings.streamer_id)
 func save_rs_settings():
 	print("Saving settings from RSMain")
-	print(settings)
 	loader.save_settings(settings)
 
 
@@ -147,7 +138,6 @@ func get_main_control_editor_node():
 	return EditorInterface.get_base_control()
 
 
-#region EXIT
 # ================================ EXIT ========================================
 func reload_plugin():
 	EditorInterface.call_deferred("set_plugin_enabled", "ridiculous_stream", false)
@@ -171,10 +161,8 @@ func _exit_tree() -> void:
 	if shoutout_mng: shoutout_mng.queue_free()
 	if wn_settings: wn_settings.queue_free()
 	print("=================================== RIDICULOS STREAMING EXITING ===================================")
-#endregion
 
 
-#region DEBUG
 # ================================ DEBUG =======================================
 enum DebugLog{RIDICULOUS, GIFT, POLYFRACT}
 var logs_text : Array
@@ -186,22 +174,4 @@ var debug_print_poly_fract := true
 func log_print(text : String, type := DebugLog.RIDICULOUS):
 	assert(logs_text.size() == logs_type.size(), "The logs arrays are not in sync")
 	if not stdout_on: return
-	#if type == DebugLog.RIDICULOUS and debug_print_ridiculous:
-	print(text)
-#endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
