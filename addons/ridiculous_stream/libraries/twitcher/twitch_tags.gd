@@ -28,14 +28,14 @@ const MSG_ID_BITSBADGETIER := &"bitsbadgetier";
 
 class Message extends RefCounted:
 	func _init(_main : RSMain):
-		self.twitch_service = _main.twitcher.twitch_service
+		self.main = _main
 
 	var color: String;
 	var badges: String;
 	var emotes: String;
 	var room_id: String;
 	var raw: Variant;
-	var twitch_service: TwitchService
+	var main: RSMain
 
 	static func from_priv_msg(tag: PrivMsg, _main : RSMain) -> Message:
 		var msg = Message.new(_main);
@@ -53,7 +53,7 @@ class Message extends RefCounted:
 		var badge_composite : Array[String] = [];
 		for badge in badges.split(",", false):
 			badge_composite.append(badge);
-		var result = await(twitch_service.get_badges(badge_composite, room_id))
+		var result = await(main.twitcher.get_badges(badge_composite, room_id))
 		var sprite_frames : Array[SpriteFrames] = [];
 		for sprite_frame in result.values():
 			sprite_frames.append(sprite_frame);
@@ -71,7 +71,7 @@ class Message extends RefCounted:
 					emotes_to_load.append(data[0]);
 		locations.sort_custom(Callable(TwitchIRC.EmoteLocation, "smaller"));
 
-		var emotes: Dictionary = await twitch_service.icon_loader.get_emotes(emotes_to_load);
+		var emotes: Dictionary = await main.twitcher.icon_loader.get_emotes(emotes_to_load);
 		for emote_location: TwitchIRC.EmoteLocation in locations:
 			emote_location.sprite_frames = emotes[emote_location.id];
 

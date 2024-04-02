@@ -15,10 +15,11 @@ func start():
 func populate_user_button_list():
 	%ln_filter.text = ""
 	await get_tree().create_timer(0.5).timeout
-	streamers_live_data = await main.gift.get_live_streamers_data()
+	if main.twitcher.is_connected_to_twitch:
+		streamers_live_data = await main.twitcher.get_live_streamers_data()
 	for btn in %user_list.get_children():
 		btn.queue_free()
-	#main.load_known_user()
+	
 	for username in main.globals.known_users.keys():
 		var user := main.globals.known_users[username] as RSTwitchUser
 		if not user: continue
@@ -35,7 +36,7 @@ func populate_user_button_list():
 
 
 ## Called by btn_user_instance
-func user_selected_pressed(user : RSTwitchUser, live_data : RSStreamerInfo):
+func user_selected_pressed(user : RSTwitchUser, live_data : TwitchStream):
 	%ln_filter.text = ""
 	user_selected.emit(user, live_data)
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://blspj1uih5msk"]
+[gd_scene load_steps=10 format=3 uid="uid://blspj1uih5msk"]
 
 [ext_resource type="Script" path="res://addons/ridiculous_stream/instances/wn_settings.gd" id="1_vldws"]
 [ext_resource type="PackedScene" uid="uid://gi6k83qtu4y2" path="res://addons/ridiculous_stream/instances/pnl_rs_setting.tscn" id="2_7ru31"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cqlaadcvsfhpq" path="res://addons/ridiculous_stream/instances/pnl_twitch_user_list.tscn" id="4_t5th0"]
 [ext_resource type="PackedScene" uid="uid://dc02d6u648u1j" path="res://addons/ridiculous_stream/instances/pnl_twitch_user_fields.tscn" id="5_qnlvo"]
 [ext_resource type="Texture2D" uid="uid://bykc5hku6ubu8" path="res://addons/ridiculous_stream/icon_irad.png" id="6_goi70"]
+[ext_resource type="PackedScene" uid="uid://rvb1iyen7vu3" path="res://addons/ridiculous_stream/instances/pnl_redeems.tscn" id="6_gsyc6"]
 [ext_resource type="Texture2D" uid="uid://b4gxd48s477ky" path="res://addons/ridiculous_stream/icon-github.png" id="7_3kd2b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dp5vt"]
@@ -40,7 +41,7 @@ grow_vertical = 2
 [node name="vb" type="VBoxContainer" parent="pnl"]
 layout_mode = 2
 
-[node name="hsplit" type="HSplitContainer" parent="pnl/vb"]
+[node name="hsplit" type="HBoxContainer" parent="pnl/vb"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -72,6 +73,10 @@ size_flags_stretch_ratio = 0.4
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="pnl_redeems" parent="pnl/vb/hsplit" instance=ExtResource("6_gsyc6")]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="bot" type="HBoxContainer" parent="pnl/vb"]
 layout_mode = 2

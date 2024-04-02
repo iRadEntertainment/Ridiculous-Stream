@@ -6,7 +6,7 @@ extends PanelContainer
 
 var main : RSMain
 var user : RSTwitchUser
-var live_data : RSStreamerInfo
+var live_data : TwitchStream
 
 var pnl_live
 var stream_title
@@ -31,7 +31,7 @@ func start():
 	pnl_live.hide()
 
 
-func populate_fields(_user : RSTwitchUser, _live_data : RSStreamerInfo):
+func populate_fields(_user : RSTwitchUser, _live_data : TwitchStream):
 	user = _user
 	live_data = _live_data
 	update_user_fields()
@@ -71,7 +71,8 @@ func update_live_fields():
 	
 	stream_title.text = live_data.title
 	stream_viewer_count.text = str(live_data.viewer_count)
-	stream_thumbnail.texture = await main.loader.load_texture_from_url(live_data.get_thumbnail_url(640, 360), false)
+	var thumbnail_url = live_data.thumbnail_url.format({"width": 640, "height": 360})
+	stream_thumbnail.texture = await main.loader.load_texture_from_url(thumbnail_url, false)
 
 
 var ticks := 0
@@ -85,7 +86,7 @@ func process_stream_time_elapsed():
 	ticks = 0
 	
 	var system_unix = Time.get_unix_time_from_system()
-	var stream_start_unix = Time.get_unix_time_from_datetime_dict(live_data.started_at)
+	var stream_start_unix = Time.get_unix_time_from_datetime_string(live_data.started_at)
 	var time_elapsed_string = Time.get_datetime_string_from_unix_time((system_unix - stream_start_unix), true)
 	stream_time.text = time_elapsed_string.split(" ")[1]
 
@@ -205,7 +206,8 @@ func opt_btn_select_from_text(opt_button : OptionButton, text : String):
 
 
 func _on_ln_search_text_submitted(new_text):
-	gather_username_info_from_api()
+	if main.twitcher.is_connected_to_twitch:
+		gather_username_info_from_api()
 func _on_opt_custom_sfx_item_selected(index):
 	%sfx_prev.stop()
 	var sfx_name = %opt_custom_sfx.get_item_text(index)

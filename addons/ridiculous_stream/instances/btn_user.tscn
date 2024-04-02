@@ -24,17 +24,17 @@ text = "Seano4D"
 
 [node name="user_live_rect" type="ColorRect" parent="btn_user"]
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = -4.0
-offset_right = -5.0
-offset_bottom = -3.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
-grow_vertical = 0
-color = Color(0.6, 0.219608, 0.466667, 1)
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.509804, 0.0196078, 0.705882, 0.254902)
 
 [node name="btn_shoutout" type="Button" parent="."]
 custom_minimum_size = Vector2(32, 32)

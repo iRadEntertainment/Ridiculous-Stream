@@ -3,7 +3,7 @@ extends HBoxContainer
 
 var main : RSMain
 var user : RSTwitchUser
-var live_data : RSStreamerInfo
+var live_data : TwitchStream
 var profile_pic : ImageTexture : set = set_profile_pic
 
 @onready var user_pic = $user_pic

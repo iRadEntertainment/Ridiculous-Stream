@@ -4,6 +4,7 @@ extends RefCounted
 class_name TwitchTokenHandler
 
 var log : TwitchLogger = TwitchLogger.new(TwitchSetting.LOGGER_NAME_AUTH);
+var auth : TwitchAuth
 
 const HEADERS = {
 	"User-Agent": "godot/twitcher/1.0 (Godot)",
@@ -26,13 +27,15 @@ var http_client : BufferedHTTPClient;
 ## Is currently requesting tokens
 var requesting_token: bool = false;
 
-func _init() -> void:
+func _init(_auth: TwitchAuth) -> void:
+	auth = _auth
 	http_client = BufferedHTTPClient.new(TwitchSetting.token_host);
 	Engine.get_main_loop().process_frame.connect(_check_token_refresh);
 
 ## Checks if tokens runs up and starts refreshing it. (called often hold footprint small)
 func _check_token_refresh() -> void:
 	if requesting_token: return;
+	if auth.authorization_pending: return;
 	if !tokens.is_token_valid() && tokens.has_refresh_token():
 		log.i("token needs refresh");
 		refresh_tokens();

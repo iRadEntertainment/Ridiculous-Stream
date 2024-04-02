@@ -26,9 +26,12 @@ func prepare_message(message: String, parent: RichTextLabel) -> String:
 	for m: RegExMatch in found_matches:
 		var path = m.get_string("path");
 		var id = m.get_string("id");
-		var resource = ResourceLoader.load(path, "SpriteFrames") as SpriteFrames;
-		var tex = resource.get_frame_texture("default", 0);
-		var size = tex.get_size();
+		# var resource := ResourceLoader.load(path, "SpriteFrames") as SpriteFrames
+		var resource := load(path) as SpriteFrames
+		# print(resource.get_animation_names())
+		# print(resource.get_frame_count("default"))
+		var tex := resource.get_frame_texture("default", 0);
+		var size := tex.get_size();
 		var start = m.get_start(0);
 		# Add an empty image to make the correct amount of space
 		message = message.replace(path, "[img width=%s height=%s]%s[/img] " % [size.x, size.y, TRANSPARENT.resource_path]);
@@ -40,7 +43,7 @@ func prepare_message(message: String, parent: RichTextLabel) -> String:
 	ready = true;
 	return message;
 
-func _create_emoji(resource: SpriteFrames):
+func _create_emoji(resource: SpriteFrames) -> AnimatedSprite2D:
 	node = AnimatedSprite2D.new();
 	node.sprite_frames = resource;
 	node.play();

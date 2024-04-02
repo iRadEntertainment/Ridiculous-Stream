@@ -19,13 +19,15 @@ signal device_code_requested(device_code: DeviceCodeResponse);
 var auth_http_server: HTTPServer;
 var token_handler: TwitchTokenHandler;
 var login_in_process: bool;
+var authorization_pending: bool;
+
 
 func _init(_main: RSMain) -> void:
 	main = _main
 	auth_http_server = HTTPServer.new(TwitchSetting.redirect_port);
 	auth_http_server.add_request_handler(_process_request);
-	token_handler = TwitchTokenHandler.new();
-	token_handler.unauthenticated.connect(login);
+	token_handler = TwitchTokenHandler.new(self);
+	#token_handler.unauthenticated.connect(login);
 
 ## Checks if the authentication is valid.
 func is_authenticated() -> bool:
@@ -38,6 +40,9 @@ func refresh_token() -> void:
 ## Checks if the authentication is done or requests a new authentication.
 ## Use this to ensure that the Twitch Auth is initialized
 func ensure_authentication() -> void:
+	if authorization_pending:
+		log.i("Waiting for authorization pending.")
+		await auth_succeed
 	if not token_handler.is_token_valid():
 		log.i("Token is invalid.")
 		await login();
@@ -57,7 +62,12 @@ func login() -> void:
 		log.i("another process tries already to login. Abort");
 		await token_handler.token_resolved;
 		return;
-
+	if authorization_pending:
+		log.i("Authorization is pending");
+		await token_handler.token_resolved;
+		return;
+	
+	
 	login_in_process = true;
 	log.i("do login")
 	match TwitchSetting.authorization_flow:
@@ -103,15 +113,13 @@ func _start_login_process(response_type: String):
 ## Starts the device flow.
 func _start_device_login_process():
 	var scopes = TwitchSetting.get_scopes();
-
 	var device_code_response = await _fetch_device_code_response(scopes);
-
-	# print the information instead of opening the browser so that the developer can decide if
-	# he want to open the browser manually. Also use print not the logger so that the information
-	# is sent always.
-	# print("Visit %s and enter the code %s for authorization." % [device_code_response.verification_uri, device_code_response.user_code])
+	authorization_pending = true
+	
+	#print("Visit %s and enter the code %s for authorization." % [device_code_response.verification_uri, device_code_response.user_code])
 	OS.shell_open(device_code_response.verification_uri)
 	var token = await token_handler.request_device_token(device_code_response, scopes);
+	authorization_pending = false
 
 func _fetch_device_code_response(scopes: String) -> DeviceCodeResponse:
 	log.i("Start login process DCF for %s" % scopes)

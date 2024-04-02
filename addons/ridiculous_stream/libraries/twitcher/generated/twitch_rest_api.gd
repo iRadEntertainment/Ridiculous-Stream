@@ -2496,10 +2496,14 @@ func get_streams(user_id: Array[String], user_login: Array[String], game_id: Arr
 		path += "game_id=" + str(param) + "&"
 	for param in language:
 		path += "language=" + str(param) + "&"
-	path += "type=" + str(type) + "&"
-	path += "first=" + str(first) + "&"
-	path += "before=" + str(before) + "&"
-	path += "after=" + str(after) + "&"
+	if type != "":
+		path += "type=" + str(type) + "&"
+	if type != "":
+		path += "first=" + str(first) + "&"
+	if type != "":
+		path += "before=" + str(before) + "&"
+	if type != "":
+		path += "after=" + str(after) + "&"
 	var response = await request(path, HTTPClient.METHOD_GET, "", "application/json");
 	var result = JSON.parse_string(response.response_data.get_string_from_utf8());
 	return TwitchGetStreamsResponse.from_json(result);

@@ -16,7 +16,7 @@ func populate():
 
 
 func reload_panels():
-	for pnl in [%pnl_rs_settings, %pnl_test, %pnl_twitch_user_list, %pnl_twitch_user_fields]:
+	for pnl in [%pnl_rs_settings, %pnl_test, %pnl_twitch_user_list, %pnl_twitch_user_fields, %pnl_redeems]:
 		if pnl is PanelContainer:
 			pnl.main = main
 			if pnl.has_method("start"):

@@ -16,7 +16,6 @@ var icon_loader: TwitchIconLoader;
 var irc: TwitchIRC;
 var eventsub: TwitchEventsub;
 var eventsub_debug: TwitchEventsub;
-var commands: TwitchCommandHandler;
 var cheer_repository: TwitchCheerRepository;
 var api: TwitchRestAPI
 
@@ -26,27 +25,22 @@ func _init(_main : RSMain) -> void:
 	main = _main
 	# Setup Twitch setting before it is needed
 	log.i("Setup")
-	TwitchSetting.setup();
+	#TwitchSetting.setup();
 	auth = TwitchAuth.new(main);
 	api = TwitchRestAPI.new(auth);
 	icon_loader = TwitchIconLoader.new(api, main);
 	eventsub = TwitchEventsub.new(api);
 	eventsub_debug = TwitchEventsub.new(api, false);
-	commands = TwitchCommandHandler.new();
 	irc = TwitchIRC.new(auth);
 
 
 ## Call this to setup the complete Twitch integration whenever you need.
 ## It boots everything up this Lib supports.
 func setup() -> void:
-	auth.main = main
-	icon_loader.main = main
-	irc.main = main
-	
 	log.i("Start")
 	await auth.ensure_authentication();
 	print("Twitcher: auth ensured")
-	await _init_chat();
+	#await _init_chat();
 	print("Twitcher: chat initialized")
 	_init_eventsub();
 	if TwitchSetting.use_test_server:
@@ -125,12 +119,12 @@ func wait_for_connection() -> void:
 #region Chat
 
 ## Initializes the chat connects to IRC and preloads everything
-func _init_chat() -> void:
-	irc.received_privmsg.connect(commands.handle_chat_command);
-	irc.received_whisper.connect(commands.handle_whisper_command);
-	irc.connect_to_irc();
-	icon_loader.do_preload();
-	await icon_loader.preload_done;
+#func _init_chat() -> void:
+	#irc.received_privmsg.connect(commands.handle_chat_command);
+	#irc.received_whisper.connect(commands.handle_whisper_command);
+	#irc.connect_to_irc();
+	#icon_loader.do_preload();
+	#await icon_loader.preload_done;
 
 ## Sends out a shoutout to a specific user
 func shoutout(user: TwitchUser) -> void:
@@ -148,17 +142,17 @@ func announcement(message: String, color: TwitchAnnouncementColor = TwitchAnnoun
 ## The callback will receive [code]info: TwitchCommandInfo, args: Array[String][/code][br]
 ## Args are optional depending on the configuration.[br]
 ## args_max == -1 => no upper limit for arguments
-func add_command(command: String, callback: Callable, args_min: int = 0, args_max: int = -1,
-	permission_level : TwitchCommandHandler.PermissionFlag = TwitchCommandHandler.PermissionFlag.EVERYONE,
-	where : TwitchCommandHandler.WhereFlag = TwitchCommandHandler.WhereFlag.CHAT) -> void:
-
-	log.i("Register command %s" % command)
-	commands.add_command(command, callback, args_min, args_max, permission_level, where);
+#func add_command(command: String, callback: Callable, args_min: int = 0, args_max: int = -1,
+	#permission_level : TwitchCommandHandler.PermissionFlag = TwitchCommandHandler.PermissionFlag.EVERYONE,
+	#where : TwitchCommandHandler.WhereFlag = TwitchCommandHandler.WhereFlag.CHAT) -> void:
+#
+	#log.i("Register command %s" % command)
+	#commands.add_command(command, callback, args_min, args_max, permission_level, where);
 
 ## Removes a command
-func remove_command(command: String) -> void:
-	log.i("Remove command %s" % command)
-	commands.remove_command(command);
+#func remove_command(command: String) -> void:
+	#log.i("Remove command %s" % command)
+	#commands.remove_command(command);
 
 ## Sends a chat to the only connected channel or in case of multiple channels doesn't do anything see
 ## join_channel to get a specific channel to send to it.

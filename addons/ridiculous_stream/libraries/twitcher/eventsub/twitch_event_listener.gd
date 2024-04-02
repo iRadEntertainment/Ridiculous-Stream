@@ -18,7 +18,7 @@ func _init(_main : RSMain):
 
 func _ready() -> void:
 	assert(subscription != null);
-	var event_sub = main.twitcher.twitch_service.eventsub as TwitchEventsub;
+	var event_sub = main.twitcher.eventsub as TwitchEventsub;
 	event_sub.event.connect(_on_received);
 	var all_subs = TwitchSubscriptions.get_all();
 	subscription_name = all_subs[subscription].value;

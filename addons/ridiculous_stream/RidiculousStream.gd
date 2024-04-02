@@ -31,7 +31,7 @@ func _enter_tree() -> void:
 	print("=================================== RIDICULOS STREAMING STARTED ===================================")
 	load_rs_settings()
 	load_known_user()
-	reload_gift()
+	#reload_gift()
 	reload_twitcher()
 	add_tool_generate_rest_api()
 	add_nodes()
@@ -90,7 +90,9 @@ func reload_dock():
 	var dock_cont := dock.get_parent() as TabContainer
 	dock_cont.move_child(dock, 1)
 	dock_cont.current_tab = 1
-	if gift:
+	#if gift:
+		#dock.start()
+	if twitcher:
 		dock.start()
 
 

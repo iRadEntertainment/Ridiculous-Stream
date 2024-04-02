@@ -40,26 +40,33 @@ var emote_start : int = 0
 var fl_first_chat_message := true
 func _on_chat_message(channel: String, from_user: String, message: String, _tags: TwitchTags.PrivMsg): #tags: TwitchTags.Message):
 	var tags := TwitchTags.Message.from_priv_msg(_tags, main)
-	var badges = await tags.get_badges() as Array[SpriteFrames];
+	#var badges = await tags.get_badges() as Array[SpriteFrames];
 	var emotes = await tags.get_emotes() as Array[TwitchIRC.EmoteLocation];
 	var color = tags.get_color();
-
+	
+	if _tags.display_name == "IAmAMerlin":
+		color = Color.BROWN
+	var user : RSTwitchUser = await main.load_known_user(from_user.to_lower())
+	if user:
+		if user.custom_chat_color != Color.BLACK:
+			color = user.custom_chat_color
+	
 	if !fl_first_chat_message:
 		lb_chat.newline()
 	fl_first_chat_message = false
 
 	var result_message = ""
 	for key in commands_string_format.keys():
-		if message.find(key) != -1: 
+		if message.find(key) != -1:
 			message = format_msg(key, message)
 	# The sprite effect needs unique ids for every sprite that it manages
 	# Add all badges to the message
-	badge_id = 0
-	for badge: SpriteFrames in badges:
-		result_message += "[sprite id='b-%s']%s[/sprite]" % [badge_id, badge.resource_path];
-		badge_id += 1;
+	#badge_id = 0
+	#for badge: SpriteFrames in badges:
+		#result_message += "[sprite id='b-%s']%s[/sprite]" % [badge_id, badge.resource_path];
+		#badge_id += 1;
 	
-	result_message += "[color=%s]%s[/color]: " % [color, from_user];
+	result_message += "[color=%s]%s[/color]: " % [color, _tags.display_name];
 
 	# Replace all the emoji names with the appropriate emojis
 	# Tracks the start where to replace next
