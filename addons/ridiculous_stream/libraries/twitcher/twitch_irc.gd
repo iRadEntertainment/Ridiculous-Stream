@@ -308,9 +308,10 @@ func _handle_message(parsed_message : ParsedMessage) -> void:
 			var userstate_tags = TwitchTags.Userstate.new(parsed_message.tags);
 			var channel_name = parsed_message.channel;
 			received_usernotice.emit(channel_name, userstate_tags);
-
-			var channel = channel_maps[channel_name] as ChannelData;
-			channel.user_state = userstate_tags;
+			
+			if channel_maps.has(channel_name):
+				var channel = channel_maps[channel_name] as ChannelData;
+				channel.user_state = userstate_tags;
 
 		"WHISPER":
 			var whisper_tags = TwitchTags.Whisper.new(parsed_message.tags);
