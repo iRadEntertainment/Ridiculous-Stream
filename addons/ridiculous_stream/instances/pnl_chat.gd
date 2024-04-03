@@ -5,7 +5,6 @@ class_name RSPnlChat
 @onready var ln_msg : LineEdit = %ln_msg
 @onready var lb_chat : RichTextLabel = %lb_chat
 @onready var pnl_connect : PanelContainer = %pnl_connect
-# var channel : TwitchIrcChannel
 
 const commands_string_format = {
 	"ACTION": "[i]%s[/i]",
@@ -69,6 +68,7 @@ func put_chat(username: String, message: String, _tags: TwitchTags.PrivMsg):
 	for key in commands_string_format.keys():
 		if message.find(key) != -1:
 			message = format_msg(key, message)
+	
 	# The sprite effect needs unique ids for every sprite that it manages
 	# Add all badges to the message
 	#badge_id = 0
@@ -101,56 +101,14 @@ func put_chat(username: String, message: String, _tags: TwitchTags.PrivMsg):
 	
 	lb_chat.append_text(result_message + message)
 
-#func put_chat(senderdata : SenderData, msg : String):
-# 	var badges : String = ""
-# 	for badge in senderdata.tags["badges"].split(",", false):
-# 		var result = await(main.gift.iconloader.get_badge(badge, senderdata.tags["room-id"]))
-# 		badges += "[img=center]" + result.resource_path + "[/img] "
-# 	var locations : Array = []
-# 	if (senderdata.tags.has("emotes")):
-# 		for emote in senderdata.tags["emotes"].split("/", false):
-# 			var data : Array = emote.split(":")
-# 			for d in data[1].split(","):
-# 				var start_end = d.split("-")
-# 				locations.append(TwitchIRC.EmoteLocation.new(data[0], int(start_end[0]), int(start_end[1])))
-# 	locations.sort_custom(TwitchIRC.EmoteLocation.smaller)
-# 	var offset = 0
-# 	for loc in locations:
-# 		var result = await(main.gift.iconloader.get_emote(loc.id))
-# 		var emote_string = "[img=center]" + result.resource_path +"[/img]"
-# 		msg = msg.substr(0, loc.start + offset) + emote_string + msg.substr(loc.end + offset + 1)
-# 		offset += emote_string.length() + loc.start - loc.end - 1
-	
-# 	var bbcode = set_msg(senderdata, msg, badges)
-# 	if !fl_first_chat_message:
-# 		lb_chat.newline()
-# 	lb_chat.append_text(bbcode)
-# 	fl_first_chat_message = false
-	
-	
-	# TODO remove extra lines when the chat grows toooooo big
-	#while lb_chat.get_line_count() > main.settings.max_messages_in_chat or false:
-		#lb_chat
-
 
 func format_msg(key, _msg) -> String:
 	_msg = _msg.replacen(key+" ", "")
 	_msg = _msg.strip_edges()
 	return commands_string_format[key]%_msg
-# func set_msg(data : SenderData, msg : String, badges : String) -> String:
-# 	if msg.begins_with("ACTION"):
-# 		msg = format_msg("ACTION", msg)
-# 	for key in commands_string_format.keys():
-# 		if msg.find(key) != -1: 
-# 			msg = format_msg(key, msg)
-	
-# 	var username_col = RSGlobals.DEFAULT_RIGID_LABEL_COLOR if data.tags["color"].is_empty() else data.tags["color"]
-# 	var colored_name = "[b][color="+ username_col + "]" + data.tags["display-name"] +"[/color][/b]: "
-# 	var final = badges + colored_name + msg
-# 	return final
 
 
-func check_first_msg(username : String, tags: TwitchTags.PrivMsg): #senderdata : SenderData):
+func check_first_msg(username : String, tags: TwitchTags.PrivMsg):
 	var display_name = tags.display_name
 	if not username in main.globals.first_session_message_username_list:
 		main.globals.first_session_message_username_list.append(username)
