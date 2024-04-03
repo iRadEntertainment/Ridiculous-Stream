@@ -10,15 +10,17 @@ func load_settings() -> RSSettings:
 	var path = get_config_path() + RSGlobals.rs_settings_file_name
 	var settings : RSSettings
 	if FileAccess.file_exists(path):
-		settings = ResourceLoader.load(path, "RSSettings", ResourceLoader.CACHE_MODE_IGNORE)
+		var json = load_json(path)
+		settings = RSSettings.from_json(json)
 	else:
 		settings = RSSettings.new()
 	return settings
-func save_settings(settings : RSSettings):
+func save_settings(settings: RSSettings) -> void:
 	var path = get_config_path() + RSGlobals.rs_settings_file_name
-	ResourceSaver.save(settings, path)
+	save_to_json(path, settings.to_dict())
 
-func save_to_json(file_path: String, variant) -> void:
+
+func save_to_json(file_path: String, variant: Variant) -> void:
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
 	file.store_string(JSON.stringify(variant))
 	file.close()

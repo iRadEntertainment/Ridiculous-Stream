@@ -4,13 +4,14 @@ class_name RSGlobals
 
 const local_res_folder = "res://addons/ridiculous_stream/local_res/"
 const rs_config_folder = "RidiculousStream/"
-const rs_settings_file_name = "settings.tres"
+const rs_settings_file_name = "settings.json"
 const rs_log_folder = "logs/"
 const rs_user_folder = "users/"
 const rs_obj_folder = "obj/"
 const rs_sfx_folder = "sfx/"
 
-const client_id = "qyiobpgrmc8hqr2qtzkrxkac5a9wjr"
+const client_id = "t0nkdk4ssr5mhvyj2939da8y4gngrp"
+const client_secret = "qv33tywbxii6mvx9nnawdm5ku5g643"
 const TwScope := {
 	"CHAT_READ": "chat:read",
 	"CHAT_EDIT": "chat:edit",

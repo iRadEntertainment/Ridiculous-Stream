@@ -3,26 +3,21 @@ extends Node
 class_name RSTwitcher
 
 var main : RSMain
-
-#var twitch_service : TwitchService
 var http_client_manager : HttpClientManager
 
 var irc : TwitchIRC
 var api : TwitchRestAPI
 var eventsub: TwitchEventsub
 var commands: TwitchCommandHandler
-
-#----
 var log: TwitchLogger
 var auth: TwitchAuth
 var icon_loader: TwitchIconLoader
 var eventsub_debug: TwitchEventsub
 var cheer_repository: TwitchCheerRepository
-#----
-
 var gif_importer_imagemagick: GifImporterImagemagick = GifImporterImagemagick.new();
 var gif_importer_native: GifImporterNative = GifImporterNative.new();
 var generator: TwitchAPIGenerator = TwitchAPIGenerator.new();
+
 
 var is_ready := false
 var is_connected_to_twitch := false
@@ -62,6 +57,8 @@ func start() -> void:
 	irc.received_privmsg.connect(_on_irc_received_privmsg)
 	eventsub.event.connect(on_event)
 	is_ready = true
+	if main.settings.auto_connect:
+		connect_to_twitch()
 
 
 func setup():
@@ -73,15 +70,12 @@ func setup():
 	TwitchSetting.cache_emote = RSExternalLoader.get_config_path() + "emotes"
 	
 	TwitchSetting.broadcaster_id = str(main.settings.broadcaster_id)
-	TwitchSetting.client_id = str(RSGlobals.client_id)
-	TwitchSetting.irc_username = main.settings.channel_name
+	TwitchSetting.client_id = main.settings.client_id
+	TwitchSetting.client_secret = main.settings.client_secret
+	TwitchSetting.authorization_flow = main.settings.authorization_flow
+	TwitchSetting.irc_username = main.settings.user_login
 	
-	var chat_bit_field = TwitchScopes.CHAT_READ.bit_value | TwitchScopes.CHAT_EDIT.bit_value
-	var channel_bit_field = 0x7FFFFFF
-	ProjectSettings.set_setting("twitch/auth/scopes/chat", chat_bit_field)
-	ProjectSettings.set_setting("twitch/auth/scopes/channel", channel_bit_field)
-	ProjectSettings.set_setting("twitch/auth/scopes/moderator", channel_bit_field)
-	ProjectSettings.set_setting("twitch/auth/scopes/user", channel_bit_field)
+	main.settings.assign_scopes_to_project_settings()
 	
 	main.add_import_plugin(gif_importer_native)
 	if is_magick_available():
@@ -92,9 +86,11 @@ func connect_to_twitch():
 	log.i("Start")
 	await auth.ensure_authentication()
 	print("Twitcher: auth ensured")
-	var user_response := await api.get_users([str(main.settings.broadcaster_id)], [])
-	var user := user_response.data[0]
-	main.settings.channel_name = user.login
+	if main.settings.user_login in [null, ""]:
+		var user_response := await api.get_users([str(main.settings.broadcaster_id)], [])
+		var user := user_response.data[0]
+		main.settings.user_login = user.login
+		main.settings.channel_name = user.login
 	await _init_chat()
 	print("Twitcher: chat initialized")
 	_init_eventsub()

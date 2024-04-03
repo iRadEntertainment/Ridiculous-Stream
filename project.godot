@@ -32,12 +32,12 @@ auth/scopes/chat=3
 auth/scopes/bits=1
 auth/scopes/channel=134217727
 auth/broadcaster_id="443367221"
-auth/client_id="qyiobpgrmc8hqr2qtzkrxkac5a9wjr"
+auth/client_id="t0nkdk4ssr5mhvyj2939da8y4gngrp"
 general/images/image_magic="magick"
 general/images/image_transformer="NativeImageTransformer"
 auth/redirect_url="http://localhost:18297"
-auth/scopes/moderator=134217727
-auth/scopes/user=134217727
+auth/scopes/moderator=262143
+auth/scopes/user=16383
 eventsub/channel_update/broadcaster_user_id="443367221"
 eventsub/channel_follow/subscribed=true
 eventsub/channel_follow/broadcaster_user_id="443367221"
@@ -115,16 +115,18 @@ eventsub/stream_offline/broadcaster_user_id="443367221"
 eventsub/user_authorization_grant/client_id="443367221"
 eventsub/user_authorization_revoke/client_id="443367221"
 eventsub/user_update/user_id="443367221"
-auth/authorization_flow="DeviceCodeGrantFlow"
 auth/scopes/moderation=1
 auth/api/auth_file_cache="C:/Users/Dario/AppData/Roaming/RidiculousStream/auth.conf"
 general/assets/cache_emote="C:/Users/Dario/AppData/Roaming/RidiculousStream/emotes"
 general/assets/cache_badge="C:/Users/Dario/AppData/Roaming/RidiculousStream/badges"
 general/assets/cache_cheermote="C:/Users/Dario/AppData/Roaming/RidiculousStream/cheermotes"
-general/logging/enabled=0
 websocket/irc/username="iraddev"
 eventsub/channel_poll_begin/subscribed=true
 eventsub/channel_poll_end/subscribed=true
+auth/client_secret="qv33tywbxii6mvx9nnawdm5ku5g643"
+auth/scopes/analytics=3
+auth/scopes/clips=1
+auth/scopes/whispers=3
 
 [twitch_chat]
 

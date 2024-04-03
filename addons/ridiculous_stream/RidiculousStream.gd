@@ -23,15 +23,11 @@ var custom : RSCustom
 var copilot : RSCoPilot
 var wn_settings : Window
 
-
-signal gift_reloaded
-
 # ================================ INIT ========================================
 func _enter_tree() -> void:
 	print("=================================== RIDICULOS STREAMING STARTED ===================================")
 	load_rs_settings()
 	load_known_user()
-	#reload_gift()
 	reload_twitcher()
 	add_tool_generate_rest_api()
 	add_nodes()
@@ -127,6 +123,10 @@ func load_rs_settings():
 	settings = loader.load_settings()
 func save_rs_settings():
 	print("Saving settings from RSMain")
+	settings.client_id = ProjectSettings.get_setting("twitch/auth/client_id")
+	settings.client_secret = ProjectSettings.get_setting("twitch/auth/client_secret")
+	settings.authorization_flow = ProjectSettings.get_setting("twitch/auth/authorization_flow")
+	settings.broadcaster_id = ProjectSettings.get_setting("twitch/auth/broadcaster_id")
 	loader.save_settings(settings)
 
 
