@@ -251,8 +251,11 @@ func get_live_streamers_data(user_names_or_ids : Array = []) -> Dictionary:
 	if user_names_or_ids.is_empty():
 		for key in main.globals.known_users.keys():
 			var user : RSTwitchUser = main.globals.known_users[key]
-			if user.is_streamer:
-				user_names_or_ids.append(key)
+			if user.get("is_streamer") != null:
+				if user.is_streamer:
+					user_names_or_ids.append(key)
+			else:
+				print("user %s doesn't have is_streamer??"%user.username)
 	
 	var live_streamers_data := {}
 	var max_user_query = 10
@@ -277,3 +280,12 @@ func get_live_streamers_data(user_names_or_ids : Array = []) -> Dictionary:
 			count += 1
 	
 	return live_streamers_data
+
+
+func raid(to_broadcaster_id : String):
+	var path = "/helix/raids?from_broadcaster_id={from}&to_broadcaster_id={to}".format(
+		{"from": str(main.settings.broadcaster_id),
+		"to":to_broadcaster_id})
+	var response = await api.request(path, HTTPClient.METHOD_POST, "", "application/x-www-form-urlencoded");
+	response.response_code
+	#var result = JSON.parse_string(response.response_data.get_string_from_utf8());
