@@ -20,7 +20,7 @@ func _on_btn_test_pressed():
 		var entry = entry_from_data(redeem)
 		%list.add_child(entry)
 		entry.owner = owner
-		print(redeem.title, "is enabled: ", redeem.is_enabled)
+
 
 func entry_from_data(redeem : TwitchCustomReward) -> HBoxContainer:
 	var entry := HBoxContainer.new()

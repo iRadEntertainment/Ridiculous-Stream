@@ -222,10 +222,7 @@ func _on_btn_open_folder_pressed():
 
 func _on_btn_raid_current_pressed():
 	if not live_data: return
-	main.twitcher.api.start_a_raid(
-		str(main.settings.broadcaster_id),
-		str(live_data.user_id),
-		)
+	main.twitcher.raid(live_data.user_id)
 
 
 # ==============================================================================
