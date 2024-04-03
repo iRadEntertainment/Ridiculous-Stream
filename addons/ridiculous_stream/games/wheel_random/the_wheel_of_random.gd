@@ -51,7 +51,8 @@ func select_winner_from_wheel():
 	var streamers : Array = streamers_live_data.keys()
 	var final_angle = wrap(-wheel.rotation, 0, TAU)
 	var selected := floor((final_angle/TAU) * streamers.size() )
-	var winner : RSStreamerInfo = streamers_live_data[streamers[selected]]
+	var winner : TwitchStream = streamers_live_data[streamers[selected]]
+	
 	main.twitcher.api.start_a_raid(
 		str(main.settings.broadcaster_id),
 		str(winner.user_id),
@@ -67,7 +68,7 @@ func build_entire_wheel() -> void:
 	var i = 0
 	var streamers : Array = streamers_live_data.keys()
 	for key in streamers:
-		var streamer_info : RSStreamerInfo = streamers_live_data[key]
+		var streamer_info : TwitchStream = streamers_live_data[key]
 		var angle = angle_init + angle_size * i
 		var sector := await wheel_sector(streamer_info, angle, angle_size, wheel_radius, res)
 		sector.color = Color(randf(), randf(), randf())#colours[wrap(i, 0, colours.size())]
@@ -99,7 +100,7 @@ func build_wheel_values(values : Array[String]) -> void:
 	pass
 
 
-func wheel_sector(_streamer_info : RSStreamerInfo, _angle_init : float, _angle_size : float, _radius : float, res : int) -> Polygon2D:
+func wheel_sector(_streamer_info : TwitchStream, _angle_init : float, _angle_size : float, _radius : float, res : int) -> Polygon2D:
 	var new_polygon := Polygon2D.new()
 	new_polygon.set_meta("streamer_info", _streamer_info)
 	var points := PackedVector2Array()
