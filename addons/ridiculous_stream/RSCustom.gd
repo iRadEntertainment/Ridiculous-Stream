@@ -60,6 +60,7 @@ func on_channel_points_redeemed(data : RSTwitchEventData):
 		"Raid kani_dev": raid_kani(data.username)
 		"Force raid a random streamer": raid_a_random_streamer_from_the_user_list()
 		"Impersonate iRadDev": impersonate_iRad(data)
+		"Change Stream Title": change_stream_title(data)
 func on_followed(data : RSTwitchEventData):
 	pass
 func on_raided(data : RSTwitchEventData):
@@ -270,12 +271,13 @@ func play_kerker():
 	OS.execute("C:\\Users\\Dario\\Desktop\\Kerker.exe", [])
 
 
+func change_stream_title(data : RSTwitchEventData):
+	var title = "%s - %s"%[data.user_input, data.username]
+	var path = "/helix/channels?"
+	path += "broadcaster_id=" + str(main.settings.broadcaster_id) + "&"
+	var res := await main.twitcher.api.request(path, HTTPClient.METHOD_PATCH, {"title":title}, "application/json")
 
 
-
-
-
-
-
-
-
+func iRad_follow_somebody(data : RSTwitchEventData):
+	main.twitcher.api
+	
