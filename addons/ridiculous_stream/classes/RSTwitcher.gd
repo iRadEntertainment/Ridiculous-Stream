@@ -288,4 +288,3 @@ func raid(to_broadcaster_id : String):
 		"to":to_broadcaster_id})
 	var response = await api.request(path, HTTPClient.METHOD_POST, "", "application/x-www-form-urlencoded");
 	response.response_code
-	#var result = JSON.parse_string(response.response_data.get_string_from_utf8());
