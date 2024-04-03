@@ -2234,7 +2234,7 @@ func start_a_raid(from_broadcaster_id: String, to_broadcaster_id: String) -> Twi
 	var path = "/helix/raids?"
 	path += "from_broadcaster_id=" + str(from_broadcaster_id) + "&"
 	path += "to_broadcaster_id=" + str(to_broadcaster_id) + "&"
-	var response = await request(path, HTTPClient.METHOD_POST, "", "application/json");
+	var response = await request(path, HTTPClient.METHOD_POST, "", "application/x-www-form-urlencoded");
 	var result = JSON.parse_string(response.response_data.get_string_from_utf8());
 	return TwitchStartRaidResponse.from_json(result);
 
