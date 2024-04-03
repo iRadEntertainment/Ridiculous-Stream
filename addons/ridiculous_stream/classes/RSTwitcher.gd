@@ -74,12 +74,28 @@ func setup():
 	TwitchSetting.client_secret = main.settings.client_secret
 	TwitchSetting.authorization_flow = main.settings.authorization_flow
 	TwitchSetting.irc_username = main.settings.user_login
-	
 	main.settings.assign_scopes_to_project_settings()
+	main.settings.assign_eventsub_to_project_settings()
+	set_broadcaster_id_for_all_eventsub(main.settings.broadcaster_id)
 	
 	main.add_import_plugin(gif_importer_native)
 	if is_magick_available():
 		main.add_import_plugin(gif_importer_imagemagick)
+
+func set_broadcaster_id_for_all_eventsub(broadcaster_id: int):
+	var all_properties : Array = ProjectSettings.get_property_list()
+	var keys = []
+	for d : Dictionary in all_properties:
+		var key : String = str(d.name)
+		if key.begins_with("twitch/eventsub/") and (
+			key.ends_with("/broadcaster_user_id") or \
+			key.ends_with("/moderator_user_id")
+			):
+			keys.append(key)
+	
+	for key in keys:
+		if ProjectSettings.get_setting(key) == "":
+			ProjectSettings.set_setting(key, str(broadcaster_id))
 
 
 func connect_to_twitch():

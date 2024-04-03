@@ -15,6 +15,7 @@ var scopes := {
 	"twitch/auth/scopes/moderator": int(0),
 	"twitch/auth/scopes/user": int(0),
 }
+var eventsubs := {}
 
 ## TwitchChatCoPilot settings
 var copilot_always_disabled := false
@@ -23,6 +24,17 @@ var max_messages_in_chat : int = 100
 ## no-OBS-ws settings
 var obs_websocket_password : String = "YvFuw8DQxdxCAsvJ"
 
+static func retrieve_eventsub_project_settings() -> Dictionary:
+	var d = {}
+	var keys = []
+	for property : Dictionary in ProjectSettings.get_property_list():
+		var key : String = str(property.name)
+		if key.begins_with("twitch/eventsub/") and ProjectSettings.get_setting(key):
+			keys.append(key)
+	
+	for key in keys:
+		d[key] = ProjectSettings.get_setting(key)
+	return d
 
 static func retrieve_scopes_from_project_settings(scopes: Dictionary) -> Dictionary:
 	for key in scopes.keys():
@@ -35,11 +47,20 @@ func assign_scopes_to_project_settings() -> void:
 		var value := int(scopes[key])
 		ProjectSettings.set_setting(key, value)
 		
+func assign_eventsub_to_project_settings() -> void:
+	for key in eventsubs.keys():
+		var value = eventsubs[key]
+		if typeof(value) in [TYPE_INT, TYPE_FLOAT]:
+			value = str(value)
+		ProjectSettings.set_setting(key, value)
+		
 
 func to_dict() -> Dictionary:
 	var d = {}
 	scopes = retrieve_scopes_from_project_settings(scopes)
 	d["scopes"] = scopes
+	eventsubs = retrieve_eventsub_project_settings()
+	d["eventsubs"] = eventsubs
 	
 	d["client_id"] = client_id
 	d["client_secret"] = client_secret
@@ -59,6 +80,7 @@ func to_json() -> String:
 static func from_json(d: Dictionary) -> RSSettings:
 	var settings = RSSettings.new()
 	if d.has("scopes") && d["scopes"] != null: settings.scopes = d["scopes"]
+	if d.has("eventsubs") && d["eventsubs"] != null: settings.eventsubs = d["eventsubs"]
 	
 	if d.has("client_id") && d["client_id"] != null: settings.client_id = d["client_id"]
 	if d.has("client_secret") && d["client_secret"] != null: settings.client_secret = d["client_secret"]
