@@ -13,7 +13,6 @@ var loader := RSExternalLoader.new()
 var http_request := HTTPRequest.new()
 
 var dock : RSDock
-var gift : RSGift
 var twitcher : RSTwitcher
 var no_obs_ws : NoOBSWS
 
@@ -74,7 +73,6 @@ func hot_reaload_wn_settings():
 	wn_settings.start()
 
 
-
 # ================================ DOCK ========================================
 func reload_dock():
 	if dock:
@@ -86,20 +84,8 @@ func reload_dock():
 	var dock_cont := dock.get_parent() as TabContainer
 	dock_cont.move_child(dock, 1)
 	dock_cont.current_tab = 1
-	#if gift:
-		#dock.start()
 	if twitcher:
 		dock.start()
-
-
-# ================================ GIFT ========================================
-func reload_gift():
-	if !gift:
-		gift = RSGift.new()
-		add_child(gift)
-	gift.main = self
-	gift.start()
-	gift_reloaded.emit()
 
 
 # =============================== KNOWN USERS ==================================
@@ -150,7 +136,8 @@ func exit_twitcher():
 	if twitcher.is_magick_available():
 		remove_import_plugin(twitcher.gif_importer_imagemagick)
 	remove_tool_menu_item("Regenerate Twitch REST Api");
-	
+	if twitcher: twitcher.queue_free()
+
 
 func _exit_tree() -> void:
 	save_rs_settings()
@@ -159,7 +146,6 @@ func _exit_tree() -> void:
 	if dock:
 		remove_control_from_docks(dock)
 		dock.queue_free()
-	if gift: gift.queue_free()
 	if shoutout_mng: shoutout_mng.queue_free()
 	if wn_settings: wn_settings.queue_free()
 	print("=================================== RIDICULOS STREAMING EXITING ===================================")
