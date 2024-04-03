@@ -10,21 +10,6 @@ const rs_user_folder = "users/"
 const rs_obj_folder = "obj/"
 const rs_sfx_folder = "sfx/"
 
-const client_id = "t0nkdk4ssr5mhvyj2939da8y4gngrp"
-const client_secret = "qv33tywbxii6mvx9nnawdm5ku5g643"
-const TwScope := {
-	"CHAT_READ": "chat:read",
-	"CHAT_EDIT": "chat:edit",
-	"SO": "moderator:manage:shoutouts",
-	"FOLLOWERS": "moderator:read:followers",
-	"REDEMPTIONS_READ": "channel:read:redemptions",
-	"REDEMPTIONS": "channel:manage:redemptions",
-	"POLLS": "channel:manage:polls",
-	"SUBS": "channel:read:subscriptions",
-	"BITS": "bits:read",
-	"RAIDS": "channel:manage:raids",
-}
-
 const dock_pack = preload("res://addons/ridiculous_stream/instances/RSDock.tscn")
 const wn_settings_pack = preload("res://addons/ridiculous_stream/instances/wn_settings.tscn")
 const wn_welcome_pack = preload("res://addons/ridiculous_stream/instances/wn_welcome.tscn")
