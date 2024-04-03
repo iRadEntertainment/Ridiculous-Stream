@@ -7,7 +7,7 @@ class_name SpriteFrameEffect
 
 const TRANSPARENT = preload("res://addons/ridiculous_stream/libraries/twitcher/assets/transparent.tres");
 
-static var regex: RegEx = RegEx.create_from_string("\\[sprite id=(?<id>.*?)\\](?<path>.*?)\\[/sprite\\]")
+var regex: RegEx
 
 var node: AnimatedSprite2D;
 ## Custom BB Code to use
@@ -19,7 +19,11 @@ var cache: Dictionary = {};
 var ready: bool;
 
 func prepare_message(message: String, parent: RichTextLabel) -> String:
+	regex = RegEx.create_from_string("\\[sprite id=(?<id>.*?)\\](?<path>.*?)\\[/sprite\\]")
 	var found_matches = regex.search_all(message) as Array[RegExMatch];
+	#print("========================")
+	#print(message)
+	#print("--")
 	# We are changing the message content and want to preserve the match beginnings.
 	# So we need to handle them in reverse
 	found_matches.reverse();
@@ -35,12 +39,13 @@ func prepare_message(message: String, parent: RichTextLabel) -> String:
 		var start = m.get_start(0);
 		# Add an empty image to make the correct amount of space
 		message = message.replace(path, "[img width=%s height=%s]%s[/img] " % [size.x, size.y, TRANSPARENT.resource_path]);
-		var emoji = _create_emoji(resource);
-		emoji.set_meta("size", size);
-		cache[id] = emoji;
-		parent.add_child(emoji);
+		#var emoji = _create_emoji(resource);
+		#emoji.set_meta("size", size);
+		#cache[id] = emoji;
+		#parent.add_child(emoji);
 
 	ready = true;
+	#print(message)
 	return message;
 
 func _create_emoji(resource: SpriteFrames) -> AnimatedSprite2D:
@@ -50,12 +55,12 @@ func _create_emoji(resource: SpriteFrames) -> AnimatedSprite2D:
 	return node;
 
 func _process_custom_fx(char_fx: CharFXTransform) -> bool:
-	if not ready: return true;
+	#if not ready: return true;
 	var id = char_fx.env['id'];
 	# unknown image just ignore
 	if(!cache.has(id)): return true;
 	char_fx.visible = false;
-
+	print("kani")
 	if char_fx.relative_index != 0: return true;
 
 	var node = cache[id];
@@ -69,6 +74,6 @@ func _process_custom_fx(char_fx: CharFXTransform) -> bool:
 	var vertical_offset: float = right_bottom.y - image_height / 4.0;
 	# Divided by 2 cause the origin of the image is centered
 	var horizontal_offset: float = right_bottom.x + image_width / 2.0;
-	cache[id].position = Vector2(horizontal_offset, vertical_offset);
+	node.position = Vector2(horizontal_offset, vertical_offset);
 
 	return true;

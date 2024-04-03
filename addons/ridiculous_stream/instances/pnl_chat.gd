@@ -38,18 +38,28 @@ func start():
 var badge_id = 0
 var emote_start : int = 0
 var fl_first_chat_message := true
-func _on_chat_message(channel: String, from_user: String, message: String, _tags: TwitchTags.PrivMsg): #tags: TwitchTags.Message):
+
+func _on_chat_message(_channel: String, from_user: String, message: String, tags: TwitchTags.PrivMsg):
+	var username = from_user.to_lower()
+	check_first_msg(username, tags)
+	put_chat(username, message, tags)
+
+func put_chat(username: String, message: String, _tags: TwitchTags.PrivMsg):
 	var tags := TwitchTags.Message.from_priv_msg(_tags, main)
-	#var badges = await tags.get_badges() as Array[SpriteFrames];
+	var badges = await tags.get_badges() as Array[SpriteFrames];
 	var emotes = await tags.get_emotes() as Array[TwitchIRC.EmoteLocation];
 	var color = tags.get_color();
+	if color.is_empty():
+		color = RSGlobals.DEFAULT_RIGID_LABEL_COLOR
 	
 	if _tags.display_name == "IAmAMerlin":
-		color = Color.BROWN
-	var user : RSTwitchUser = await main.load_known_user(from_user.to_lower())
+		color = Color.BROWN.to_html()
+	var user : RSTwitchUser
+	if username in main.globals.known_users.keys():
+		user = await main.load_known_user(username)
 	if user:
 		if user.custom_chat_color != Color.BLACK:
-			color = user.custom_chat_color
+			color = user.custom_chat_color.to_html()
 	
 	if !fl_first_chat_message:
 		lb_chat.newline()
@@ -66,38 +76,32 @@ func _on_chat_message(channel: String, from_user: String, message: String, _tags
 		#result_message += "[sprite id='b-%s']%s[/sprite]" % [badge_id, badge.resource_path];
 		#badge_id += 1;
 	
-	result_message += "[color=%s]%s[/color]: " % [color, _tags.display_name];
+	result_message += "[b][color=%s]%s[/color][/b]: " % [color, _tags.display_name];
 
 	# Replace all the emoji names with the appropriate emojis
 	# Tracks the start where to replace next
-	emote_start = 0
-	for emote in emotes:
-		# Takes text between the start / the last emoji and the next emoji
-		var part := message.substr(emote_start, emote.start - emote_start);
-		# Adds this text to the message
-		result_message += part;
-		# Adds the sprite after the text
-		result_message += "[sprite id='%s']%s[/sprite]" % [emote.start, emote.sprite_frames.resource_path];
-		# Marks the start of the next text
-		emote_start = emote.end + 1;
+	#emote_start = 0
+	#for emote in emotes:
+		## Takes text between the start / the last emoji and the next emoji
+		#var part := message.substr(emote_start, emote.start - emote_start);
+		## Adds this text to the message
+		#result_message += part;
+		## Adds the sprite after the text
+		#result_message += "[sprite id='%s']%s[/sprite]" % [badge_id, emote.sprite_frames.resource_path];
+		## Marks the start of the next text
+		#emote_start = emote.end + 1;
+		##badge_id += 1;
+				  #
+	## get the text between the last emoji and the end
+	#var part := message.substr(emote_start, message.length() - emote_start);
+	## adds it to the message
+	#result_message += part;
+	## adds all the emojis to the richtext and registers them to be processed
+	#result_message = sprite_effect.prepare_message(result_message, lb_chat);
+	
+	lb_chat.append_text(result_message + message)
 
-	# get the text between the last emoji and the end
-	var part := message.substr(emote_start, message.length() - emote_start);
-	# adds it to the message
-	result_message += part;
-	# adds all the emojis to the richtext and registers them to be processed
-	result_message = sprite_effect.prepare_message(result_message, lb_chat);
-
-	lb_chat.append_text(result_message)
-
-#=======================================================
-
-# func on_chat(senderdata : SenderData, msg : String):
-# 	if not senderdata.tags.has("display-name"): return
-# 	check_first_msg(senderdata)
-# 	put_chat(senderdata, msg)
-
-# func put_chat(senderdata : SenderData, msg : String):
+#func put_chat(senderdata : SenderData, msg : String):
 # 	var badges : String = ""
 # 	for badge in senderdata.tags["badges"].split(",", false):
 # 		var result = await(main.gift.iconloader.get_badge(badge, senderdata.tags["room-id"]))
@@ -146,35 +150,28 @@ func format_msg(key, _msg) -> String:
 # 	return final
 
 
-func check_first_msg(senderdata : SenderData):
-	var username = senderdata.user
-	var display_name = senderdata.tags["display-name"]
+func check_first_msg(username : String, tags: TwitchTags.PrivMsg): #senderdata : SenderData):
+	var display_name = tags.display_name
 	if not username in main.globals.first_session_message_username_list:
 		main.globals.first_session_message_username_list.append(username)
-		check_user_twitch_color(senderdata)
+		check_user_twitch_color(username, tags)
 		
-		# let the physic name appear in the editor
 		var user := RSTwitchUser.new()
 		if username in main.globals.known_users:
-			user = main.globals.known_users[senderdata.user.to_lower()]
+			user = main.globals.known_users[username]
 			if user.auto_shoutout:
 				main.shoutout_mng.add_shoutout(user)
-			if user.auto_shoutout:
-				main.gift.announce(user)
 		else:
 			user.display_name = display_name
+		# let the physic name appear in the editor
 		main.custom.destructibles_names(user)
-		
-		# automatic shoutout for known twitch users
 
 
-func check_user_twitch_color(senderdata : SenderData):
-	if !senderdata.tags.has("color"):
-		return
-	var tw_col = senderdata.tags["color"]
+func check_user_twitch_color(username : String, tags: TwitchTags.PrivMsg):
+	var tw_col = tags.color
 	
-	if senderdata.user in main.globals.known_users.keys():
-		var user := main.globals.known_users[senderdata.user] as RSTwitchUser
+	if username in main.globals.known_users.keys():
+		var user := main.globals.known_users[username] as RSTwitchUser
 		if user.twitch_chat_color == Color.BLACK:
 			user.twitch_chat_color = tw_col
 			main.loader.save_userfile(user)
