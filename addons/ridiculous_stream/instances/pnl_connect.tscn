@@ -64,3 +64,4 @@ size_flags_vertical = 3
 [connection signal="text_submitted" from="vb/hb/ln_broadcaster_id" to="." method="_on_ln_broadcaster_id_text_submitted"]
 [connection signal="pressed" from="vb/btn_connect_twitcher" to="." method="_on_btn_connect_twitcher_pressed"]
 [connection signal="pressed" from="vb/btn_retrieve_id" to="." method="_on_btn_retrieve_id_pressed"]
+[connection signal="toggled" from="vb/btn_connect_at_startup" to="." method="_on_btn_connect_at_startup_toggled"]
