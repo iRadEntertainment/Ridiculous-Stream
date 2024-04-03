@@ -10,10 +10,9 @@ var main : RSMain
 
 func start():
 	connect_twitcher_signals()
-	%pnl_chat.main = main
-	%pnl_chat.start()
-	%pnl_co_pilot.main = main
-	%pnl_co_pilot.start()
+	for pnl in [%pnl_chat, %pnl_co_pilot, %pnl_quick_actions]:
+		pnl.main = main
+		pnl.start()
 
 
 func connect_twitcher_signals():
@@ -40,7 +39,5 @@ func _on_btn_open_sett_wind_pressed():
 
 # TEST: remove test stuff
 func _on_btn_test_stuff_pressed():
-	print("Twitcher connected: ", main.twitcher.is_connected_to_twitch)
-	
-	main.twitcher.chat("this is a test", "iraddev")
+	main.twitcher.set_broadcaster_id_for_all_eventsub()
 	#main.custom.raid_a_random_streamer_from_the_user_list()

@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://cm77spqiel43k"]
+
+[ext_resource type="Script" path="res://addons/ridiculous_stream/instances/pnl_quick_actions.gd" id="1_wcf5d"]
+[ext_resource type="Texture2D" uid="uid://mijaq0gueewe" path="res://addons/ridiculous_stream/ui/bootstrap_icons/chevron-compact-down.svg" id="2_72ah7"]
+
+[node name="pnl_quick_actions" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -831.0
+offset_bottom = -244.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wcf5d")
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="btn_expand" type="Button" parent="vb"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+icon = ExtResource("2_72ah7")
+icon_alignment = 1
+expand_icon = true
+
+[node name="lb" type="Label" parent="vb/btn_expand"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_right = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Quick Actions"
+vertical_alignment = 1
+
+[node name="btn_cont" type="HFlowContainer" parent="vb"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="btn_laser" type="Button" parent="vb/btn_cont"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "!laser"
+
+[node name="btn_zeroG" type="Button" parent="vb/btn_cont"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "!zeroG"
+
+[connection signal="pressed" from="vb/btn_expand" to="." method="_on_btn_expand_pressed"]
+[connection signal="pressed" from="vb/btn_cont/btn_laser" to="." method="_on_btn_laser_pressed"]
+[connection signal="pressed" from="vb/btn_cont/btn_zeroG" to="." method="_on_btn_zero_g_pressed"]
