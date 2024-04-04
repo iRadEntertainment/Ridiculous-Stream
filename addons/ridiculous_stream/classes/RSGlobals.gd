@@ -36,27 +36,27 @@ var physics_space_rid : RID
 
 const params_can = {
 	"img_paths" : ["can.png"],
-	"spawn_range" : [3,5],
+	"spawn_range" : [3, 5],
 	"sfx_paths" : ["sfx_can_01.ogg", "sfx_can_02.ogg", "sfx_can_03.ogg", "sfx_can_04.ogg"],
 	"sfx_volume" : -12.0,
 	"is_pickable" : true,
 	"is_poly_fracture" : false,
 	"is_destroy" : true,
-	"scale" : Vector2.ONE * 0.3,
+	"scale" : [0.3, 0.3],
 	"coll_layer" : 4,
 	"coll_mask" : 5,
 	"destroy_shard_params" : {
 		"img_paths" : ["bean_01.png", "bean_02.png"],
-		"spawn_range" : [12,17],
+		"spawn_range" : [12, 17],
 		"sfx_paths" : [],
 		"sfx_volume" : 0.0,
 		"is_pickable" : false,
 		"is_poly_fracture" : false,
 		"is_destroy" : false,
-		"scale" : Vector2.ONE*0.5,
+		"scale" : [0.5, 0.5],
 		"coll_layer" : 2,
 		"coll_mask" : 3,
-		"destroy_shard_params" : {}
+		"destroy_shard_params" : null
 	}}
 const param_beans = {
 	"img_paths" : ["bean_01.png", "bean_02.png"],
@@ -66,7 +66,7 @@ const param_beans = {
 	"is_pickable" : false,
 	"is_poly_fracture" : false,
 	"is_destroy" : false,
-	"scale" : Vector2.ONE,
+	"scale" : [0.5, 0.5],
 	"coll_layer" : 2,
 	"coll_mask" : 3,
 	"destroy_shard_params" : {}}

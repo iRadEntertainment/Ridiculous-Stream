@@ -63,7 +63,7 @@ func set_nodes():
 	sprite.scale = params.scale
 	add_child(sprite)
 	sfx_node = AudioStreamPlayer.new()
-	sfx_node.volume_db = params.sfx_volume if params.has("sfx_volume") else 0
+	sfx_node.volume_db = params.sfx_volume if params.sfx_volume else 0
 	add_child(sfx_node)
 	coll = CollisionShape2D.new()
 	coll.visible = false

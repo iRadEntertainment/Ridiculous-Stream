@@ -3,17 +3,17 @@ extends Resource
 class_name RSBeansParam
 
 
-var img_paths : Array
-var sfx_paths : Array
-var spawn_range : Array
-var coll_layer : int
-var coll_mask : int
-var sfx_volume : int
+var img_paths : Array = []
+var sfx_paths : Array = []
+var spawn_range : Array = [3, 5]
+var coll_layer : int = 4
+var coll_mask : int = 5
+var sfx_volume : int = 0
 var is_destroy : bool
 var is_pickable : bool
 var is_poly_fracture : bool
-var scale : Vector2
-var destroy_shard_params
+var scale : Vector2 = Vector2.ONE
+var destroy_shard_params : RSBeansParam
 
 
 func to_dict() -> Dictionary:

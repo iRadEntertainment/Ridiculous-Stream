@@ -35,12 +35,12 @@ func add_commands() -> void:
 # func on_chat(sender_data : SenderData, message : String):
 func on_chat(_channel_name: String, _username: String, _message: String, _tags: TwitchTags.PrivMsg):
 	pass
-func on_whisper_message(sender_data : SenderData, message : String):
-	pass
-func on_user_joined(sender_data : SenderData):
-	pass
-func on_user_parted(sender_data : SenderData):
-	pass
+# func on_whisper_message(sender_data : SenderData, message : String):
+# 	pass
+# func on_user_joined(sender_data : SenderData):
+# 	pass
+# func on_user_parted(sender_data : SenderData):
+# 	pass
 func on_channel_points_redeemed(data : RSTwitchEventData):
 	match data.reward_title:
 		"beans":
@@ -130,11 +130,11 @@ func get_advice(data : RSTwitchEventData) -> void:
 	main.twitcher.chat(format_string.format(advice_dic) )
 
 
-func discord(cmd_info : CommandInfo, args = []):
+func discord():
 	var msg = "Join Discord: https://discord.gg/4YhKaHkcMb"
 	main.twitcher.chat(msg)
 
-func chat_commands_help(cmd_info : CommandInfo, args = []):
+func chat_commands_help():
 	var msg = "Use a combination of ![command] for chat: hl (highlight), hd(hidden), rb(rainbow), big, small, wave, pulse, tornado, shake"
 	main.twitcher.chat(msg)
 
@@ -150,19 +150,19 @@ func beans(username : String):
 	add_physic_scene()
 	if physic_scene.is_closing: return
 	
+	var beans_param := RSBeansParam.from_json(RSGlobals.params_can)
 	var user := main.get_known_user(username.to_lower()) as RSTwitchUser
 	if user:
 		if user.custom_beans_params:
-			physic_scene.add_image_bodies(user.custom_beans_params)
-			return
-	
-	physic_scene.add_image_bodies(RSGlobals.params_can)
+			beans_param = user.custom_beans_params
+	physic_scene.add_image_bodies(beans_param)
 
-func zero_g(cmd_info := CommandInfo.new(SenderData.new("iRadDev", "", {}), "", false), args = []):
+
+func zero_g():
 	if not physic_scene:
 		main.twitcher.chat("Wait for the physic scene to be in first!")
 		return
-	main.twitcher.chat("%s initiated zero_g"%cmd_info.sender_data.user)
+	# main.twitcher.chat("%s initiated zero_g"%cmd_info.sender_data.user)
 	#physic_scene.shake_bodies()
 	var tw = main.create_tween()
 	tw.tween_method(physic_scene.set_space_gravity, 4410, 0, 2.0)
@@ -171,7 +171,7 @@ func zero_g(cmd_info := CommandInfo.new(SenderData.new("iRadDev", "", {}), "", f
 	tw.tween_method(physic_scene.set_space_gravity, 0, 4410, 5.0)
 
 
-func laser(cmd_info : CommandInfo = null, args = []):
+func laser():
 	add_physic_scene()
 	if physic_scene.is_closing: return
 	physic_scene.add_laser()
