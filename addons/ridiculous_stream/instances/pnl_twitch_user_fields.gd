@@ -56,8 +56,7 @@ func update_user_fields():
 	
 	check_param_and_add_inspector(user.custom_beans_params)
 	#clear_param_inspector()
-	if user.custom_beans_params != {}:
-		%btn_add_custom_beans.button_pressed = true
+	%btn_add_custom_beans.button_pressed = user.custom_beans_params != null
 		
 	%te_so.text = user.shoutout_description
 	%te_promote.text = user.promotion_description
@@ -95,17 +94,17 @@ func _process(_d):
 	process_stream_time_elapsed()
 
 
-func check_param_and_add_inspector(params):
+func check_param_and_add_inspector(params : RSBeansParam):
 	clear_param_inspector()
 	%btn_add_custom_beans.button_pressed = false
 	if params == null: return
-	if params != {}:
-		var param_inspector = RSGlobals.param_inspector_pack.instantiate()
-		%sub_res.add_child(param_inspector)
-		param_inspector.owner = owner
-		param_inspector.params = params
-		btn_custom_beans_is_gui_input = false
-		%btn_add_custom_beans.button_pressed = true
+	
+	var param_inspector = RSGlobals.param_inspector_pack.instantiate()
+	%sub_res.add_child(param_inspector)
+	param_inspector.owner = owner
+	param_inspector.params = params
+	btn_custom_beans_is_gui_input = false
+	%btn_add_custom_beans.button_pressed = true
 func clear_param_inspector():
 	#%btn_add_custom_beans.button_pressed = false
 	for child in %sub_res.get_children():
@@ -127,7 +126,7 @@ func user_from_fields() -> RSTwitchUser:
 	user.custom_notification_sfx = %opt_custom_sfx.get_item_text(%opt_custom_sfx.selected)
 	user.custom_action = %opt_custom_actions.get_item_text(%opt_custom_actions.selected)
 	#-----------------------------
-	user.custom_beans_params = {}
+	user.custom_beans_params = null
 	if %btn_add_custom_beans.button_pressed:
 		var param_inspector : RSParamInspector = %sub_res.get_child(0)
 		user.custom_beans_params = param_inspector.get_params()
@@ -263,12 +262,11 @@ func _on_btn_raid_current_pressed():
 	##EditorInspector.edited_object()
 
 func add_param_inspector():
-	print("here")
 	if %sub_res.get_child_count() > 0: return
-	if user.custom_beans_params != {}:
+	if user.custom_beans_params != null:
 		check_param_and_add_inspector(user.custom_beans_params)
 	else:
-		check_param_and_add_inspector(RSGlobals.params_can)
+		check_param_and_add_inspector(RSBeansParam.from_json(RSGlobals.params_can))
 	#var param_inspector : RSParamInspector = RSGlobals.param_inspector_pack.instantiate()
 	#%sub_res.add_child(param_inspector)
 	#param_inspector.owner = owner

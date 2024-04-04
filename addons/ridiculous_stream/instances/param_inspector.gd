@@ -2,23 +2,20 @@
 extends PanelContainer
 class_name RSParamInspector
 
-var params : Dictionary : set = set_params
+var params : RSBeansParam : set = set_params
 
 
 func populate_fields():
 	clear_custom_lists()
-	if params.has("img_paths"):
-		for tex_path in params.img_paths:
-			var opt_btn := new_tex_opt_btn()
-			%tex_list.add_child(opt_btn)
-			set_item_opt_btn_from_string(opt_btn, tex_path)
-	else:
-		print("WTF")
-	if params.has("sfx_paths"):
-		for sfx_path in params.sfx_paths:
-			var opt_btn := new_sfx_opt_btn()
-			%sfx_list.add_child(opt_btn)
-			set_item_opt_btn_from_string(opt_btn, sfx_path)
+	for tex_path in params.img_paths:
+		var opt_btn := new_tex_opt_btn()
+		%tex_list.add_child(opt_btn)
+		set_item_opt_btn_from_string(opt_btn, tex_path)
+	
+	for sfx_path in params.sfx_paths:
+		var opt_btn := new_sfx_opt_btn()
+		%sfx_list.add_child(opt_btn)
+		set_item_opt_btn_from_string(opt_btn, sfx_path)
 	
 	%sl_sfx_vol.value = params.sfx_volume
 	%sfx_vol_val.text = "%.01f"%(params.sfx_volume)
@@ -35,68 +32,60 @@ func populate_fields():
 	%sb_coll_layer.value = params.coll_layer
 	%sb_coll_mask.value = params.coll_mask
 	
-	if !params.has("destroy_shard_params"):
-		params.destroy_shard_params = {}
-	elif !params.destroy_shard_params:
-		params.destroy_shard_params = {}
-	if params.destroy_shard_params.is_empty():
-		for child in %sub_res.get_children():
-			child.queue_free()
-	else:
+	for child in %sub_res.get_children():
+		child.queue_free()
+	if params.destroy_shard_params:
 		var param_inspector : RSParamInspector = RSGlobals.param_inspector_pack.instantiate()
 		%sub_res.add_child(param_inspector)
 		param_inspector.owner = owner
 		param_inspector.params = params.destroy_shard_params
 
 
-func params_from_fields() -> Dictionary:
-	#params = RSGlobals.params_can.duplicate()
-	params = {}
-	params.img_paths = []
+func params_from_fields() -> RSBeansParam:
+	var new_params = RSBeansParam.new()
 	for opt_btn : OptionButton in %tex_list.get_children():
 		var path = opt_btn.get_item_text(opt_btn.selected)
 		if path.is_empty(): continue
-		params.img_paths.append(path)
-	params.sfx_paths = []
+		new_params.img_paths.append(path)
 	for opt_btn : OptionButton in %sfx_list.get_children():
 		var path = opt_btn.get_item_text(opt_btn.selected)
 		if path.is_empty(): continue
-		params.sfx_paths.append(path)
-	params.sfx_volume = %sl_sfx_vol.value
+		new_params.sfx_paths.append(path)
+
+	new_params.sfx_volume = %sl_sfx_vol.value
 	
-	params.is_pickable = %ck_is_pickable.button_pressed
-	params.is_destroy = %ck_is_destroy.button_pressed
-	params.is_poly_fracture = %ck_is_fracture.button_pressed
+	new_params.is_pickable = %ck_is_pickable.button_pressed
+	new_params.is_destroy = %ck_is_destroy.button_pressed
+	new_params.is_poly_fracture = %ck_is_fracture.button_pressed
 	
-	params.scale = Vector2(%sb_scale_x.value, %sb_scale_y.value)
-	params.spawn_range = [%sb_spawn_min.value as int, %sb_spawn_max.value as int]
-	params.coll_layer = %sb_coll_layer.value as int
-	params.coll_mask = %sb_coll_mask.value as int
+	new_params.scale = Vector2(%sb_scale_x.value, %sb_scale_y.value)
+	new_params.spawn_range = [%sb_spawn_min.value as int, %sb_spawn_max.value as int]
+	new_params.coll_layer = %sb_coll_layer.value as int
+	new_params.coll_mask = %sb_coll_mask.value as int
 	
-	params.destroy_shard_params = {}
 	if $vb/hb2/ck_shard.button_pressed:
-		params.destroy_shard_params = %sub_res.get_child(0).get_params()
+		new_params.destroy_shard_params = %sub_res.get_child(0).get_params()
 	
-	return params
+	return new_params
 
 func _on_ck_shard_toggled(toggled_on):
 	%sub_res.visible = toggled_on
+	for child in %sub_res.get_children():
+			child.queue_free()
 	if toggled_on:
 		var new_inspector = RSGlobals.param_inspector_pack.instantiate()
 		%sub_res.add_child(new_inspector)
 		new_inspector.owner = owner
-		if !params.destroy_shard_params:
+		if params.destroy_shard_params:
 			new_inspector.params = params.destroy_shard_params
 		else:
-			new_inspector.params = RSGlobals.param_beans.duplicate()
-	else:
-		for child in %sub_res.get_children():
-			child.queue_free()
+			new_inspector.params = RSBeansParam.new()
 
-func set_params(val : Dictionary):
+
+func set_params(val : RSBeansParam):
 	params = val
 	populate_fields()
-func get_params() -> Dictionary:
+func get_params() -> RSBeansParam:
 	return params_from_fields()
 
 
