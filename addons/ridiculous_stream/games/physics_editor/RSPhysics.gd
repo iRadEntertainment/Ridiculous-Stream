@@ -119,7 +119,7 @@ func generate_text_rigidbody(text : String, col : Color):
 	call_deferred("add_rigid", lb_body, pos, linear_velocity, angular_velocity, true)
 
 
-func add_image_bodies(params : Dictionary, pos = null, linear_velocity = null, angular_velocity = null):
+func add_image_bodies(params : RSBeansParam, pos = null, linear_velocity = null, angular_velocity = null):
 	if params.img_paths.is_empty():
 		print("RSPhysics: no image passed to 'add_image_bodies()'")
 		return

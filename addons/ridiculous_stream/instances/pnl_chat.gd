@@ -132,7 +132,7 @@ func check_user_twitch_color(username : String, tags: TwitchTags.PrivMsg):
 		var user := main.globals.known_users[username] as RSTwitchUser
 		if user.twitch_chat_color == Color.BLACK:
 			user.twitch_chat_color = tw_col
-			main.loader.save_userfile(user)
+			# main.loader.save_userfile(user)
 
 
 func change_font_size(font_size : int):

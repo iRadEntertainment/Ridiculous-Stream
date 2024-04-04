@@ -12,11 +12,11 @@ var shape : CapsuleShape2D
 var sfx_node : AudioStreamPlayer
 
 var tex : Texture2D
-var params : Dictionary
+var params : RSBeansParam
 var sfx_streams : Array[AudioStream]
 
 
-func _init(_tex : Texture2D, _params : Dictionary, _sfx_streams : Array[AudioStream]):
+func _init(_tex : Texture2D, _params : RSBeansParam, _sfx_streams : Array[AudioStream]):
 	tex = _tex
 	params = _params
 	sfx_streams = _sfx_streams
@@ -50,7 +50,7 @@ func play_random_sfx():
 
 func destroy():
 	if params.destroy_shard_params:
-		var new_p : Dictionary = params.destroy_shard_params
+		var new_p : RSBeansParam = params.destroy_shard_params
 		var shards_num = range(new_p.spawn_range[0], new_p.spawn_range[1]).pick_random()
 		physics_scene.add_image_bodies(new_p, position)
 	queue_free()

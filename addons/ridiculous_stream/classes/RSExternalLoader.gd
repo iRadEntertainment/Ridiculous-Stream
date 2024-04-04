@@ -24,37 +24,34 @@ func save_to_json(file_path: String, variant: Variant) -> void:
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
 	file.store_string(JSON.stringify(variant))
 	file.close()
-func load_json(file_path: String):
+func load_json(file_path: String) -> Variant:
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	var content = file.get_as_text()
 	file.close()
 	return JSON.parse_string(content)
 
 
-#func load_rigid_body_instance_from_obj_folder(rigid_body_scn_name : String) -> RigidBody2D:
-	#if rigid_body_scn_name in cached.keys():
-		#return cached[rigid_body_scn_name]
-	#var obj_global_path = get_obj_path()
-	##print(obj_global_path)
-	#var filename = rigid_body_scn_name+".tscn"
-	#var filescript = rigid_body_scn_name+".gd"
-	#var file_path = obj_global_path+filename
-	#var file_script_path = obj_global_path+filescript
-	#
-	## TODO: search in the obj folder if cannot find the obj name in the external folder
-	#
-	#if !filename in list_file_in_folder(obj_global_path):
-		#return null
-	#if not FileAccess.file_exists(file_script_path):
-		#print("RSExternalLoader: file %s doesn't have a correspondent %s" % [filename, filescript])
-		#return null
-	#
-	#var body_pack = ResourceLoader.load(obj_global_path+filename, "", ResourceLoader.CACHE_MODE_IGNORE) as PackedScene
-	#var body = body_pack.instantiate()
-	#body.set_script(ResourceLoader.load(file_script_path, "GDScript", ResourceLoader.CACHE_MODE_IGNORE))
-	#cached[rigid_body_scn_name] = body
-	#return body
+func convert_all_users():
+	var dic = {}
+	var user_files = list_file_in_folder(get_users_path(), ["tres"])
+	
+	for user_file in user_files:
+		var path = get_users_path() + user_file
+		var username = username_from_userfile(user_file)
+		var res = await ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_IGNORE) as RSTwitchUser
+		if res.username:
+			pass
+			# print("user loaded OK: ", res.username)
+		else:
+			print("user missing info: ", username)
+		dic[username] = {"RSTwitchUser": res, "path": path}
 
+	for username in dic.keys():
+		var res := dic[username]["RSTwitchUser"] as RSTwitchUser
+		var path := dic[username]["path"] as String
+		path = path.trim_suffix("tres") + "json"
+		save_to_json(path, res.to_dict())
+		
 
 func load_sfx_from_sfx_folder(sfx_name : String) -> AudioStreamOggVorbis:
 	if sfx_name in cached.keys():
@@ -109,15 +106,31 @@ func load_texture_from_data_folder(texture_file_name : String) -> Texture2D:
 	cached[texture_file_name] = tex
 	return tex
 
+#=========================================== USERSERSRESWRES ========================================================
+func load_userfile(username) -> RSTwitchUser:
+	var path := get_user_filepath(username)
+	if !FileAccess.file_exists(path):
+		print("Cannot find file: ", path)
+	var user := RSTwitchUser.from_json(load_json(path))
+	if user.username == "":
+		user.username = username_from_userfile(path)
+		print("WARNING: %s doesn't contain a username."%path.get_file())
+	return user
+func save_userfile(user : RSTwitchUser) -> void:
+	if user.username == "":
+		print("cannot save an user without a username")
+		return
+	var path = get_user_filepath(user.username)
+	save_to_json(path, user.to_dict())
+
 
 func load_all_user() -> Dictionary:
 	var dic = {}
-	var user_files = list_file_in_folder(get_users_path(), ["tres"])
+	var user_files = list_file_in_folder(get_users_path(), ["json"])
 	
 	for user_file in user_files:
-		var path = get_users_path() + user_file
-		var res = await ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_IGNORE) as RSTwitchUser
-		var username = res.username
+		var username = username_from_userfile(user_file)
+		var res = load_userfile(username)
 		dic[username] = res
 	
 	return dic
@@ -128,23 +141,14 @@ func save_all_user(dic):
 
 
 func userfile_from_username(username : String) -> String:
-	return "user_%s.tres" % username
+	return "user_%s.json" % username
 func username_from_userfile(userfile : String) -> String:
-	return userfile.trim_prefix("user_").trim_suffix(".tres")
+	userfile = userfile.get_file()
+	return userfile.trim_prefix("user_").trim_suffix(".json")
 func get_user_filepath(username : String) -> String:
-	var user_file = "user_%s.tres" % username
+	var user_file = "user_%s.json" % username
 	return get_users_path() + user_file
-
-
-func load_userfile(username) -> RSTwitchUser:
-	var path = get_user_filepath(username)
-	if !FileAccess.file_exists(path):
-		print_stack()
-	var user : RSTwitchUser = await ResourceLoader.load(path, "RSTwitchUser", ResourceLoader.CACHE_MODE_IGNORE)
-	return user
-func save_userfile(user : RSTwitchUser):
-	var path = get_user_filepath(user.username)
-	ResourceSaver.save(user, path)
+#=========================================== USERSERSRESWRES ========================================================
 
 
 #region UTILITIES

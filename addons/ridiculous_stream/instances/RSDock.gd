@@ -40,5 +40,6 @@ func _on_btn_open_sett_wind_pressed():
 # TEST: remove test stuff
 func _on_btn_test_stuff_pressed():
 	pass
+	main.loader.convert_all_users()
 	# main.twitcher.set_broadcaster_id_for_all_eventsub(456)
 	#main.custom.raid_a_random_streamer_from_the_user_list()
