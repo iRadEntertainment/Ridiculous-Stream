@@ -48,10 +48,10 @@ func add_commands_to_gift() -> void:
 	main.twitcher.commands.add_command("undo", copilot_action.bind(Cmd.UNDO))
 
 
-func temp_activate(cmd_info : CommandInfo, arg_ary := PackedStringArray()):
+func temp_activate():
 	activate(300)
 
-func copilot_action(cmd_info : CommandInfo, arg_ary := PackedStringArray(), what := Cmd.HELP):
+func copilot_action(arg_ary, what := Cmd.HELP):
 	#if not main.settings.co_pilot_active and not is_enabled:
 	if not is_enabled:
 		main.twitcher.chat("Co-pilot is turned off")
