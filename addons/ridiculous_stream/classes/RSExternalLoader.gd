@@ -121,7 +121,9 @@ func save_userfile(user : RSTwitchUser) -> void:
 		print("cannot save an user without a username")
 		return
 	var path = get_user_filepath(user.username)
-	save_to_json(path, user.to_dict())
+	var dict = user.to_dict()
+	if not dict.is_empty():
+		save_to_json(path, dict)
 
 
 func load_all_user() -> Dictionary:
