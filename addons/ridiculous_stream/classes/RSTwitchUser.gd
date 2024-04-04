@@ -15,7 +15,7 @@ var auto_promotion : bool
 var custom_chat_color : Color
 var custom_notification_sfx : String
 var custom_action : String
-var custom_beans_params
+var custom_beans_params : RSBeansParam
 
 var shoutout_description : String
 var promotion_description : String
@@ -35,7 +35,33 @@ func to_dict() -> Dictionary:
 	d["custom_chat_color"] = custom_chat_color.to_html()
 	d["custom_notification_sfx"] = custom_notification_sfx
 	d["custom_action"] = custom_action
-	d["custom_beans_params"] = custom_beans_params.to_dict() if custom_beans_params else null
+
+	if custom_beans_params == null:
+		d["custom_beans_params"] = null
+	elif (custom_beans_params is RSBeansParam):
+		d["custom_beans_params"] = custom_beans_params.to_dict()
+	elif typeof(custom_beans_params) == TYPE_DICTIONARY:
+		if custom_beans_params.is_empty():
+			d["custom_beans_params"] = null
+		else:
+			if "scale" in custom_beans_params.keys():
+				if typeof(custom_beans_params["scale"]) == TYPE_VECTOR2:
+					custom_beans_params["scale"] = [custom_beans_params["scale"].x, custom_beans_params["scale"].y]
+				d["custom_beans_params"] = custom_beans_params
+			if "destroy_shard_params" in custom_beans_params.keys():
+				var destroy_shard_params = custom_beans_params["destroy_shard_params"]
+				if not destroy_shard_params:
+					d["custom_beans_params"]["destroy_shard_params"] = null
+				elif destroy_shard_params.is_empty():
+					d["custom_beans_params"]["destroy_shard_params"] = null
+				else:
+					destroy_shard_params["destroy_shard_params"] = null
+					if "scale" in destroy_shard_params.keys():
+						if typeof(destroy_shard_params["scale"]) == TYPE_VECTOR2:
+							destroy_shard_params["scale"] = [destroy_shard_params["scale"].x, destroy_shard_params["scale"].y]
+					d["custom_beans_params"]["destroy_shard_params"] = destroy_shard_params
+
+	
 	d["shoutout_description"] = shoutout_description
 	d["promotion_description"] = promotion_description
 	d["last_shout_unix_time"] = last_shout_unix_time
