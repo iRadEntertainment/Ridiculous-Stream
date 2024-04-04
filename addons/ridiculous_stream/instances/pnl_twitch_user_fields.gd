@@ -1,8 +1,10 @@
 # pgorley is the best
 @tool
 #download carbrix now
-
 extends PanelContainer
+
+@onready var tabs = %tabs
+@onready var ln_chat_live_streamer = %ln_chat_live_streamer
 
 var main : RSMain
 var user : RSTwitchUser
@@ -29,6 +31,14 @@ func start():
 	%pnl_connect_to_gift.main = main
 	%pnl_connect_to_gift.start()
 	pnl_live.hide()
+	set_tab_names()
+
+
+func set_tab_names():
+	tabs.all_tabs_in_front
+	for pnl in tabs.get_children():
+		var tab_title = pnl.name.trim_prefix("pnl_").capitalize()
+		tabs.set_tab_title(pnl.get_index(), tab_title)
 
 
 func populate_fields(_user : RSTwitchUser, _live_data : TwitchStream):
@@ -284,12 +294,13 @@ func _on_btn_add_custom_beans_toggled(toggled_on):
 		clear_param_inspector()
 
 
-
-
-
 func _on_btn_test_beans_pressed():
 	var user := user_from_fields()
 	if !user.username.is_empty():
 		main.custom.beans(user.username)
 
 
+func _on_ln_chat_live_streamer_text_submitted(new_text):
+	ln_chat_live_streamer.clear()
+	if !live_data: return
+	main.twitcher.chat(new_text, live_data.user_login)

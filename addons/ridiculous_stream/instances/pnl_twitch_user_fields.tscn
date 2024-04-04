@@ -18,6 +18,7 @@ anchor_bottom = 1.0
 offset_bottom = 251.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = ExtResource("4_18mwm")
 script = ExtResource("1_t6b5i")
 
 [node name="vb" type="VBoxContainer" parent="."]
@@ -117,203 +118,7 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 
-[node name="pnl_live" type="PanelContainer" parent="vb"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
-theme_override_styles/panel = ExtResource("4_18mwm")
-
-[node name="stream_thumbnail" type="TextureRect" parent="vb/pnl_live"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
-expand_mode = 1
-stretch_mode = 5
-
-[node name="pnl" type="PanelContainer" parent="vb/pnl_live/stream_thumbnail"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 23.0
-grow_horizontal = 2
-
-[node name="stream_title" type="Label" parent="vb/pnl_live/stream_thumbnail/pnl"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Stream title"
-autowrap_mode = 3
-
-[node name="hb" type="HBoxContainer" parent="vb/pnl_live/stream_thumbnail"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -24.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="btn_raid_current" type="Button" parent="vb/pnl_live/stream_thumbnail/hb"]
-custom_minimum_size = Vector2(250, 0)
-layout_mode = 2
-text = "Raid!"
-icon = ExtResource("7_ayv7u")
-expand_icon = true
-
-[node name="empty" type="Control" parent="vb/pnl_live/stream_thumbnail/hb"]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="pnl" type="PanelContainer" parent="vb/pnl_live/stream_thumbnail/hb"]
-layout_mode = 2
-
-[node name="hb" type="HBoxContainer" parent="vb/pnl_live/stream_thumbnail/hb/pnl"]
-layout_mode = 2
-
-[node name="stream_time" type="Label" parent="vb/pnl_live/stream_thumbnail/hb/pnl/hb"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "00:15:32"
-
-[node name="icon" type="TextureRect" parent="vb/pnl_live/stream_thumbnail/hb/pnl/hb"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-texture = ExtResource("3_6ldp6")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="stream_viewer_count" type="Label" parent="vb/pnl_live/stream_thumbnail/hb/pnl/hb"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "15"
-
 [node name="sep" type="HSeparator" parent="vb"]
-layout_mode = 2
-
-[node name="hb2" type="HBoxContainer" parent="vb"]
-layout_mode = 2
-
-[node name="pnl" type="PanelContainer" parent="vb/hb2"]
-layout_mode = 2
-theme_override_styles/panel = ExtResource("4_18mwm")
-
-[node name="grid_flags" type="GridContainer" parent="vb/hb2/pnl"]
-layout_mode = 2
-columns = 2
-
-[node name="fl_is_streamer" type="CheckButton" parent="vb/hb2/pnl/grid_flags"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Streamer"
-alignment = 2
-
-[node name="fl_auto_shoutout" type="CheckButton" parent="vb/hb2/pnl/grid_flags"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Auto-shoutout"
-alignment = 2
-
-[node name="fl_auto_promotion" type="CheckButton" parent="vb/hb2/pnl/grid_flags"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Auto-promotion"
-alignment = 2
-
-[node name="grid_custom" type="GridContainer" parent="vb/hb2"]
-layout_mode = 2
-size_flags_horizontal = 3
-columns = 2
-
-[node name="lb4" type="Label" parent="vb/hb2/grid_custom"]
-layout_mode = 2
-text = "Godot chat colour"
-
-[node name="btn_custom_color" type="ColorPickerButton" parent="vb/hb2/grid_custom"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="lb5" type="Label" parent="vb/hb2/grid_custom"]
-layout_mode = 2
-text = "Custom sfx"
-
-[node name="opt_custom_sfx" type="OptionButton" parent="vb/hb2/grid_custom"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="lb7" type="Label" parent="vb/hb2/grid_custom"]
-layout_mode = 2
-text = "Custom actions"
-
-[node name="opt_custom_actions" type="OptionButton" parent="vb/hb2/grid_custom"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="vb" type="VBoxContainer" parent="vb/hb2"]
-layout_mode = 2
-
-[node name="sep4" type="HSeparator" parent="vb"]
-layout_mode = 2
-
-[node name="scroll" type="ScrollContainer" parent="vb"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="vb" type="VBoxContainer" parent="vb/scroll"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="hb" type="HBoxContainer" parent="vb/scroll/vb"]
-layout_mode = 2
-
-[node name="btn_test_beans" type="Button" parent="vb/scroll/vb/hb"]
-layout_mode = 2
-text = "Test beans!"
-
-[node name="btn_add_custom_beans" type="CheckButton" parent="vb/scroll/vb/hb"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Custom Beans!"
-alignment = 1
-
-[node name="sub_res" type="PanelContainer" parent="vb/scroll/vb"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="sep7" type="HSeparator" parent="vb/scroll/vb"]
-layout_mode = 2
-
-[node name="te_so" type="TextEdit" parent="vb/scroll/vb"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "shoutout message"
-wrap_mode = 1
-scroll_fit_content_height = true
-caret_blink = true
-
-[node name="te_promote" type="TextEdit" parent="vb/scroll/vb"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "promotion message"
-wrap_mode = 1
-scroll_fit_content_height = true
-caret_blink = true
-
-[node name="sep5" type="HSeparator" parent="vb"]
 layout_mode = 2
 
 [node name="hb3" type="HBoxContainer" parent="vb"]
@@ -341,14 +146,216 @@ text = "Open folder"
 icon = ExtResource("6_1qe2s")
 expand_icon = true
 
+[node name="tabs" type="TabContainer" parent="vb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="pnl_info" type="PanelContainer" parent="vb/tabs"]
+visible = false
+layout_mode = 2
+
+[node name="vb" type="VBoxContainer" parent="vb/tabs/pnl_info"]
+layout_mode = 2
+
+[node name="hb2" type="HBoxContainer" parent="vb/tabs/pnl_info/vb"]
+layout_mode = 2
+
+[node name="pnl" type="PanelContainer" parent="vb/tabs/pnl_info/vb/hb2"]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("4_18mwm")
+
+[node name="grid_flags" type="GridContainer" parent="vb/tabs/pnl_info/vb/hb2/pnl"]
+layout_mode = 2
+columns = 2
+
+[node name="fl_is_streamer" type="CheckButton" parent="vb/tabs/pnl_info/vb/hb2/pnl/grid_flags"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Streamer"
+alignment = 2
+
+[node name="fl_auto_shoutout" type="CheckButton" parent="vb/tabs/pnl_info/vb/hb2/pnl/grid_flags"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Auto-shoutout"
+alignment = 2
+
+[node name="fl_auto_promotion" type="CheckButton" parent="vb/tabs/pnl_info/vb/hb2/pnl/grid_flags"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Auto-promotion"
+alignment = 2
+
+[node name="grid_custom" type="GridContainer" parent="vb/tabs/pnl_info/vb/hb2"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 2
+
+[node name="lb4" type="Label" parent="vb/tabs/pnl_info/vb/hb2/grid_custom"]
+layout_mode = 2
+text = "Godot chat colour"
+
+[node name="btn_custom_color" type="ColorPickerButton" parent="vb/tabs/pnl_info/vb/hb2/grid_custom"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb5" type="Label" parent="vb/tabs/pnl_info/vb/hb2/grid_custom"]
+layout_mode = 2
+text = "Custom sfx"
+
+[node name="opt_custom_sfx" type="OptionButton" parent="vb/tabs/pnl_info/vb/hb2/grid_custom"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb7" type="Label" parent="vb/tabs/pnl_info/vb/hb2/grid_custom"]
+layout_mode = 2
+text = "Custom actions"
+
+[node name="opt_custom_actions" type="OptionButton" parent="vb/tabs/pnl_info/vb/hb2/grid_custom"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="vb" type="VBoxContainer" parent="vb/tabs/pnl_info/vb/hb2"]
+layout_mode = 2
+
+[node name="te_so" type="TextEdit" parent="vb/tabs/pnl_info/vb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "shoutout message"
+wrap_mode = 1
+scroll_fit_content_height = true
+caret_blink = true
+
+[node name="te_promote" type="TextEdit" parent="vb/tabs/pnl_info/vb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "promotion message"
+wrap_mode = 1
+scroll_fit_content_height = true
+caret_blink = true
+
+[node name="pnl_beans" type="PanelContainer" parent="vb/tabs"]
+visible = false
+layout_mode = 2
+
+[node name="scroll" type="ScrollContainer" parent="vb/tabs/pnl_beans"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="vb" type="VBoxContainer" parent="vb/tabs/pnl_beans/scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="hb" type="HBoxContainer" parent="vb/tabs/pnl_beans/scroll/vb"]
+layout_mode = 2
+
+[node name="btn_test_beans" type="Button" parent="vb/tabs/pnl_beans/scroll/vb/hb"]
+layout_mode = 2
+text = "Test beans!"
+
+[node name="btn_add_custom_beans" type="CheckButton" parent="vb/tabs/pnl_beans/scroll/vb/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Custom Beans!"
+alignment = 1
+
+[node name="sub_res" type="PanelContainer" parent="vb/tabs/pnl_beans/scroll/vb"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="sep7" type="HSeparator" parent="vb/tabs/pnl_beans/scroll/vb"]
+layout_mode = 2
+
+[node name="pnl_live" type="PanelContainer" parent="vb/tabs"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+theme_override_styles/panel = ExtResource("4_18mwm")
+
+[node name="vb" type="VBoxContainer" parent="vb/tabs/pnl_live"]
+layout_mode = 2
+
+[node name="pnl" type="PanelContainer" parent="vb/tabs/pnl_live/vb"]
+layout_mode = 2
+
+[node name="stream_title" type="Label" parent="vb/tabs/pnl_live/vb/pnl"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Stream title"
+autowrap_mode = 3
+
+[node name="stream_thumbnail" type="TextureRect" parent="vb/tabs/pnl_live/vb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="hb" type="HBoxContainer" parent="vb/tabs/pnl_live/vb"]
+layout_mode = 2
+
+[node name="btn_raid_current" type="Button" parent="vb/tabs/pnl_live/vb/hb"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+text = "Raid!"
+icon = ExtResource("7_ayv7u")
+expand_icon = true
+
+[node name="ln_chat_live_streamer" type="LineEdit" parent="vb/tabs/pnl_live/vb/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "send chat message"
+
+[node name="pnl" type="PanelContainer" parent="vb/tabs/pnl_live/vb/hb"]
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="vb/tabs/pnl_live/vb/hb/pnl"]
+layout_mode = 2
+
+[node name="stream_time" type="Label" parent="vb/tabs/pnl_live/vb/hb/pnl/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "00:15:32"
+
+[node name="icon" type="TextureRect" parent="vb/tabs/pnl_live/vb/hb/pnl/hb"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = ExtResource("3_6ldp6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="stream_viewer_count" type="Label" parent="vb/tabs/pnl_live/vb/hb/pnl/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "15"
+
 [node name="sfx_prev" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 
 [connection signal="text_submitted" from="vb/top/vb/search/ln_search" to="." method="_on_ln_search_text_submitted"]
-[connection signal="pressed" from="vb/pnl_live/stream_thumbnail/hb/btn_raid_current" to="." method="_on_btn_raid_current_pressed"]
-[connection signal="item_selected" from="vb/hb2/grid_custom/opt_custom_sfx" to="." method="_on_opt_custom_sfx_item_selected"]
-[connection signal="pressed" from="vb/scroll/vb/hb/btn_test_beans" to="." method="_on_btn_test_beans_pressed"]
-[connection signal="toggled" from="vb/scroll/vb/hb/btn_add_custom_beans" to="." method="_on_btn_add_custom_beans_toggled"]
 [connection signal="pressed" from="vb/hb3/btn_save" to="." method="_on_btn_save_pressed"]
 [connection signal="pressed" from="vb/hb3/btn_open_file" to="." method="_on_btn_open_file_pressed"]
 [connection signal="pressed" from="vb/hb3/btn_open_folder" to="." method="_on_btn_open_folder_pressed"]
+[connection signal="item_selected" from="vb/tabs/pnl_info/vb/hb2/grid_custom/opt_custom_sfx" to="." method="_on_opt_custom_sfx_item_selected"]
+[connection signal="pressed" from="vb/tabs/pnl_beans/scroll/vb/hb/btn_test_beans" to="." method="_on_btn_test_beans_pressed"]
+[connection signal="toggled" from="vb/tabs/pnl_beans/scroll/vb/hb/btn_add_custom_beans" to="." method="_on_btn_add_custom_beans_toggled"]
+[connection signal="pressed" from="vb/tabs/pnl_live/vb/hb/btn_raid_current" to="." method="_on_btn_raid_current_pressed"]
+[connection signal="text_submitted" from="vb/tabs/pnl_live/vb/hb/ln_chat_live_streamer" to="." method="_on_ln_chat_live_streamer_text_submitted"]
