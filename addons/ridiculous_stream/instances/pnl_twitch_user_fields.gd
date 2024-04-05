@@ -300,7 +300,11 @@ func _on_btn_test_beans_pressed():
 		main.custom.beans(user.username)
 
 
+func _on_stream_title_pressed():
+	OS.shell_open("https://www.twitch.tv/%s"%user.username)
 func _on_ln_chat_live_streamer_text_submitted(new_text):
 	ln_chat_live_streamer.clear()
 	if !live_data: return
 	main.twitcher.chat(new_text, live_data.user_login)
+
+

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dc02d6u648u1j"]
+[gd_scene load_steps=13 format=3 uid="uid://dc02d6u648u1j"]
 
 [ext_resource type="Script" path="res://addons/ridiculous_stream/instances/pnl_twitch_user_fields.gd" id="1_t6b5i"]
 [ext_resource type="Texture2D" uid="uid://dqxomv5pykt6i" path="res://addons/ridiculous_stream/ui/bootstrap_icons/search-heart.svg" id="2_iqcnk"]
@@ -10,6 +10,10 @@
 [ext_resource type="Texture2D" uid="uid://b0ojmkb42pnot" path="res://addons/ridiculous_stream/ui/bootstrap_icons/folder2-open.svg" id="6_1qe2s"]
 [ext_resource type="PackedScene" uid="uid://bnvfuklj58uqa" path="res://addons/ridiculous_stream/instances/pnl_connect.tscn" id="6_jv0c3"]
 [ext_resource type="Texture2D" uid="uid://dbpv7xe18l2r6" path="res://addons/ridiculous_stream/ui/sprites/raid_icon.png" id="7_ayv7u"]
+[ext_resource type="Theme" uid="uid://s7hlwwefuhgh" path="res://addons/ridiculous_stream/ui/chat_message.theme" id="10_0ham4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dft32"]
+bg_color = Color(0.129412, 0.14902, 0.180392, 1)
 
 [node name="pnl_twitch_user_fields" type="PanelContainer"]
 anchors_preset = 15
@@ -150,8 +154,10 @@ expand_icon = true
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+current_tab = 2
 
 [node name="pnl_info" type="PanelContainer" parent="vb/tabs"]
+visible = false
 layout_mode = 2
 
 [node name="vb" type="VBoxContainer" parent="vb/tabs/pnl_info"]
@@ -280,24 +286,20 @@ layout_mode = 2
 
 [node name="pnl_live" type="PanelContainer" parent="vb/tabs"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
-theme_override_styles/panel = ExtResource("4_18mwm")
+theme = ExtResource("10_0ham4")
 
 [node name="vb" type="VBoxContainer" parent="vb/tabs/pnl_live"]
 layout_mode = 2
 
-[node name="pnl" type="PanelContainer" parent="vb/tabs/pnl_live/vb"]
-layout_mode = 2
-
-[node name="stream_title" type="Label" parent="vb/tabs/pnl_live/vb/pnl"]
+[node name="stream_title" type="Button" parent="vb/tabs/pnl_live/vb"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Stream title"
-autowrap_mode = 3
 
 [node name="stream_thumbnail" type="TextureRect" parent="vb/tabs/pnl_live/vb"]
 unique_name_in_owner = true
@@ -308,41 +310,39 @@ size_flags_stretch_ratio = 3.0
 expand_mode = 1
 stretch_mode = 5
 
-[node name="hb" type="HBoxContainer" parent="vb/tabs/pnl_live/vb"]
+[node name="bot" type="PanelContainer" parent="vb/tabs/pnl_live/vb"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dft32")
+
+[node name="hb" type="HBoxContainer" parent="vb/tabs/pnl_live/vb/bot"]
 layout_mode = 2
 
-[node name="btn_raid_current" type="Button" parent="vb/tabs/pnl_live/vb/hb"]
+[node name="btn_raid_current" type="Button" parent="vb/tabs/pnl_live/vb/bot/hb"]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 text = "Raid!"
 icon = ExtResource("7_ayv7u")
 expand_icon = true
 
-[node name="ln_chat_live_streamer" type="LineEdit" parent="vb/tabs/pnl_live/vb/hb"]
+[node name="ln_chat_live_streamer" type="LineEdit" parent="vb/tabs/pnl_live/vb/bot/hb"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "send chat message"
 
-[node name="pnl" type="PanelContainer" parent="vb/tabs/pnl_live/vb/hb"]
-layout_mode = 2
-
-[node name="hb" type="HBoxContainer" parent="vb/tabs/pnl_live/vb/hb/pnl"]
-layout_mode = 2
-
-[node name="stream_time" type="Label" parent="vb/tabs/pnl_live/vb/hb/pnl/hb"]
+[node name="stream_time" type="Label" parent="vb/tabs/pnl_live/vb/bot/hb"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "00:15:32"
 
-[node name="icon" type="TextureRect" parent="vb/tabs/pnl_live/vb/hb/pnl/hb"]
+[node name="icon" type="TextureRect" parent="vb/tabs/pnl_live/vb/bot/hb"]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 texture = ExtResource("3_6ldp6")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="stream_viewer_count" type="Label" parent="vb/tabs/pnl_live/vb/hb/pnl/hb"]
+[node name="stream_viewer_count" type="Label" parent="vb/tabs/pnl_live/vb/bot/hb"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "15"
@@ -357,5 +357,6 @@ unique_name_in_owner = true
 [connection signal="item_selected" from="vb/tabs/pnl_info/vb/hb2/grid_custom/opt_custom_sfx" to="." method="_on_opt_custom_sfx_item_selected"]
 [connection signal="pressed" from="vb/tabs/pnl_beans/scroll/vb/hb/btn_test_beans" to="." method="_on_btn_test_beans_pressed"]
 [connection signal="toggled" from="vb/tabs/pnl_beans/scroll/vb/hb/btn_add_custom_beans" to="." method="_on_btn_add_custom_beans_toggled"]
-[connection signal="pressed" from="vb/tabs/pnl_live/vb/hb/btn_raid_current" to="." method="_on_btn_raid_current_pressed"]
-[connection signal="text_submitted" from="vb/tabs/pnl_live/vb/hb/ln_chat_live_streamer" to="." method="_on_ln_chat_live_streamer_text_submitted"]
+[connection signal="pressed" from="vb/tabs/pnl_live/vb/stream_title" to="." method="_on_stream_title_pressed"]
+[connection signal="pressed" from="vb/tabs/pnl_live/vb/bot/hb/btn_raid_current" to="." method="_on_btn_raid_current_pressed"]
+[connection signal="text_submitted" from="vb/tabs/pnl_live/vb/bot/hb/ln_chat_live_streamer" to="." method="_on_ln_chat_live_streamer_text_submitted"]
