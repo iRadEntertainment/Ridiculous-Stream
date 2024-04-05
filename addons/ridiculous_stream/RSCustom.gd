@@ -9,11 +9,8 @@ var screen_shader : RSShaders
 var wheel_of_random : RSWheelOfRandom
 
 
-func start():
+func start() -> void:
 	main.twitcher.received_chat_message.connect(on_chat)
-	# main.twitcher.whisper_message.connect(on_whisper_message)
-	# main.twitcher.user_joined.connect(on_user_joined)
-	# main.twitcher.user_parted.connect(on_user_parted)
 	main.twitcher.channel_points_redeemed.connect(on_channel_points_redeemed)
 	main.twitcher.followed.connect(on_followed)
 	main.twitcher.raided.connect(on_raided)
@@ -23,24 +20,18 @@ func start():
 
 
 func add_commands() -> void:
+	print("yeah I'm adding the commands again")
 	main.twitcher.commands.add_command("laser", laser)
 	main.twitcher.commands.add_command("zeroG", zero_g)
-	#main.twitcher.commands.add_command("crt", start_screen_shader.bind("crt"))
-	#main.twitcher.commands.add_command("old", start_screen_shader.bind("old_movie"))
-	#main.twitcher.commands.add_command("speed", start_screen_shader.bind("speed_lines"))
-	#main.twitcher.commands.add_command("so", main.shoutout, main.twitcher.commands.PermissionFlag.MOD_STREAMER)
+	main.twitcher.commands.add_alias("zeroG", "zerog")
+	main.twitcher.commands.add_alias("zeroG", "0g")
+	main.twitcher.commands.add_alias("zeroG", "0G")
 	main.twitcher.commands.add_command("discord", discord)
-	main.twitcher.commands.add_command("chat", chat_commands_help)
+	main.twitcher.commands.add_command("commands", chat_commands_help)
 
-# func on_chat(sender_data : SenderData, message : String):
 func on_chat(_channel_name: String, _username: String, _message: String, _tags: TwitchTags.PrivMsg):
 	pass
-# func on_whisper_message(sender_data : SenderData, message : String):
-# 	pass
-# func on_user_joined(sender_data : SenderData):
-# 	pass
-# func on_user_parted(sender_data : SenderData):
-# 	pass
+
 func on_channel_points_redeemed(data : RSTwitchEventData):
 	match data.reward_title:
 		"beans":
@@ -130,11 +121,11 @@ func get_advice(data : RSTwitchEventData) -> void:
 	main.twitcher.chat(format_string.format(advice_dic) )
 
 
-func discord():
+func discord(_info : TwitchCommandInfo = null):
 	var msg = "Join Discord: https://discord.gg/4YhKaHkcMb"
 	main.twitcher.chat(msg)
 
-func chat_commands_help():
+func chat_commands_help(_info : TwitchCommandInfo = null):
 	var msg = "Use a combination of ![command] for chat: hl (highlight), hd(hidden), rb(rainbow), big, small, wave, pulse, tornado, shake"
 	main.twitcher.chat(msg)
 
@@ -158,7 +149,7 @@ func beans(username : String):
 	physic_scene.add_image_bodies(beans_param)
 
 
-func zero_g():
+func zero_g(_info : TwitchCommandInfo = null):
 	if not physic_scene:
 		main.twitcher.chat("Wait for the physic scene to be in first!")
 		return
@@ -171,7 +162,7 @@ func zero_g():
 	tw.tween_method(physic_scene.set_space_gravity, 0, 4410, 5.0)
 
 
-func laser():
+func laser(_info : TwitchCommandInfo = null):
 	add_physic_scene()
 	if physic_scene.is_closing: return
 	physic_scene.add_laser()
