@@ -152,7 +152,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="pnl_info" type="PanelContainer" parent="vb/tabs"]
-visible = false
 layout_mode = 2
 
 [node name="vb" type="VBoxContainer" parent="vb/tabs/pnl_info"]
@@ -281,6 +280,7 @@ layout_mode = 2
 
 [node name="pnl_live" type="PanelContainer" parent="vb/tabs"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

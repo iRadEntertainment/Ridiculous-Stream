@@ -10,6 +10,7 @@ const rs_user_folder = "users/"
 const rs_obj_folder = "obj/"
 const rs_sfx_folder = "sfx/"
 
+const pnl_settings_pack = preload("res://addons/ridiculous_stream/instances/pnl_settings.tscn")
 const dock_pack = preload("res://addons/ridiculous_stream/instances/RSDock.tscn")
 const wn_settings_pack = preload("res://addons/ridiculous_stream/instances/wn_settings.tscn")
 const wn_welcome_pack = preload("res://addons/ridiculous_stream/instances/wn_welcome.tscn")

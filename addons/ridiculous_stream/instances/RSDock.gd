@@ -31,15 +31,11 @@ func play_notification(_channel_name: String, username: String, _message: String
 	new_notif_inst.play()
 
 
-func _on_btn_hot_reload_plugin_pressed():
-	main.reload_plugin()
-func _on_btn_open_sett_wind_pressed():
-	main.wn_settings.popup_centered_clamped()
-
-
+func _on_btn_reload_pressed():
+	main.call_deferred("reload_dock")
 # TEST: remove test stuff
 func _on_btn_test_stuff_pressed():
-	pass
-	main.loader.convert_all_users()
+	main.custom.add_commands()
+	#main.loader.convert_all_users()
 	# main.twitcher.set_broadcaster_id_for_all_eventsub(456)
 	#main.custom.raid_a_random_streamer_from_the_user_list()

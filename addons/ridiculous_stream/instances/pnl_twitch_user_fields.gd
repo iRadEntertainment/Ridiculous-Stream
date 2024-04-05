@@ -75,7 +75,7 @@ func update_user_fields():
 
 func update_live_fields():
 	set_process(live_data != null)
-	pnl_live.visible = live_data != null
+	#pnl_live.visible = live_data != null
 	if not live_data: return
 	
 	stream_title.text = live_data.title

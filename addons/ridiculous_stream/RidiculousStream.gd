@@ -12,6 +12,7 @@ var globals := RSGlobals.new()
 var loader := RSExternalLoader.new()
 var http_request := HTTPRequest.new()
 
+var pnl_settings : RSPnlSettings
 var dock : RSDock
 var twitcher : RSTwitcher
 var no_obs_ws : NoOBSWS
@@ -20,7 +21,6 @@ var shoutout_mng : RSShoutoutMng
 var physics_space_rid : RID #TODO: remove?
 var custom : RSCustom
 var copilot : RSCoPilot
-var wn_settings : Window
 
 # ================================ INIT ========================================
 func _enter_tree() -> void:
@@ -30,7 +30,18 @@ func _enter_tree() -> void:
 	reload_twitcher()
 	add_tool_generate_rest_api()
 	add_nodes()
+	hot_reload_pnl_settings()
 	reload_dock()
+
+func _has_main_screen():
+	return true
+func _make_visible(visible):
+	if pnl_settings:
+		pnl_settings.visible = visible
+func _get_plugin_name():
+	return "RSSettings"
+func _get_plugin_icon():
+	return load("res://addons/ridiculous_stream/ui/settings_icon.png")
 
 
 func reload_twitcher():
@@ -63,14 +74,18 @@ func add_nodes():
 	no_obs_ws = NoOBSWS.new()
 	add_child(no_obs_ws)
 	no_obs_ws.connect_to_obsws(4455, settings.obs_websocket_password)
-	hot_reaload_wn_settings()
 
-func hot_reaload_wn_settings():
-	wn_settings = RSGlobals.wn_settings_pack.instantiate()
-	wn_settings.visible = false
-	wn_settings.main = self
-	EditorInterface.get_base_control().add_child(wn_settings)
-	wn_settings.start()
+
+func hot_reload_pnl_settings():
+	var pnl_settings_exists = pnl_settings != null
+	if pnl_settings_exists:
+		pnl_settings.queue_free()
+	pnl_settings = RSGlobals.pnl_settings_pack.instantiate()
+	pnl_settings.name = "panel_settings"
+	pnl_settings.visible = pnl_settings_exists
+	pnl_settings.main = self
+	EditorInterface.get_editor_main_screen().add_child(pnl_settings)
+	pnl_settings.start()
 
 
 # ================================ DOCK ========================================

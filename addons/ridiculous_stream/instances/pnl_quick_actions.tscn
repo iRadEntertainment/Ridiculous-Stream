@@ -38,6 +38,7 @@ vertical_alignment = 1
 
 [node name="btn_cont" type="PanelContainer" parent="vb"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_override_styles/panel = ExtResource("3_qsojj")
 
