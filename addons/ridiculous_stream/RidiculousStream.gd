@@ -162,7 +162,6 @@ func _exit_tree() -> void:
 		remove_control_from_docks(dock)
 		dock.queue_free()
 	if shoutout_mng: shoutout_mng.queue_free()
-	if wn_settings: wn_settings.queue_free()
 	print("=================================== RIDICULOS STREAMING EXITING ===================================")
 
 
