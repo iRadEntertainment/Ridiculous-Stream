@@ -1,13 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://blspj1uih5msk"]
+[gd_scene load_steps=4 format=3 uid="uid://blspj1uih5msk"]
 
 [ext_resource type="Script" path="res://addons/ridiculous_stream/instances/wn_settings.gd" id="1_vldws"]
-[ext_resource type="PackedScene" uid="uid://gi6k83qtu4y2" path="res://addons/ridiculous_stream/instances/pnl_rs_setting.tscn" id="2_7ru31"]
-[ext_resource type="PackedScene" uid="uid://cmm5f6140s4jm" path="res://addons/ridiculous_stream/instances/pnl_test.tscn" id="4_gjljo"]
-[ext_resource type="PackedScene" uid="uid://cqlaadcvsfhpq" path="res://addons/ridiculous_stream/instances/pnl_twitch_user_list.tscn" id="4_t5th0"]
-[ext_resource type="PackedScene" uid="uid://dc02d6u648u1j" path="res://addons/ridiculous_stream/instances/pnl_twitch_user_fields.tscn" id="5_qnlvo"]
-[ext_resource type="Texture2D" uid="uid://bykc5hku6ubu8" path="res://addons/ridiculous_stream/icon_irad.png" id="6_goi70"]
-[ext_resource type="PackedScene" uid="uid://rvb1iyen7vu3" path="res://addons/ridiculous_stream/instances/pnl_redeems.tscn" id="6_gsyc6"]
-[ext_resource type="Texture2D" uid="uid://b4gxd48s477ky" path="res://addons/ridiculous_stream/icon-github.png" id="7_3kd2b"]
+[ext_resource type="PackedScene" uid="uid://cnlev2iwtj1pr" path="res://addons/ridiculous_stream/instances/pnl_settings.tscn" id="2_16q5g"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dp5vt"]
 bg_color = Color(0.211765, 0.239216, 0.290196, 1)
@@ -31,106 +25,9 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dp5vt")
 
-[node name="pnl" type="PanelContainer" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="vb" type="VBoxContainer" parent="pnl"]
-layout_mode = 2
-
-[node name="hsplit" type="HBoxContainer" parent="pnl/vb"]
+[node name="pnl_settings" parent="." instance=ExtResource("2_16q5g")]
 unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="vsplit" type="VSplitContainer" parent="pnl/vb/hsplit"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.4
-
-[node name="pnl_rs_settings" parent="pnl/vb/hsplit/vsplit" instance=ExtResource("2_7ru31")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="pnl_test" parent="pnl/vb/hsplit/vsplit" instance=ExtResource("4_gjljo")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="hsplit" type="HSplitContainer" parent="pnl/vb/hsplit"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.5
-
-[node name="pnl_twitch_user_list" parent="pnl/vb/hsplit/hsplit" instance=ExtResource("4_t5th0")]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_stretch_ratio = 0.4
-
-[node name="pnl_twitch_user_fields" parent="pnl/vb/hsplit/hsplit" instance=ExtResource("5_qnlvo")]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="pnl_redeems" parent="pnl/vb/hsplit" instance=ExtResource("6_gsyc6")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="bot" type="HBoxContainer" parent="pnl/vb"]
-layout_mode = 2
-
-[node name="btn_hot_reload" type="Button" parent="pnl/vb/bot"]
-layout_mode = 2
-text = "Re-instatiate window"
-
-[node name="sep" type="VSeparator" parent="pnl/vb/bot"]
-layout_mode = 2
-
-[node name="lb" type="Label" parent="pnl/vb/bot"]
-layout_mode = 2
-text = "Credits"
-
-[node name="btn_open_irad_twitch" type="Button" parent="pnl/vb/bot"]
-custom_minimum_size = Vector2(36, 36)
-layout_mode = 2
-icon = ExtResource("6_goi70")
-icon_alignment = 1
-expand_icon = true
-
-[node name="btn_open_github" type="Button" parent="pnl/vb/bot"]
-custom_minimum_size = Vector2(36, 36)
-layout_mode = 2
-icon = ExtResource("7_3kd2b")
-icon_alignment = 1
-expand_icon = true
-
-[node name="btn_credits_gift" type="Button" parent="pnl/vb/bot"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Gift | by Issork"
-
-[node name="btn_credits_twitcher" type="Button" parent="pnl/vb/bot"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Twitcher | by Kani_dev"
-
-[node name="btn_credits_noobs" type="Button" parent="pnl/vb/bot"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "No OBS ws | by TheYagich"
-
-[node name="btn_credits_polygon" type="Button" parent="pnl/vb/bot"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Polygon 2d fracture | by SoloBits"
+offset_right = 0.0
+offset_bottom = 0.0
 
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]
-[connection signal="pressed" from="pnl/vb/bot/btn_hot_reload" to="." method="_on_btn_hot_reload_pressed"]
-[connection signal="pressed" from="pnl/vb/bot/btn_open_irad_twitch" to="." method="_on_btn_open_irad_twitch_pressed"]
-[connection signal="pressed" from="pnl/vb/bot/btn_open_github" to="." method="_on_btn_open_github_pressed"]
-[connection signal="pressed" from="pnl/vb/bot/btn_credits_gift" to="." method="_on_btn_credits_gift_pressed"]
-[connection signal="pressed" from="pnl/vb/bot/btn_credits_twitcher" to="." method="_on_btn_credits_twitcher_pressed"]
-[connection signal="pressed" from="pnl/vb/bot/btn_credits_noobs" to="." method="_on_btn_credits_noobs_pressed"]
-[connection signal="pressed" from="pnl/vb/bot/btn_credits_polygon" to="." method="_on_btn_credits_polygon_pressed"]
