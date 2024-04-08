@@ -166,6 +166,18 @@ func chat(msg : String, channel_name := ""):
 func whisper(message: String, username: String) -> void:
 	log.e("Whipser from bots aren't supported by Twitch anymore. See https://dev.twitch.tv/docs/irc/chat-commands/ at /w")
 
+## Possible colors are: * blue * green * orange * purple * primary (default)
+func announcement(msg : String, color := ""):
+	var body := TwitchSendChatAnnouncementBody.new()
+	body.message = msg
+	body.color = color
+	var path = "/helix/chat/announcements?"
+	path += "broadcaster_id=" + str(main.settings.broadcaster_id) + "&"
+	path += "moderator_id=" + str(main.settings.broadcaster_id)
+	await api.request(path, HTTPClient.METHOD_POST, body, "application/json")
+
+
+
 ## Returns the definition of emotes for given channel or for the global emotes.
 ## Key: EmoteID as String ; Value: TwitchGlobalEmote | TwitchChannelEmote
 func get_emotes_data(channel_id: String = "global") -> Dictionary:

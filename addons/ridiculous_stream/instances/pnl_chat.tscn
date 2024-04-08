@@ -27,15 +27,40 @@ scroll_following = true
 threaded = true
 selection_enabled = true
 
-[node name="hb_msg" type="HBoxContainer" parent="vb"]
-layout_mode = 2
-
-[node name="ln_msg" type="LineEdit" parent="vb/hb_msg"]
+[node name="ln_msg" type="LineEdit" parent="vb"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.160784, 0.764706, 0.65098, 1)
 placeholder_text = "chat"
+
+[node name="hb_msg" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+
+[node name="ln_announce" type="LineEdit" parent="vb/hb_msg"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.160784, 0.764706, 0.65098, 1)
+placeholder_text = "announcement"
+
+[node name="opt_announce_color" type="OptionButton" parent="vb/hb_msg"]
+unique_name_in_owner = true
+layout_mode = 2
+item_count = 6
+popup/item_0/text = ""
+popup/item_0/id = 0
+popup/item_1/text = ""
+popup/item_1/id = 5
+popup/item_1/separator = true
+popup/item_2/text = "blue"
+popup/item_2/id = 1
+popup/item_3/text = "green"
+popup/item_3/id = 2
+popup/item_4/text = "orange"
+popup/item_4/id = 3
+popup/item_5/text = "purple"
+popup/item_5/id = 4
 
 [node name="hb" type="HBoxContainer" parent="vb"]
 layout_mode = 2
@@ -59,5 +84,6 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 
-[connection signal="text_submitted" from="vb/hb_msg/ln_msg" to="." method="_on_ln_msg_text_submitted"]
+[connection signal="text_submitted" from="vb/ln_msg" to="." method="_on_ln_msg_text_submitted"]
+[connection signal="text_submitted" from="vb/hb_msg/ln_announce" to="." method="_on_ln_announce_text_submitted"]
 [connection signal="value_changed" from="vb/hb/sl_font_size" to="." method="_on_sl_font_size_value_changed"]

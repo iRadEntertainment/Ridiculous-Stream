@@ -3,6 +3,8 @@ extends Control
 class_name RSPnlChat
 
 @onready var ln_msg : LineEdit = %ln_msg
+@onready var ln_announce : LineEdit = %ln_announce
+@onready var opt_announce_color = %opt_announce_color
 @onready var lb_chat : RichTextLabel = %lb_chat
 @onready var pnl_connect : PanelContainer = %pnl_connect
 
@@ -145,9 +147,15 @@ func change_font_size(font_size : int):
 func _on_ln_msg_text_submitted(new_text):
 	main.twitcher.chat(new_text)
 	ln_msg.clear()
+func _on_ln_announce_text_submitted(new_text):
+	var color : String = opt_announce_color.get_item_text( opt_announce_color.get_selected_id() )
+	main.twitcher.announcement(new_text, color)
+	ln_announce.clear()
 
 
 func _on_sl_font_size_value_changed(value):
 	change_font_size(value as int)
 	%lb_font_size.text = str(value)
+
+
 
