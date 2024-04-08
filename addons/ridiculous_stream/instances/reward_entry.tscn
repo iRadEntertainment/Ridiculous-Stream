@@ -1,0 +1,73 @@
+[gd_scene load_steps=4 format=3 uid="uid://wl1340ejrqt0"]
+
+[ext_resource type="Script" path="res://addons/ridiculous_stream/instances/reward_entry.gd" id="1_bd50v"]
+[ext_resource type="Texture2D" uid="uid://b4gxd48s477ky" path="res://addons/ridiculous_stream/icon-github.png" id="2_nn7ct"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o7420"]
+bg_color = Color(0.211765, 0.239216, 0.290196, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="reward_entry" type="PanelContainer"]
+offset_right = 305.0
+offset_bottom = 36.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_o7420")
+script = ExtResource("1_bd50v")
+
+[node name="hb" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="btn_icon" type="Button" parent="hb"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="icon" type="TextureRect" parent="hb/btn_icon"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_nn7ct")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="vb" type="VBoxContainer" parent="hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="hb" type="HBoxContainer" parent="hb/vb"]
+layout_mode = 2
+
+[node name="title" type="Label" parent="hb/vb/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Check the chat"
+
+[node name="cost" type="LineEdit" parent="hb/vb/hb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "10000"
+alignment = 2
+
+[node name="ck_is_active" type="CheckButton" parent="hb/vb/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ln_input" type="LineEdit" parent="hb/vb"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="pressed" from="hb/btn_icon" to="." method="_on_btn_icon_pressed"]
+[connection signal="toggled" from="hb/vb/hb/ck_is_active" to="." method="_on_ck_is_active_toggled"]

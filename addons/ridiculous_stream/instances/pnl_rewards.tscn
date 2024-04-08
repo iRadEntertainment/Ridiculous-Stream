@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://rvb1iyen7vu3"]
+
+[ext_resource type="Script" path="res://addons/ridiculous_stream/instances/pnl_rewards.gd" id="1_3d7eq"]
+[ext_resource type="Theme" uid="uid://s7hlwwefuhgh" path="res://addons/ridiculous_stream/ui/chat_message.theme" id="2_3q2xc"]
+[ext_resource type="PackedScene" uid="uid://wl1340ejrqt0" path="res://addons/ridiculous_stream/instances/reward_entry.tscn" id="3_nmi06"]
+[ext_resource type="Texture2D" uid="uid://b2mtooi658yq0" path="res://addons/ridiculous_stream/ui/sprites/loading.png" id="3_ssecm"]
+
+[node name="pnl_rewards" type="PanelContainer"]
+custom_minimum_size = Vector2(350, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3d7eq")
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="top" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="vb/top"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_3q2xc")
+text = "Channel Redeems"
+horizontal_alignment = 1
+
+[node name="btn_update" type="Button" parent="vb/top"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("3_ssecm")
+icon_alignment = 1
+expand_icon = true
+
+[node name="scroll" type="ScrollContainer" parent="vb"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="list" type="VBoxContainer" parent="vb/scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="reward_entry" parent="vb/scroll/list" instance=ExtResource("3_nmi06")]
+layout_mode = 2
+
+[connection signal="pressed" from="vb/top/btn_update" to="." method="_on_btn_update_pressed"]

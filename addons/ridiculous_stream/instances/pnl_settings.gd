@@ -24,7 +24,7 @@ func populate():
 
 
 func reload_panels():
-	for pnl in [%pnl_rs_settings, %pnl_test, %pnl_twitch_user_list, %pnl_twitch_user_fields, %pnl_redeems]:
+	for pnl in [%pnl_rs_settings, %pnl_test, %pnl_twitch_user_list, %pnl_twitch_user_fields, %pnl_rewards]:
 		if pnl is PanelContainer:
 			pnl.main = main
 			if pnl.has_method("start"):
@@ -59,9 +59,6 @@ func _on_btn_hot_reload_plugin_pressed():
 func _on_btn_hot_reload_pressed():
 	main.call_deferred("hot_reload_pnl_settings")
 	queue_free()
-func _on_btn_credits_pressed():
-	main.twitcher.chat("Go figure! Issork made Gift! That's what I am using: https://github.com/issork/gift")
-
 func _on_btn_open_irad_twitch_pressed():
 	OS.shell_open("https://twitch.tv/iraddev")
 	main.twitcher.chat("Ridiculous Stream has been provided kindly by iRadDev: https://twitch.tv/iraddev")

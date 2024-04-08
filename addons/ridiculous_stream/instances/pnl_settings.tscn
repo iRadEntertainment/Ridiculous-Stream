@@ -8,9 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://dc02d6u648u1j" path="res://addons/ridiculous_stream/instances/pnl_twitch_user_fields.tscn" id="3_tus6h"]
 [ext_resource type="Texture2D" uid="uid://boa5ns6c4c07k" path="res://addons/ridiculous_stream/ui/bootstrap_icons/twitch.svg" id="4_7hk7t"]
 [ext_resource type="PackedScene" uid="uid://cqlaadcvsfhpq" path="res://addons/ridiculous_stream/instances/pnl_twitch_user_list.tscn" id="4_j0n41"]
-[ext_resource type="PackedScene" uid="uid://rvb1iyen7vu3" path="res://addons/ridiculous_stream/instances/pnl_redeems.tscn" id="4_tssrk"]
 [ext_resource type="Texture2D" uid="uid://ctpfh3qqwicqq" path="res://addons/ridiculous_stream/ui/sprites/btn_settings.png" id="5_574cn"]
 [ext_resource type="Texture2D" uid="uid://bykc5hku6ubu8" path="res://addons/ridiculous_stream/icon_irad.png" id="5_pus7l"]
+[ext_resource type="PackedScene" uid="uid://rvb1iyen7vu3" path="res://addons/ridiculous_stream/instances/pnl_rewards.tscn" id="6_d22ns"]
 [ext_resource type="Texture2D" uid="uid://b4gxd48s477ky" path="res://addons/ridiculous_stream/icon-github.png" id="6_e1vcs"]
 [ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://addons/ridiculous_stream/ui/bootstrap_icons/arrow-repeat.svg" id="7_a5jks"]
 [ext_resource type="Texture2D" uid="uid://b2mtooi658yq0" path="res://addons/ridiculous_stream/ui/sprites/loading.png" id="12_yksnf"]
@@ -44,6 +44,17 @@ custom_minimum_size = Vector2(48, 32)
 layout_mode = 2
 alignment = 1
 
+[node name="btn_tab3" type="Button" parent="vb/hb/side/side_vb"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+theme_override_colors/icon_pressed_color = Color(0.803922, 0.486275, 0.996078, 1)
+toggle_mode = true
+icon = ExtResource("5_574cn")
+icon_alignment = 1
+expand_icon = true
+
 [node name="btn_tab1" type="Button" parent="vb/hb/side/side_vb"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -63,17 +74,6 @@ focus_mode = 0
 theme_override_colors/icon_pressed_color = Color(0.803922, 0.486275, 0.996078, 1)
 toggle_mode = true
 icon = ExtResource("4_7hk7t")
-icon_alignment = 1
-expand_icon = true
-
-[node name="btn_tab3" type="Button" parent="vb/hb/side/side_vb"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-size_flags_vertical = 3
-focus_mode = 0
-theme_override_colors/icon_pressed_color = Color(0.803922, 0.486275, 0.996078, 1)
-toggle_mode = true
-icon = ExtResource("5_574cn")
 icon_alignment = 1
 expand_icon = true
 
@@ -98,7 +98,28 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 tabs_visible = false
 
+[node name="pnl_settings" type="PanelContainer" parent="vb/hb/tabs"]
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="vb/hb/tabs/pnl_settings"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="split" type="HSplitContainer" parent="vb/hb/tabs/pnl_settings/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+
+[node name="pnl_rs_settings" parent="vb/hb/tabs/pnl_settings/hb/split" instance=ExtResource("1_7lr6v")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="pnl_test" parent="vb/hb/tabs/pnl_settings/hb/split" instance=ExtResource("2_06h4g")]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="users" type="HSplitContainer" parent="vb/hb/tabs"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.5
@@ -114,27 +135,19 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="others" type="HBoxContainer" parent="vb/hb/tabs"]
-unique_name_in_owner = true
+[node name="pnl_twitch_utilities" type="PanelContainer" parent="vb/hb/tabs"]
 visible = false
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="vsplit" type="VSplitContainer" parent="vb/hb/tabs/others"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.4
-
-[node name="pnl_rs_settings" parent="vb/hb/tabs/others/vsplit" instance=ExtResource("1_7lr6v")]
-unique_name_in_owner = true
+[node name="hb" type="HSplitContainer" parent="vb/hb/tabs/pnl_twitch_utilities"]
 layout_mode = 2
 
-[node name="pnl_test" parent="vb/hb/tabs/others/vsplit" instance=ExtResource("2_06h4g")]
+[node name="pnl_rewards" parent="vb/hb/tabs/pnl_twitch_utilities/hb" instance=ExtResource("6_d22ns")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 
-[node name="pnl_redeems" parent="vb/hb/tabs/others" instance=ExtResource("4_tssrk")]
-unique_name_in_owner = true
+[node name="Control" type="Control" parent="vb/hb/tabs/pnl_twitch_utilities/hb"]
 layout_mode = 2
 
 [node name="bot" type="PanelContainer" parent="vb"]

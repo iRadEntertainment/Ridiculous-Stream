@@ -10,11 +10,11 @@ var main : RSMain
 var user : RSTwitchUser
 var live_data : TwitchStream
 
-var pnl_live
-var stream_title
-var stream_thumbnail
-var stream_time
-var stream_viewer_count
+@onready var pnl_live : PanelContainer = %pnl_live
+@onready var stream_title : Button = %stream_title
+@onready var stream_thumbnail : TextureRect = %stream_thumbnail
+@onready var stream_time : Label = %stream_time
+@onready var stream_viewer_count : Label = %stream_viewer_count
 
 
 func _ready():
@@ -23,14 +23,9 @@ func _ready():
 
 func start():
 	update_dropdown_fields()
-	pnl_live = %pnl_live
-	stream_title = %stream_title
-	stream_thumbnail = %stream_thumbnail
-	stream_time = %stream_time
-	stream_viewer_count = %stream_viewer_count
 	%pnl_connect_to_gift.main = main
 	%pnl_connect_to_gift.start()
-	pnl_live.hide()
+	reset_pnl_live()
 	set_tab_names()
 
 
@@ -72,16 +67,26 @@ func update_user_fields():
 	%te_promote.text = user.promotion_description
 	
 
-
 func update_live_fields():
 	set_process(live_data != null)
-	#pnl_live.visible = live_data != null
-	if not live_data: return
+	var live_tab_idx = tabs.get_tab_idx_from_control(pnl_live)
+	tabs.set_tab_disabled(live_tab_idx, live_data == null)
+	
+	if not live_data:
+		reset_pnl_live()
+		return
 	
 	stream_title.text = live_data.title
+	stream_title.disabled = false
 	stream_viewer_count.text = str(live_data.viewer_count)
 	var thumbnail_url = live_data.thumbnail_url.format({"width": 640, "height": 360})
 	stream_thumbnail.texture = await main.loader.load_texture_from_url(thumbnail_url, false)
+
+func reset_pnl_live():
+	stream_title.text = "Stream title"
+	stream_title.disabled = true
+	stream_viewer_count.text = "0"
+	stream_thumbnail.texture = null
 
 
 var ticks := 0
@@ -152,7 +157,7 @@ func clear_custom_fields():
 	%fl_auto_promotion.button_pressed = false
 	%btn_custom_color.color = Color()
 	%opt_custom_sfx.selected = 0
-	%opt_custom_beans.selected = 0
+	#%opt_custom_beans.selected = 0
 	%opt_custom_actions.selected = 0
 	%te_so.text = ""
 	%te_promote.text = ""

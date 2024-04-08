@@ -9,7 +9,8 @@ var main : RSMain
 func start():
 	pass
 
-
+func open_silent_newground_page():
+	OS.shell_open("https://silentground.newgrounds.com/")
 func _on_btn_beans_pressed():
 	main.custom.beans("redston4d")
 func _on_btn_zero_g_pressed():

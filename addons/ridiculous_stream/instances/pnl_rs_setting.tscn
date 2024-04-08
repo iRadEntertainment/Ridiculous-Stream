@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://gi6k83qtu4y2"]
+[gd_scene load_steps=5 format=3 uid="uid://gi6k83qtu4y2"]
 
 [ext_resource type="Script" path="res://addons/ridiculous_stream/instances/pnl_rs_setting.gd" id="1_mw25e"]
+[ext_resource type="Texture2D" uid="uid://b0ojmkb42pnot" path="res://addons/ridiculous_stream/ui/bootstrap_icons/folder2-open.svg" id="2_5jph2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q70dn"]
+bg_color = Color(0.211765, 0.239216, 0.290196, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tqhrp"]
+bg_color = Color(0.219608, 0.239216, 0.266667, 1)
 
 [node name="pnl_rs_settings" type="PanelContainer"]
 anchors_preset = 15
@@ -12,65 +19,108 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_mw25e")
 
-[node name="scr" type="ScrollContainer" parent="."]
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="top" type="PanelContainer" parent="vb"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_q70dn")
+
+[node name="lb" type="Label" parent="vb/top"]
+layout_mode = 2
+text = "General Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="scr" type="ScrollContainer" parent="vb"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="vb" type="VBoxContainer" parent="scr"]
+[node name="vb" type="VBoxContainer" parent="vb/scr"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="btn_reload_plugin" type="Button" parent="scr/vb"]
-unique_name_in_owner = true
+[node name="sect2" type="PanelContainer" parent="vb/scr/vb"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
-text = "Reload Plugin"
+theme_override_styles/panel = SubResource("StyleBoxFlat_tqhrp")
 
-[node name="ck_show_time" type="CheckButton" parent="scr/vb"]
+[node name="lb" type="Label" parent="vb/scr/vb/sect2"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-focus_mode = 0
-text = "show time"
+text = "Data"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="ck_co_pilot" type="CheckButton" parent="scr/vb"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-focus_mode = 0
-text = "co-pilot"
-
-[node name="btn_reload_commands" type="Button" parent="scr/vb"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "reload commands"
-
-[node name="btn_reload_gift" type="Button" parent="scr/vb"]
-layout_mode = 2
-text = "Reload Gift"
-
-[node name="btn_reconnect_gift_signals" type="Button" parent="scr/vb"]
-layout_mode = 2
-text = "Reconnect Gift signals"
-
-[node name="btn_silent" type="Button" parent="scr/vb"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Silent page"
-
-[node name="btn_open_data_dir" type="Button" parent="scr/vb"]
+[node name="btn_open_data_dir" type="Button" parent="vb/scr/vb"]
 layout_mode = 2
 text = "Data Dir"
+icon = ExtResource("2_5jph2")
+expand_icon = true
 
-[node name="btn_open_user_dir" type="Button" parent="scr/vb"]
+[node name="btn_open_user_dir" type="Button" parent="vb/scr/vb"]
 layout_mode = 2
 text = "User Dir"
+icon = ExtResource("2_5jph2")
+expand_icon = true
 
-[connection signal="pressed" from="scr/vb/btn_reload_plugin" to="." method="_on_btn_reload_plugin_pressed"]
-[connection signal="toggled" from="scr/vb/ck_show_time" to="." method="_on_ck_show_time_toggled"]
-[connection signal="toggled" from="scr/vb/ck_co_pilot" to="." method="_on_ck_co_pilot_toggled"]
-[connection signal="pressed" from="scr/vb/btn_reload_commands" to="." method="_on_btn_reload_commands_pressed"]
-[connection signal="pressed" from="scr/vb/btn_reload_gift" to="." method="_on_btn_reload_gift_pressed"]
-[connection signal="pressed" from="scr/vb/btn_reconnect_gift_signals" to="." method="_on_btn_reconnect_gift_signals_pressed"]
-[connection signal="pressed" from="scr/vb/btn_silent" to="." method="_on_btn_silent_pressed"]
-[connection signal="pressed" from="scr/vb/btn_open_data_dir" to="." method="_on_data_dir_pressed"]
-[connection signal="pressed" from="scr/vb/btn_open_user_dir" to="." method="_on_btn_open_user_dir_pressed"]
+[node name="sect1" type="PanelContainer" parent="vb/scr/vb"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tqhrp")
+
+[node name="lb" type="Label" parent="vb/scr/vb/sect1"]
+layout_mode = 2
+text = "Twitcher"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="btn_reload_twitcher" type="Button" parent="vb/scr/vb"]
+layout_mode = 2
+text = "Reload Twitcher"
+
+[node name="btn_reload_commands" type="Button" parent="vb/scr/vb"]
+layout_mode = 2
+text = "Reload command handling"
+
+[node name="btn_open_cache_badges_dir" type="Button" parent="vb/scr/vb"]
+layout_mode = 2
+text = "Cache Badges Dir"
+icon = ExtResource("2_5jph2")
+expand_icon = true
+
+[node name="btn_open_cache_emotes_dir" type="Button" parent="vb/scr/vb"]
+layout_mode = 2
+text = "Cache Profile Pic Dir"
+icon = ExtResource("2_5jph2")
+expand_icon = true
+
+[node name="btn_open_cache_cheer_emotes_dir" type="Button" parent="vb/scr/vb"]
+layout_mode = 2
+text = "Cache Profile Pic Dir"
+icon = ExtResource("2_5jph2")
+expand_icon = true
+
+[node name="sect3" type="PanelContainer" parent="vb/scr/vb"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tqhrp")
+
+[node name="lb" type="Label" parent="vb/scr/vb/sect3"]
+layout_mode = 2
+text = "OBS Websocket"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="btn_obs_connect" type="Button" parent="vb/scr/vb"]
+layout_mode = 2
+text = "Reload Twitcher"
+
+[connection signal="pressed" from="vb/scr/vb/btn_open_data_dir" to="." method="_on_data_dir_pressed"]
+[connection signal="pressed" from="vb/scr/vb/btn_open_user_dir" to="." method="_on_btn_open_user_dir_pressed"]
+[connection signal="pressed" from="vb/scr/vb/btn_reload_twitcher" to="." method="_on_btn_reload_twitcher_pressed"]
+[connection signal="pressed" from="vb/scr/vb/btn_reload_commands" to="." method="_on_btn_reload_commands_pressed"]
+[connection signal="pressed" from="vb/scr/vb/btn_open_cache_badges_dir" to="." method="_on_btn_open_cache_badges_dir_pressed"]
+[connection signal="pressed" from="vb/scr/vb/btn_open_cache_emotes_dir" to="." method="_on_btn_open_cache_emotes_dir_pressed"]
+[connection signal="pressed" from="vb/scr/vb/btn_open_cache_cheer_emotes_dir" to="." method="_on_btn_open_cache_cheer_emotes_dir_pressed"]
+[connection signal="pressed" from="vb/scr/vb/btn_obs_connect" to="." method="_on_btn_obs_connect_pressed"]

@@ -281,9 +281,6 @@ alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="sep7" type="HSeparator" parent="vb/tabs/pnl_beans/scroll/vb"]
-layout_mode = 2
-
 [node name="pnl_live" type="PanelContainer" parent="vb/tabs"]
 unique_name_in_owner = true
 layout_mode = 2
