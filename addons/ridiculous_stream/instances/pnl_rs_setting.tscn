@@ -114,7 +114,7 @@ vertical_alignment = 1
 
 [node name="btn_obs_connect" type="Button" parent="vb/scr/vb"]
 layout_mode = 2
-text = "Reload Twitcher"
+text = "Connect OBS"
 
 [connection signal="pressed" from="vb/scr/vb/btn_open_data_dir" to="." method="_on_data_dir_pressed"]
 [connection signal="pressed" from="vb/scr/vb/btn_open_user_dir" to="." method="_on_btn_open_user_dir_pressed"]
