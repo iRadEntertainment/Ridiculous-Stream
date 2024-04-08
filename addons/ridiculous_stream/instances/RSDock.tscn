@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cai08v17ca5ek"]
+[gd_scene load_steps=7 format=3 uid="uid://cai08v17ca5ek"]
 
 [ext_resource type="Script" path="res://addons/ridiculous_stream/instances/RSDock.gd" id="1_p2d3n"]
 [ext_resource type="PackedScene" uid="uid://cm77spqiel43k" path="res://addons/ridiculous_stream/instances/pnl_quick_actions.tscn" id="3_24byk"]
 [ext_resource type="PackedScene" uid="uid://dagv0scp1nluf" path="res://addons/ridiculous_stream/instances/pnl_co_pilot.tscn" id="3_miis1"]
 [ext_resource type="PackedScene" uid="uid://bbi521t8ayr48" path="res://addons/ridiculous_stream/instances/pnl_chat.tscn" id="3_xew1i"]
+[ext_resource type="PackedScene" uid="uid://b21wx5v72d3bj" path="res://addons/ridiculous_stream/instances/pnl_mods.tscn" id="4_8gbcu"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xm7kp"]
 content_margin_left = 4.0
@@ -27,6 +28,10 @@ script = ExtResource("1_p2d3n")
 [node name="vb" type="VBoxContainer" parent="."]
 layout_mode = 2
 
+[node name="pnl_quick_actions" parent="vb" instance=ExtResource("3_24byk")]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="hb" type="HBoxContainer" parent="vb"]
 layout_mode = 2
 
@@ -44,14 +49,14 @@ text = "Reload Dock"
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="pnl_mods" parent="vb" instance=ExtResource("4_8gbcu")]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="pnl_chat" parent="vb" instance=ExtResource("3_xew1i")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-
-[node name="pnl_quick_actions" parent="vb" instance=ExtResource("3_24byk")]
-unique_name_in_owner = true
-layout_mode = 2
 
 [connection signal="pressed" from="vb/hb/btn_test_stuff" to="." method="_on_btn_test_stuff_pressed"]
 [connection signal="pressed" from="vb/hb/btn_reload" to="." method="_on_btn_reload_pressed"]

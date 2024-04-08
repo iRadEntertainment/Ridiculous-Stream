@@ -266,8 +266,6 @@ func get_live_streamers_data(user_names_or_ids : Array = []) -> Dictionary:
 			if user.get("is_streamer") != null:
 				if user.is_streamer:
 					user_names_or_ids.append(key)
-			else:
-				print("user %s doesn't have is_streamer??"%user.username)
 	
 	var live_streamers_data := {}
 	var max_user_query = 10
@@ -300,3 +298,46 @@ func raid(to_broadcaster_id : String):
 		"to":to_broadcaster_id})
 	var response = await api.request(path, HTTPClient.METHOD_POST, "", "application/x-www-form-urlencoded");
 	response.response_code
+
+
+func get_follower_count() -> int:
+	var path = "/helix/channels/followers?"
+	path += "first=" + str(100) + "&"
+	path += "broadcaster_id=" + str(main.settings.broadcaster_id)
+	var response = await api.request(path, HTTPClient.METHOD_GET, "", "application/json")
+	var result = JSON.parse_string(response.response_data.get_string_from_utf8())
+	var parsed := TwitchGetChannelFollowersResponse.from_json(result)
+	var count = parsed.data.size()
+	
+	while not parsed.pagination.cursor.is_empty():
+		var pagination_path = path + "&after=%s" % parsed.pagination.cursor
+		response = await api.request(pagination_path, HTTPClient.METHOD_GET, "", "application/json")
+		result = JSON.parse_string(response.response_data.get_string_from_utf8())
+		parsed = TwitchGetChannelFollowersResponse.from_json(result)
+		count += parsed.data.size()
+	
+	return count
+
+func get_moderators() -> Array[TwitchUserModerator]:
+	var total : Array[TwitchUserModerator] = []
+	
+	var path = "/helix/moderation/moderators?"
+	path += "first=" + str(100) + "&"
+	path += "broadcaster_id=" + str(main.settings.broadcaster_id)
+	
+	var response = await api.request(path, HTTPClient.METHOD_GET, "", "application/json")
+	var result = JSON.parse_string(response.response_data.get_string_from_utf8())
+	var parsed := TwitchGetModeratorsResponse.from_json(result)
+	total.append_array( TwitchGetModeratorsResponse.from_json(result).data )
+	
+	while not parsed.pagination.cursor.is_empty():
+		var pagination_path = path + "&after=%s" % parsed.pagination.cursor
+		response = await api.request(pagination_path, HTTPClient.METHOD_GET, "", "application/json")
+		result = JSON.parse_string(response.response_data.get_string_from_utf8())
+		parsed = TwitchGetModeratorsResponse.from_json(result)
+		total.append_array( TwitchGetModeratorsResponse.from_json(result).data )
+	
+	#return TwitchGetModeratorsResponse.from_json(result).data
+	return total
+
+	

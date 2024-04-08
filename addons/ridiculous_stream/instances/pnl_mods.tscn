@@ -1,0 +1,72 @@
+[gd_scene load_steps=5 format=3 uid="uid://b21wx5v72d3bj"]
+
+[ext_resource type="Script" path="res://addons/ridiculous_stream/instances/pnl_mods.gd" id="1_jvok1"]
+[ext_resource type="Texture2D" uid="uid://h1by403q5s8f" path="res://addons/ridiculous_stream/ui/sword.png" id="2_pqt2s"]
+[ext_resource type="Texture2D" uid="uid://6weky3a0q5r5" path="res://addons/ridiculous_stream/ui/bootstrap_icons/person-heart.svg" id="3_xw2ck"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wcjmo"]
+bg_color = Color(0.129412, 0.14902, 0.180392, 1)
+
+[node name="pnl_mods" type="PanelContainer"]
+offset_right = 391.0
+offset_bottom = 36.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_wcjmo")
+script = ExtResource("1_jvok1")
+
+[node name="btn_update_mod_count" type="Button" parent="."]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="btn_update_mod_count"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_right = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="tx_mod" type="TextureRect" parent="btn_update_mod_count/hb"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_pqt2s")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="lb_mod_count" type="Label" parent="btn_update_mod_count/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "121"
+vertical_alignment = 1
+
+[node name="lb" type="Label" parent="btn_update_mod_count/hb"]
+layout_mode = 2
+text = "/"
+vertical_alignment = 1
+
+[node name="tx_follow" type="TextureRect" parent="btn_update_mod_count/hb"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("3_xw2ck")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="lb_followers_count" type="Label" parent="btn_update_mod_count/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "121"
+vertical_alignment = 1
+
+[node name="percentage" type="Label" parent="btn_update_mod_count/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "55.55%"
+horizontal_alignment = 2
+
+[connection signal="pressed" from="btn_update_mod_count" to="." method="_on_btn_update_mod_count_pressed"]
