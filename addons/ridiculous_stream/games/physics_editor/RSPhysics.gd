@@ -2,9 +2,11 @@
 extends Control
 class_name RSPhysics
 
-var laser_scene
+
+@onready var sfx_list = %sfx_list
 
 var main : RSMain
+var laser_scene
 
 var parent
 var code_edit : CodeEdit
@@ -136,7 +138,7 @@ func add_image_bodies(params : RSBeansParam, pos = null, linear_velocity = null,
 	var num = range(params.spawn_range[0], params.spawn_range[1]+1).pick_random()
 	for i in num:
 		var tex = texs.pick_random()
-		var body : ImageToRigid = ImageToRigid.new(tex, params, sfx_streams)
+		var body := ImageToRigid.new(tex, params, sfx_streams)
 		var final_pos := Vector2()
 		if not pos:
 			var safe = 120
@@ -165,21 +167,45 @@ func add_laser():
 
 func obj_input(event, obj : RigidBody2D): # input event rigid body
 	if not joint_rid: return
+	if not obj or not obj.get_rid().is_valid(): return
+	
 	if event is InputEventMouseButton:
 		# Pick object
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			var is_picked = event.is_pressed()
 			obj.angular_damp = 10 if is_picked else 2
 			if is_picked:
-				var anchor_pos = parent.get_global_mouse_position()
+				var anchor_pos = get_global_mouse_position()
+				PhysicsServer2D.joint_clear(joint_rid)
 				PhysicsServer2D.joint_make_pin(joint_rid, anchor_pos, obj.get_rid(), $pick_dummy.get_rid())
 			else:
 				PhysicsServer2D.joint_clear(joint_rid)
 		# destroy object
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			if event.is_pressed():
+				PhysicsServer2D.joint_clear(joint_rid)
+				obj.destroy()
 				if obj.has_method("destroy"):
 					obj.call_deferred("destroy")
+
+func is_sfx_free() -> bool:
+	var is_too_early_to_play_another_one := false
+	var one_is_free := false
+	for sfx : AudioStreamPlayer in sfx_list.get_children():
+		if !sfx.playing:
+			one_is_free = true
+		elif sfx.get_playback_position() < randf_range(0.02, 0.04):
+			is_too_early_to_play_another_one = true
+	return one_is_free and not is_too_early_to_play_another_one
+
+func play_sfx(stream : AudioStream, volume_db: int) -> void:
+	for sfx : AudioStreamPlayer in sfx_list.get_children():
+		if !sfx.playing:
+			sfx.volume_db = volume_db
+			sfx.stream = stream
+			sfx.pitch_scale = randf_range(0.95, 1.05)
+			sfx.play()
+			break
 
 
 func shuffle_bodies():
@@ -273,19 +299,4 @@ func add_body_to_space(body : PhysicsBody2D):
 func add_collider_to_space(collider_rid : RID):
 	PhysicsServer2D.area_set_space(collider_rid, main.globals.physics_space_rid)
 	PhysicsServer2D.body_set_space(collider_rid, main.globals.physics_space_rid)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

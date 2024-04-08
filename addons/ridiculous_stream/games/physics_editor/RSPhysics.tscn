@@ -77,6 +77,19 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
+[node name="sfx_list" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="sfx1" type="AudioStreamPlayer" parent="sfx_list"]
+
+[node name="sfx2" type="AudioStreamPlayer" parent="sfx_list"]
+
+[node name="sfx3" type="AudioStreamPlayer" parent="sfx_list"]
+
+[node name="sfx4" type="AudioStreamPlayer" parent="sfx_list"]
+
+[node name="sfx5" type="AudioStreamPlayer" parent="sfx_list"]
+
 [connection signal="timeout" from="tmr_disable" to="." method="disable_boundaries"]
 [connection signal="timeout" from="tmr_kill" to="." method="kill"]
 [connection signal="pressed" from="btn_kill" to="." method="kill"]

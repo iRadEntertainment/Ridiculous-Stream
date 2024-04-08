@@ -9,7 +9,6 @@ var sprite_scale := Vector2(1,1)
 var sprite : Sprite2D
 var coll : CollisionShape2D
 var shape : CapsuleShape2D
-var sfx_node : AudioStreamPlayer
 
 var tex : Texture2D
 var params : RSBeansParam
@@ -34,8 +33,8 @@ func _init(_tex : Texture2D, _params : RSBeansParam, _sfx_streams : Array[AudioS
 
 
 func _on_body_entered(body):
-	if sfx_node.playing: return
-	if linear_velocity.length_squared() > pow(150, 2):
+	if not physics_scene.is_sfx_free(): return
+	if linear_velocity.length_squared() > pow(250, 2):
 		if !sfx_streams.is_empty():
 			play_random_sfx()
 	#if linear_velocity.length_squared() > pow(3000, 2) and params.is_destroy:
@@ -43,9 +42,8 @@ func _on_body_entered(body):
 
 
 func play_random_sfx():
-	sfx_node.stream = sfx_streams.pick_random()
-	sfx_node.pitch_scale = randf_range(0.95, 1.05)
-	sfx_node.play()
+	var stream : AudioStream = sfx_streams.pick_random()
+	physics_scene.play_sfx(stream, params.sfx_volume)
 
 
 func destroy():
@@ -62,9 +60,6 @@ func set_nodes():
 	sprite.texture = tex
 	sprite.scale = params.scale
 	add_child(sprite)
-	sfx_node = AudioStreamPlayer.new()
-	sfx_node.volume_db = params.sfx_volume if params.sfx_volume else 0
-	add_child(sfx_node)
 	coll = CollisionShape2D.new()
 	coll.visible = false
 	shape = CapsuleShape2D.new()
