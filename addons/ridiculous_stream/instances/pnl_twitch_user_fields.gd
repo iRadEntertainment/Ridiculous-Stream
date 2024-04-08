@@ -10,6 +10,7 @@ var main : RSMain
 var user : RSTwitchUser
 var live_data : TwitchStream
 
+@onready var pnl_info = %pnl_info
 @onready var pnl_live : PanelContainer = %pnl_live
 @onready var stream_title : Button = %stream_title
 @onready var stream_thumbnail : TextureRect = %stream_thumbnail
@@ -70,7 +71,9 @@ func update_user_fields():
 func update_live_fields():
 	set_process(live_data != null)
 	var live_tab_idx = tabs.get_tab_idx_from_control(pnl_live)
+	var info_tab_idx = tabs.get_tab_idx_from_control(pnl_info)
 	tabs.set_tab_disabled(live_tab_idx, live_data == null)
+	tabs.current_tab = live_tab_idx if live_data else info_tab_idx
 	
 	if not live_data:
 		reset_pnl_live()

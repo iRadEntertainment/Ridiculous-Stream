@@ -157,6 +157,7 @@ size_flags_vertical = 3
 current_tab = 2
 
 [node name="pnl_info" type="PanelContainer" parent="vb/tabs"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
 
