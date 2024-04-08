@@ -8,6 +8,13 @@
 
 config_version=5
 
+[RidiculousStream]
+
+general/logging/enabled=0
+"general/OBS Websocket/obs_autoconnect"=true
+"general/OBS Websocket/obs_websocket_password"="YvFuw8DQxdxCAsvJ"
+"general/OBS Websocket/obs_websocket_port"=""
+
 [application]
 
 config/name="Ridiculous Stream"
@@ -120,7 +127,6 @@ auth/api/auth_file_cache="C:/Users/Dario/AppData/Roaming/RidiculousStream/auth.c
 general/assets/cache_emote="C:/Users/Dario/AppData/Roaming/RidiculousStream/emotes"
 general/assets/cache_badge="C:/Users/Dario/AppData/Roaming/RidiculousStream/badges"
 general/assets/cache_cheermote="C:/Users/Dario/AppData/Roaming/RidiculousStream/cheermotes"
-general/logging/enabled=0
 websocket/irc/username="iraddev"
 eventsub/channel_poll_begin/subscribed=true
 eventsub/channel_poll_end/subscribed=true
@@ -128,6 +134,7 @@ auth/client_secret="qv33tywbxii6mvx9nnawdm5ku5g643"
 auth/scopes/analytics=3
 auth/scopes/clips=1
 auth/scopes/whispers=3
+general/logging/enabled=0
 
 [twitch_chat]
 
