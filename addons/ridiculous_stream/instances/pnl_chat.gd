@@ -100,6 +100,7 @@ func put_chat(username: String, message: String, _tags: TwitchTags.PrivMsg):
 	#result_message = sprite_effect.prepare_message(result_message, lb_chat);
 	
 	lb_chat.append_text(result_message + message)
+	lb_chat.pop_all()
 
 
 func format_msg(key, _msg) -> String:
