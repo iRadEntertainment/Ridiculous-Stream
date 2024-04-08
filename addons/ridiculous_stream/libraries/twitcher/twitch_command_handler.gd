@@ -112,10 +112,11 @@ func _handle_command(command: TwitchCommand, raw_message: String, channel_name: 
 			received_invalid_command.emit(command_name, channel_name, username, commands, arg_array, tags);
 			return
 		var info = TwitchCommandInfo.new(command_name, command, message, channel_name, username, tags);
-		if (command.max_arguments > 0):
-			command.function_reference.call(info, [] as Array[String])
-		else:
-			command.function_reference.call(info)
+		command.function_reference.call(info, [] as Array[String])
+		#if (command.max_arguments > 0):
+			#command.function_reference.call(info, [] as Array[String])
+		#else:
+			#command.function_reference.call(info)
 	else:
 		command.function_reference.call(TwitchCommandInfo.new(command_name, command, message, channel_name, username, tags), arg_array)
 

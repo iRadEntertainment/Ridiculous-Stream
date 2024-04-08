@@ -25,6 +25,7 @@ var copilot : RSCoPilot
 # ================================ INIT ========================================
 func _enter_tree() -> void:
 	print("=================================== RIDICULOS STREAMING STARTED ===================================")
+	RSSettings.setup()
 	load_rs_settings()
 	load_known_user()
 	reload_twitcher()
@@ -73,7 +74,7 @@ func add_nodes():
 	copilot.start()
 	no_obs_ws = NoOBSWS.new()
 	add_child(no_obs_ws)
-	no_obs_ws.connect_to_obsws(4455, settings.obs_websocket_password)
+	no_obs_ws.start(self)
 
 
 func hot_reload_pnl_settings():
@@ -163,17 +164,3 @@ func _exit_tree() -> void:
 		dock.queue_free()
 	if shoutout_mng: shoutout_mng.queue_free()
 	print("=================================== RIDICULOS STREAMING EXITING ===================================")
-
-
-# ================================ DEBUG =======================================
-enum DebugLog{RIDICULOUS, GIFT, POLYFRACT}
-var logs_text : Array
-var logs_type : Array
-var stdout_on := true
-var debug_print_ridiculous := true
-var debug_print_gift := true
-var debug_print_poly_fract := true
-func log_print(text : String, type := DebugLog.RIDICULOUS):
-	assert(logs_text.size() == logs_type.size(), "The logs arrays are not in sync")
-	if not stdout_on: return
-

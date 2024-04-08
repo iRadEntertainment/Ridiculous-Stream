@@ -27,14 +27,14 @@ signal flags_changed
 #}
 
 func start():
-	add_commands_to_gift()
+	add_commands()
 	active_timer = Timer.new()
 	active_timer.one_shot = true
 	active_timer.wait_time = 10
 	active_timer.timeout.connect(_on_active_timer_timeout)
 	add_child(active_timer)
 
-func add_commands_to_gift() -> void:
+func add_commands() -> void:
 	main.twitcher.commands.add_command("copilot", copilot_action.bind(Cmd.HELP))
 	main.twitcher.commands.add_command("code", copilot_action.bind(Cmd.CODE), -1, 1)
 	main.twitcher.commands.add_command("replace", copilot_action.bind(Cmd.REPLACE), -1, 1)
@@ -51,7 +51,7 @@ func add_commands_to_gift() -> void:
 func temp_activate():
 	activate(300)
 
-func copilot_action(arg_ary, what := Cmd.HELP):
+func copilot_action(info: TwitchCommandInfo, arg_ary, what := Cmd.HELP):
 	#if not main.settings.co_pilot_active and not is_enabled:
 	if not is_enabled:
 		main.twitcher.chat("Co-pilot is turned off")

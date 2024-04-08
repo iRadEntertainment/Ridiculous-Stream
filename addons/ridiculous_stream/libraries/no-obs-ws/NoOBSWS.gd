@@ -5,6 +5,9 @@ class_name NoOBSWS
 const Authenticator := preload("res://addons/ridiculous_stream/libraries/no-obs-ws/Authenticator.gd")
 const Enums := preload("res://addons/ridiculous_stream/libraries/no-obs-ws/Utility/Enums.gd")
 
+var main : RSMain
+var log : RSLogger
+
 var _ws: WebSocketPeer
 # {request_id: RequestResponse}
 var _requests: Dictionary = {}
@@ -17,13 +20,21 @@ signal connection_failed()
 signal connection_closed_clean(code: int, reason: String)
 
 signal error(message: String)
-
 signal event_received(event: Message)
-
 signal _auth_required()
 
 
+func start(_main : RSMain):
+	main = _main
+	log = RSLogger.new(RSSettings.LOGGER_NAME_NOOBSWS, main.settings)
+	log.i("Started")
+	if main.settings.obs_autoconnect:
+		connect_to_obsws(4455, main.settings.obs_websocket_password)
+
 func connect_to_obsws(port: int, password: String = "") -> void:
+	if password.is_empty():
+		log.e("Websocket password missing.")
+		return
 	_ws = WebSocketPeer.new()
 	_ws.connect_to_url(WS_URL % port)
 	_auth_required.connect(_authenticate.bind(password))
@@ -97,12 +108,12 @@ func _poll_socket() -> void:
 
 func _handle_packet(packet: PackedByteArray) -> void:
 	var message = Message.from_json(packet.get_string_from_utf8())
-	print("got message with code ", message.op_code)
+	log.i("got message with code %s"%message.op_code)
 	_handle_message(message)
 
 
 func _handle_message(message: Message) -> void:
-#	print(message)
+	log.d( str(message.to_obsws_json()) )
 	match message.op_code:
 		Enums.WebSocketOpCode.HELLO:
 			if message.get("authentication") != null:
@@ -119,14 +130,16 @@ func _handle_message(message: Message) -> void:
 			event_received.emit(message)
 
 		Enums.WebSocketOpCode.REQUEST_RESPONSE:
-			print("Req Response")
+			log.i("Req Response")
 			var id = message.get_data().get("request_id")
 			if id == null:
+				log.e("Received request response, but there was no request id field.")
 				error.emit("Received request response, but there was no request id field.")
 				return
 
 			var response = _requests.get(id) as RequestResponse
 			if response == null:
+				log.e("Received request response, but there was no request made with that id.")
 				error.emit("Received request response, but there was no request made with that id.")
 				return
 
@@ -153,6 +166,9 @@ func _handle_message(message: Message) -> void:
 
 
 func _send_message(message: Message) -> void:
+	if not _ws:
+		log.e("WebSocket not initialized")
+		return
 	_ws.send_text(message.to_obsws_json())
 
 
@@ -166,8 +182,8 @@ func _authenticate(message: Message, password: String) -> void:
 	var m = Message.new()
 	m.op_code = Enums.WebSocketOpCode.IDENTIFY
 	m._d["authentication"] = auth_string
-	print("MY RESPONSE: ")
-	print(m)
+	log.i("MY RESPONSE: ")
+	log.i(m._to_string())
 	_send_message(m)
 
 

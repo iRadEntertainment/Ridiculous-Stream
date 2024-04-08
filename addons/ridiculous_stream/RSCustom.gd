@@ -2,6 +2,7 @@ extends RefCounted
 class_name RSCustom
 
 var main : RSMain
+var log : RSLogger
 
 var alert_scene : RSAlertOverlay
 var physic_scene : RSPhysics
@@ -9,7 +10,10 @@ var screen_shader : RSShaders
 var wheel_of_random : RSWheelOfRandom
 
 
+
 func start() -> void:
+	log = RSLogger.new(RSSettings.LOGGER_NAME_CUSTOM, main.settings)
+	log.i("Started")
 	main.twitcher.received_chat_message.connect(on_chat)
 	main.twitcher.channel_points_redeemed.connect(on_channel_points_redeemed)
 	main.twitcher.followed.connect(on_followed)
@@ -20,7 +24,6 @@ func start() -> void:
 
 
 func add_commands() -> void:
-	print("yeah I'm adding the commands again")
 	main.twitcher.commands.add_command("laser", laser)
 	main.twitcher.commands.add_command("zeroG", zero_g)
 	main.twitcher.commands.add_alias("zeroG", "zerog")
@@ -28,16 +31,15 @@ func add_commands() -> void:
 	main.twitcher.commands.add_alias("zeroG", "0G")
 	main.twitcher.commands.add_command("discord", discord)
 	main.twitcher.commands.add_command("commands", chat_commands_help)
+	log.i("Command added to the handler.")
 
 func on_chat(_channel_name: String, _username: String, _message: String, _tags: TwitchTags.PrivMsg):
 	pass
 
 func on_channel_points_redeemed(data : RSTwitchEventData):
+	log.i("Channel points redeemed. %s -> %s" % [data.username, data.reward_title] )
 	match data.reward_title:
-		"beans":
-			beans(data.username)
-		"activate copilot for 10 minutes":
-			pass
+		"beans": beans(data.username)
 		"crt": start_screen_shader(RSShaders.FxType.CRT, 24.0)
 		"speed": start_screen_shader(RSShaders.FxType.SPEED, 120.0)
 		"old movie": start_screen_shader(RSShaders.FxType.OLD, 60.0)
@@ -121,11 +123,11 @@ func get_advice(data : RSTwitchEventData) -> void:
 	main.twitcher.chat(format_string.format(advice_dic) )
 
 
-func discord(_info : TwitchCommandInfo = null):
+func discord(_info : TwitchCommandInfo = null, _args := []):
 	var msg = "Join Discord: https://discord.gg/4YhKaHkcMb"
 	main.twitcher.chat(msg)
 
-func chat_commands_help(_info : TwitchCommandInfo = null):
+func chat_commands_help(_info : TwitchCommandInfo = null, _args := []):
 	var msg = "Use a combination of ![command] for chat: hl (highlight), hd(hidden), rb(rainbow), big, small, wave, pulse, tornado, shake"
 	main.twitcher.chat(msg)
 
@@ -149,7 +151,7 @@ func beans(username : String):
 	physic_scene.add_image_bodies(beans_param)
 
 
-func zero_g(_info : TwitchCommandInfo = null):
+func zero_g(_info : TwitchCommandInfo = null, _args := []):
 	if not physic_scene:
 		main.twitcher.chat("Wait for the physic scene to be in first!")
 		return
@@ -162,7 +164,7 @@ func zero_g(_info : TwitchCommandInfo = null):
 	tw.tween_method(physic_scene.set_space_gravity, 0, 4410, 5.0)
 
 
-func laser(_info : TwitchCommandInfo = null):
+func laser(_info : TwitchCommandInfo = null, _args := []):
 	add_physic_scene()
 	if physic_scene.is_closing: return
 	physic_scene.add_laser()
