@@ -54,7 +54,7 @@ func select_winner_from_wheel():
 	var winner : TwitchStream = streamers_live_data[streamers[selected]]
 	
 	main.twitcher.api.start_a_raid(
-		str(main.settings.broadcaster_id),
+		str(RSSettings.broadcaster_id),
 		str(winner.user_id),
 		)
 
@@ -112,7 +112,7 @@ func wheel_sector(_streamer_info : TwitchStream, _angle_init : float, _angle_siz
 		points.append(p)
 	new_polygon.polygon = points
 	
-	#var user : RSTwitchUser = main.globals.known_users[_streamer_info.user_login]
+	#var user : RSTwitchUser = main.known_users[_streamer_info.user_login]
 	#new_polygon.texture = await main.loader.load_texture_from_url(user.profile_image_url)
 	#new_polygon.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	

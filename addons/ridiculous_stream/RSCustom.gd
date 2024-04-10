@@ -6,13 +6,14 @@ var log : RSLogger
 
 var alert_scene : RSAlertOverlay
 var physic_scene : RSPhysics
+var physics_space_rid: RID
 var screen_shader : RSShaders
 var wheel_of_random : RSWheelOfRandom
 
 
 
 func start() -> void:
-	log = RSLogger.new(RSSettings.LOGGER_NAME_CUSTOM, main.settings)
+	log = RSLogger.new(RSSettings.LOGGER_NAME_CUSTOM)
 	log.i("Started")
 	main.twitcher.received_chat_message.connect(on_chat)
 	main.twitcher.channel_points_redeemed.connect(on_channel_points_redeemed)
@@ -267,7 +268,7 @@ func play_kerker():
 func change_stream_title(data : RSTwitchEventData):
 	var title = "%s - %s"%[data.user_input, data.username]
 	var path = "/helix/channels?"
-	path += "broadcaster_id=" + str(main.settings.broadcaster_id) + "&"
+	path += "broadcaster_id=" + str(RSSettings.broadcaster_id) + "&"
 	var res := await main.twitcher.api.request(path, HTTPClient.METHOD_PATCH, {"title":title}, "application/json")
 
 

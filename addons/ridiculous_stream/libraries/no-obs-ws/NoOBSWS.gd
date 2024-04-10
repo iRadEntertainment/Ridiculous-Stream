@@ -26,10 +26,10 @@ signal _auth_required()
 
 func start(_main : RSMain):
 	main = _main
-	log = RSLogger.new(RSSettings.LOGGER_NAME_NOOBSWS, main.settings)
+	log = RSLogger.new(RSSettings.LOGGER_NAME_NOOBSWS)
 	log.i("Started")
-	if main.settings.obs_autoconnect:
-		connect_to_obsws(4455, main.settings.obs_websocket_password)
+	if RSSettings.obs_autoconnect:
+		connect_to_obsws(RSSettings.obs_websocket_port, RSSettings.obs_websocket_password)
 
 func connect_to_obsws(port: int, password: String = "") -> void:
 	if password.is_empty():

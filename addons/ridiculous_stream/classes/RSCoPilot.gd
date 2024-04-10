@@ -52,7 +52,6 @@ func temp_activate():
 	activate(300)
 
 func copilot_action(info: TwitchCommandInfo, arg_ary, what := Cmd.HELP):
-	#if not main.settings.co_pilot_active and not is_enabled:
 	if not is_enabled:
 		main.twitcher.chat("Co-pilot is turned off")
 		return

@@ -178,8 +178,8 @@ func search_user(username : String):
 
 func gather_username_info_from_api():
 	var possible_username = %ln_search.text
-	if possible_username in main.globals.known_users.keys():
-		populate_fields(main.globals.known_users[possible_username], null)
+	if possible_username in main.known_users.keys():
+		populate_fields(main.known_users[possible_username], null)
 	else:
 		clear_custom_fields()
 	var user = await main.twitcher.gather_user_info(possible_username)

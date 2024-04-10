@@ -33,9 +33,9 @@ func _process(delta):
 
 func give_shoutout(user : RSTwitchUser):
 	main.twitcher.api.send_a_shoutout(
-		str(main.settings.broadcaster_id),
+		str(RSSettings.broadcaster_id),
 		str(user.user_id),
-		str(main.settings.broadcaster_id),
+		str(RSSettings.broadcaster_id),
 		)
 	if user.shoutout_description != "":
 		main.twitcher.chat(user.shoutout_description)

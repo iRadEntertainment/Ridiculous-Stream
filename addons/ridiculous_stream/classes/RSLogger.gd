@@ -3,17 +3,13 @@ extends RefCounted
 
 class_name RSLogger
 
-var settings: RSSettings
-
 var context_name: String
 var suffix: String
 var enabled : bool
 var debug: bool
 
-func _init(_context_name: String, _settings: RSSettings) -> void:
-	settings = _settings
+func _init(_context_name: String) -> void:
 	context_name = _context_name
-	#RSLoggerMng.register(self, _settings)
 
 func is_enabled() -> bool:
 	return RSSettings.is_log_enabled(context_name)

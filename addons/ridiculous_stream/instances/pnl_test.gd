@@ -36,8 +36,8 @@ func _on_btn_send_message_to_pressed():
 func _on_btn_load_image_pressed():
 	var url = ""
 	while url == "":
-		var key = main.globals.known_users.keys().pick_random()
-		var user := main.globals.known_users[key] as RSTwitchUser
+		var key = main.known_users.keys().pick_random()
+		var user := main.known_users[key] as RSTwitchUser
 		if user.profile_image_url != "":
 			url = user.profile_image_url
 	var tex := await main.loader.load_texture_from_url(url)

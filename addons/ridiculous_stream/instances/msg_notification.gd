@@ -14,8 +14,8 @@ func play():
 	var hashed = hash(username)
 	var assigned_num := (hashed % 11) as int
 	var sound_path = "sfx_notification_%02d.ogg"%[assigned_num]
-	if username in main.globals.known_users.keys():
-		var user := main.globals.known_users[username] as RSTwitchUser
+	if username in main.known_users.keys():
+		var user := main.known_users[username] as RSTwitchUser
 		if !user.custom_notification_sfx.is_empty():
 			sound_path = user.custom_notification_sfx
 	

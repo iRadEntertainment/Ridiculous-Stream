@@ -13,7 +13,11 @@ config_version=5
 general/logging/enabled=0
 "general/OBS Websocket/obs_autoconnect"=true
 "general/OBS Websocket/obs_websocket_password"="YvFuw8DQxdxCAsvJ"
-"general/OBS Websocket/obs_websocket_port"=""
+general/RSTwitch/client_secret="qv33tywbxii6mvx9nnawdm5ku5g643"
+general/RSTwitch/broadcaster_id=443367221
+general/RSTwitch/user_login="iraddev"
+general/RSTwitch/channel_name="iraddev"
+general/RSTwitch/auto_connect=true
 
 [application]
 

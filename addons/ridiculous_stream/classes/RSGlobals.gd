@@ -1,9 +1,11 @@
 extends RefCounted
 class_name RSGlobals
 
+const IRADDEV_CLIENT_ID = "t0nkdk4ssr5mhvyj2939da8y4gngrp"
 const local_res_folder = "res://addons/ridiculous_stream/local_res/"
 const rs_config_folder = "RidiculousStream/"
 const rs_settings_file_name = "settings.json"
+const rs_vetting_file_name = "user_vetting_list.json"
 const rs_log_folder = "logs/"
 const rs_user_folder = "users/"
 const rs_obj_folder = "obj/"
@@ -26,10 +28,8 @@ const laser_scene_pack = preload ("res://addons/ridiculous_stream/games/physics_
 
 const DEFAULT_RIGID_LABEL_COLOR = "#29c3a6"
 
-var known_users := {}
 var first_session_message_username_list: PackedStringArray = []
-var physics_space: RSPhysics
-var physics_space_rid: RID
+
 
 const params_can = {
 	"img_paths": ["can.png"],

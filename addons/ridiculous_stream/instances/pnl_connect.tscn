@@ -54,6 +54,7 @@ layout_mode = 2
 text = "Retrieve your broadcaster ID"
 
 [node name="btn_connect_at_startup" type="CheckBox" parent="vb"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "connect at startup"
 

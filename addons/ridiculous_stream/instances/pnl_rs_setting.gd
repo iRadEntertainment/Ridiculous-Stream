@@ -25,4 +25,4 @@ func _on_btn_open_cache_cheer_emotes_dir_pressed():
 
 
 func _on_btn_obs_connect_pressed():
-	main.no_obs_ws.connect_to_obsws(int(main.settings.obs_websocket_port), main.settings.obs_websocket_password)
+	main.no_obs_ws.connect_to_obsws(int(RSSettings.obs_websocket_port), RSSettings.obs_websocket_password)

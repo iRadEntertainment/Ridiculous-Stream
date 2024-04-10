@@ -13,7 +13,7 @@ func update_list():
 	for child in list.get_children():
 		child.queue_free()
 	
-	var res := await main.twitcher.api.get_custom_reward([], false, str(main.settings.broadcaster_id))
+	var res := await main.twitcher.api.get_custom_reward([], false, str(RSSettings.broadcaster_id))
 	for reward : TwitchCustomReward in res.data:
 		var entry = reward_entry_pack.instantiate()
 		entry.reward = reward

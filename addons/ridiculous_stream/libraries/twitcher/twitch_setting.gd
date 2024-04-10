@@ -3,6 +3,7 @@ extends Object
 
 class_name TwitchSetting
 
+static var is_initialized : bool
 
 ## Uses the implicit auth flow see also: https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#implicit-grant-flow
 ## @deprecated use AuthorizationCodeGrantFlow... Implicit is almost completly implemented just deactivated
@@ -304,6 +305,7 @@ static var log_enabled: Array[String]:
 	get: return get_log_enabled()
 
 static func setup() -> void:
+	is_initialized = true
 	# Auth
 	_broadcaster_id = Property.new("twitch/auth/broadcaster_id").as_str("Broadcaster ID of youself").basic();
 	_authorization_flow = Property.new("twitch/auth/authorization_flow", "AuthorizationCodeGrantFlow").as_select([FLOW_IMPLICIT, FLOW_CLIENT_CREDENTIALS, FLOW_AUTHORIZATION_CODE, FLOW_DEVICE_CODE_GRANT], false);

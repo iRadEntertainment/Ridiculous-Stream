@@ -57,7 +57,7 @@ func start() -> void:
 	irc.received_privmsg.connect(_on_irc_received_privmsg)
 	eventsub.event.connect(on_event)
 	is_ready = true
-	if main.settings.auto_connect:
+	if RSSettings.auto_connect:
 		connect_to_twitch()
 
 
@@ -69,14 +69,14 @@ func setup():
 	TwitchSetting.cache_cheermote = RSExternalLoader.get_config_path() + "cheermotes"
 	TwitchSetting.cache_emote = RSExternalLoader.get_config_path() + "emotes"
 	
-	TwitchSetting.broadcaster_id = str(main.settings.broadcaster_id)
-	TwitchSetting.client_id = main.settings.client_id
-	TwitchSetting.client_secret = main.settings.client_secret
-	TwitchSetting.authorization_flow = main.settings.authorization_flow
-	TwitchSetting.irc_username = main.settings.user_login
-	main.settings.assign_scopes_to_project_settings()
-	main.settings.assign_eventsub_to_project_settings()
-	set_broadcaster_id_for_all_eventsub(main.settings.broadcaster_id)
+	TwitchSetting.broadcaster_id = str(RSSettings.broadcaster_id)
+	TwitchSetting.client_id = RSSettings.client_id
+	TwitchSetting.client_secret = RSSettings.client_secret
+	TwitchSetting.authorization_flow = RSSettings.authorization_flow
+	TwitchSetting.irc_username = RSSettings.user_login
+	#RSSettings.assign_scopes_to_project_settings()
+	#RSSettings.assign_eventsub_to_project_settings()
+	set_broadcaster_id_for_all_eventsub(RSSettings.broadcaster_id)
 	
 	main.add_import_plugin(gif_importer_native)
 	if is_magick_available():
@@ -102,11 +102,11 @@ func connect_to_twitch():
 	log.i("Start")
 	await auth.ensure_authentication()
 	print("Twitcher: auth ensured")
-	if main.settings.user_login in [null, ""]:
-		var user_response := await api.get_users([str(main.settings.broadcaster_id)], [])
+	if RSSettings.user_login in [null, ""]:
+		var user_response := await api.get_users([str(RSSettings.broadcaster_id)], [])
 		var user := user_response.data[0]
-		main.settings.user_login = user.login
-		main.settings.channel_name = user.login
+		RSSettings.user_login = user.login
+		RSSettings.channel_name = user.login
 	await _init_chat()
 	print("Twitcher: chat initialized")
 	_init_eventsub()
@@ -123,7 +123,7 @@ func _init_chat() -> void:
 	irc.received_privmsg.connect(commands.handle_chat_command);
 	irc.received_whisper.connect(commands.handle_whisper_command);
 	irc.connect_to_irc();
-	irc.join_channel(main.settings.channel_name)
+	irc.join_channel(RSSettings.channel_name)
 	icon_loader.do_preload();
 	await icon_loader.preload_done;
 
@@ -159,7 +159,7 @@ func _on_irc_received_privmsg(channel_name: String, username: String, message: S
 
 func chat(msg : String, channel_name := ""):
 	if channel_name == "":
-		irc.chat(msg, main.settings.channel_name)
+		irc.chat(msg, RSSettings.channel_name)
 	else:
 		irc.chat(msg, channel_name)
 
@@ -172,10 +172,9 @@ func announcement(msg : String, color := ""):
 	body.message = msg
 	body.color = color
 	var path = "/helix/chat/announcements?"
-	path += "broadcaster_id=" + str(main.settings.broadcaster_id) + "&"
-	path += "moderator_id=" + str(main.settings.broadcaster_id)
+	path += "broadcaster_id=" + str(RSSettings.broadcaster_id) + "&"
+	path += "moderator_id=" + str(RSSettings.broadcaster_id)
 	await api.request(path, HTTPClient.METHOD_POST, body, "application/json")
-
 
 
 ## Returns the definition of emotes for given channel or for the global emotes.
@@ -273,8 +272,8 @@ func get_live_streamers_data(user_names_or_ids : Array = []) -> Dictionary:
 		return {}
 	
 	if user_names_or_ids.is_empty():
-		for key in main.globals.known_users.keys():
-			var user : RSTwitchUser = main.globals.known_users[key]
+		for key in main.known_users.keys():
+			var user : RSTwitchUser = main.known_users[key]
 			if user.get("is_streamer") != null:
 				if user.is_streamer:
 					user_names_or_ids.append(key)
@@ -306,7 +305,7 @@ func get_live_streamers_data(user_names_or_ids : Array = []) -> Dictionary:
 
 func raid(to_broadcaster_id : String):
 	var path = "/helix/raids?from_broadcaster_id={from}&to_broadcaster_id={to}".format(
-		{"from": str(main.settings.broadcaster_id),
+		{"from": str(RSSettings.broadcaster_id),
 		"to":to_broadcaster_id})
 	var response = await api.request(path, HTTPClient.METHOD_POST, "", "application/x-www-form-urlencoded");
 	response.response_code
@@ -315,7 +314,7 @@ func raid(to_broadcaster_id : String):
 func get_follower_count() -> int:
 	var path = "/helix/channels/followers?"
 	path += "first=" + str(100) + "&"
-	path += "broadcaster_id=" + str(main.settings.broadcaster_id)
+	path += "broadcaster_id=" + str(RSSettings.broadcaster_id)
 	var response = await api.request(path, HTTPClient.METHOD_GET, "", "application/json")
 	var result = JSON.parse_string(response.response_data.get_string_from_utf8())
 	var parsed := TwitchGetChannelFollowersResponse.from_json(result)
@@ -335,7 +334,7 @@ func get_moderators() -> Array[TwitchUserModerator]:
 	
 	var path = "/helix/moderation/moderators?"
 	path += "first=" + str(100) + "&"
-	path += "broadcaster_id=" + str(main.settings.broadcaster_id)
+	path += "broadcaster_id=" + str(RSSettings.broadcaster_id)
 	
 	var response = await api.request(path, HTTPClient.METHOD_GET, "", "application/json")
 	var result = JSON.parse_string(response.response_data.get_string_from_utf8())

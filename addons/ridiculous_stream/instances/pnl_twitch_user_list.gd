@@ -20,8 +20,8 @@ func populate_user_button_list():
 	for btn in %user_list.get_children():
 		btn.queue_free()
 	
-	for username in main.globals.known_users.keys():
-		var user := main.globals.known_users[username] as RSTwitchUser
+	for username in main.known_users.keys():
+		var user := main.known_users[username] as RSTwitchUser
 		if not user: continue
 		var btn_user_instance = RSGlobals.btn_user_pack.instantiate()
 		btn_user_instance.main = main

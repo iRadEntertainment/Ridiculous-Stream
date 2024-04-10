@@ -56,7 +56,7 @@ func put_chat(username: String, message: String, _tags: TwitchTags.PrivMsg):
 	if _tags.display_name == "IAmAMerlin":
 		color = Color.BROWN.to_html()
 	var user : RSTwitchUser
-	if username in main.globals.known_users.keys():
+	if username in main.known_users.keys():
 		user = await main.load_known_user(username)
 	if user:
 		if user.custom_chat_color != Color.BLACK:
@@ -118,8 +118,8 @@ func check_first_msg(username : String, tags: TwitchTags.PrivMsg):
 		check_user_twitch_color(username, tags)
 		
 		var user := RSTwitchUser.new()
-		if username in main.globals.known_users:
-			user = main.globals.known_users[username]
+		if username in main.known_users:
+			user = main.known_users[username]
 			if user.auto_shoutout:
 				main.shoutout_mng.add_shoutout(user)
 		else:
@@ -131,8 +131,8 @@ func check_first_msg(username : String, tags: TwitchTags.PrivMsg):
 func check_user_twitch_color(username : String, tags: TwitchTags.PrivMsg):
 	var tw_col = tags.color
 	
-	if username in main.globals.known_users.keys():
-		var user := main.globals.known_users[username] as RSTwitchUser
+	if username in main.known_users.keys():
+		var user := main.known_users[username] as RSTwitchUser
 		if user.twitch_chat_color == Color.BLACK:
 			user.twitch_chat_color = tw_col
 			# main.loader.save_userfile(user)

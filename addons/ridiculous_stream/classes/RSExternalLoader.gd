@@ -6,18 +6,14 @@ class_name RSExternalLoader
 var cached = {}
 var main : RSMain
 
-func load_settings() -> RSSettings:
+func load_settings() -> void:
 	var path = get_config_path() + RSGlobals.rs_settings_file_name
-	var settings : RSSettings
 	if FileAccess.file_exists(path):
 		var json = load_json(path)
-		settings = RSSettings.from_json(json)
-	else:
-		settings = RSSettings.new()
-	return settings
-func save_settings(settings: RSSettings) -> void:
+		RSSettings.from_json(json)
+func save_settings() -> void:
 	var path = get_config_path() + RSGlobals.rs_settings_file_name
-	save_to_json(path, settings.to_dict())
+	save_to_json(path, RSSettings.to_dict())
 
 
 func save_to_json(file_path: String, variant: Variant) -> void:

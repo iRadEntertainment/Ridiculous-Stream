@@ -6,8 +6,6 @@
 extends EditorPlugin
 class_name RSMain
 
-var settings : RSSettings
-
 var globals := RSGlobals.new()
 var loader := RSExternalLoader.new()
 var http_request := HTTPRequest.new()
@@ -21,6 +19,9 @@ var shoutout_mng : RSShoutoutMng
 var physics_space_rid : RID #TODO: remove?
 var custom : RSCustom
 var copilot : RSCoPilot
+var vetting : RSVetting
+
+var known_users := {}
 
 # ================================ INIT ========================================
 func _enter_tree() -> void:
@@ -62,6 +63,7 @@ func add_nodes():
 	custom.main = self
 	custom.start()
 	loader.main = self
+	vetting = RSVetting.new()
 	# --- tree nodes
 	shoutout_mng = RSShoutoutMng.new()
 	shoutout_mng.main = self
@@ -107,29 +109,30 @@ func reload_dock():
 # =============================== KNOWN USERS ==================================
 func load_known_user(username := ""):
 	if username.is_empty():
-		globals.known_users = await loader.load_all_user()
+		known_users = await loader.load_all_user()
 	else:
-		globals.known_users[username] = await loader.load_userfile(username)
+		known_users[username] = await loader.load_userfile(username)
 func save_known_users():
-	loader.save_all_user(globals.known_users)
+	loader.save_all_user(known_users)
 func get_known_user(username : String) -> RSTwitchUser:
 	var user = null
-	if username in globals.known_users.keys():
-		user = globals.known_users[username]
+	if username in known_users.keys():
+		user = known_users[username]
 	return user
 
 
 # ========================== LOAD/SAVE CONFIG ==================================
 func load_rs_settings():
 	print("Loading settings from RSMain")
-	settings = loader.load_settings()
+	loader.load_settings()
+	
 func save_rs_settings():
 	print("Saving settings from RSMain")
-	settings.client_id = ProjectSettings.get_setting("twitch/auth/client_id")
-	settings.client_secret = ProjectSettings.get_setting("twitch/auth/client_secret")
-	settings.authorization_flow = ProjectSettings.get_setting("twitch/auth/authorization_flow")
-	settings.broadcaster_id = ProjectSettings.get_setting("twitch/auth/broadcaster_id")
-	loader.save_settings(settings)
+	RSSettings.client_id = ProjectSettings.get_setting("twitch/auth/client_id")
+	RSSettings.client_secret = ProjectSettings.get_setting("twitch/auth/client_secret")
+	RSSettings.authorization_flow = ProjectSettings.get_setting("twitch/auth/authorization_flow")
+	RSSettings.broadcaster_id = ProjectSettings.get_setting("twitch/auth/broadcaster_id")
+	loader.save_settings()
 
 
 # =============================== UTILS =======================================
