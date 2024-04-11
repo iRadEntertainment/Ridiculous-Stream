@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cnlev2iwtj1pr"]
+[gd_scene load_steps=16 format=3 uid="uid://cnlev2iwtj1pr"]
 
 [ext_resource type="Script" path="res://addons/ridiculous_stream/instances/pnl_settings.gd" id="1_5rbjj"]
 [ext_resource type="PackedScene" uid="uid://gi6k83qtu4y2" path="res://addons/ridiculous_stream/instances/pnl_rs_setting.tscn" id="1_7lr6v"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bykc5hku6ubu8" path="res://addons/ridiculous_stream/icon_irad.png" id="5_pus7l"]
 [ext_resource type="PackedScene" uid="uid://rvb1iyen7vu3" path="res://addons/ridiculous_stream/instances/pnl_rewards.tscn" id="6_d22ns"]
 [ext_resource type="Texture2D" uid="uid://b4gxd48s477ky" path="res://addons/ridiculous_stream/icon-github.png" id="6_e1vcs"]
+[ext_resource type="PackedScene" uid="uid://cwbekbjfcqjml" path="res://addons/ridiculous_stream/instances/pnl_vetting.tscn" id="7_0wmw7"]
 [ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://addons/ridiculous_stream/ui/bootstrap_icons/arrow-repeat.svg" id="7_a5jks"]
 [ext_resource type="Texture2D" uid="uid://b2mtooi658yq0" path="res://addons/ridiculous_stream/ui/sprites/loading.png" id="12_yksnf"]
 
@@ -114,9 +115,19 @@ size_flags_stretch_ratio = 0.4
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="pnl_test" parent="vb/hb/tabs/pnl_settings/hb/split" instance=ExtResource("2_06h4g")]
+[node name="VSplitContainer" type="VSplitContainer" parent="vb/hb/tabs/pnl_settings/hb/split"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="pnl_vetting" parent="vb/hb/tabs/pnl_settings/hb/split/VSplitContainer" instance=ExtResource("7_0wmw7")]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="pnl_test" parent="vb/hb/tabs/pnl_settings/hb/split/VSplitContainer" instance=ExtResource("2_06h4g")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
 
 [node name="users" type="HSplitContainer" parent="vb/hb/tabs"]
 visible = false

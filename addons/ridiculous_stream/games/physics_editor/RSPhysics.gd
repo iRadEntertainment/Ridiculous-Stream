@@ -158,7 +158,7 @@ func add_laser():
 		laser_scene = main.globals.laser_scene_pack.instantiate()
 		laser_scene.physics_scene = self
 		laser_scene.position = size/2
-		laser_scene.physics_space_rid = main.globals.physics_space_rid
+		laser_scene.physics_space_rid = main.custom.physics_space_rid
 		add_child(laser_scene)
 		laser_scene.play()
 	else:
@@ -243,22 +243,22 @@ func kill():
 
 
 func start_physics():
-	if not main.globals.physics_space_rid:
-		main.globals.physics_space_rid = activate_new_space()
-	set_new_space_default_param(main.globals.physics_space_rid)
+	if not main.custom.physics_space_rid:
+		main.custom.physics_space_rid = activate_new_space()
+	set_new_space_default_param(main.custom.physics_space_rid)
 	set_editor_physics(false)
 	set_process(true)
 	joint_rid = PhysicsServer2D.joint_create()
 	add_body_to_space($boundaries)
 	add_body_to_space($pick_dummy)
-	PhysicsServer2D.space_set_active(main.globals.physics_space_rid, true)
+	PhysicsServer2D.space_set_active(main.custom.physics_space_rid, true)
 	PhysicsServer2D.set_active(true)
 
 
 func stop_physics():
 	PhysicsServer2D.set_active(false)
-	deactivate_space(main.globals.physics_space_rid)
-	PhysicsServer2D.space_set_active(main.globals.physics_space_rid, false)
+	deactivate_space(main.custom.physics_space_rid)
+	PhysicsServer2D.space_set_active(main.custom.physics_space_rid, false)
 	set_process(false)
 
 
@@ -289,14 +289,14 @@ func set_new_space_default_param(space_rid : RID):
 
 
 func set_space_gravity(gravity : int = 4410):
-	var space_rid = main.globals.physics_space_rid
+	var space_rid = main.custom.physics_space_rid
 	var dir_state := PhysicsServer2D.space_get_direct_state(space_rid)
 	PhysicsServer2D.area_set_param(space_rid, PhysicsServer2D.AREA_PARAM_GRAVITY, gravity)
 
 
 func add_body_to_space(body : PhysicsBody2D):
-	PhysicsServer2D.body_set_space(body.get_rid(), main.globals.physics_space_rid)
+	PhysicsServer2D.body_set_space(body.get_rid(), main.custom.physics_space_rid)
 func add_collider_to_space(collider_rid : RID):
-	PhysicsServer2D.area_set_space(collider_rid, main.globals.physics_space_rid)
-	PhysicsServer2D.body_set_space(collider_rid, main.globals.physics_space_rid)
+	PhysicsServer2D.area_set_space(collider_rid, main.custom.physics_space_rid)
+	PhysicsServer2D.body_set_space(collider_rid, main.custom.physics_space_rid)
 

@@ -17,6 +17,7 @@ const param_inspector_pack = preload ("res://addons/ridiculous_stream/instances/
 
 const msg_notif_pack = preload ("res://addons/ridiculous_stream/instances/msg_notification.tscn")
 const btn_user_pack = preload ("res://addons/ridiculous_stream/instances/btn_user.tscn")
+const notif_vetting_reward_pack = preload ("res://addons/ridiculous_stream/instances/notification_vetting_reward.tscn")
 
 const screen_shader_pack = preload ("res://addons/ridiculous_stream/games/screen_shaders/RSShaders.tscn")
 

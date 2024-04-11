@@ -7,6 +7,7 @@ class_name RSPnlChat
 @onready var opt_announce_color = %opt_announce_color
 @onready var lb_chat : RichTextLabel = %lb_chat
 @onready var pnl_connect : PanelContainer = %pnl_connect
+@onready var pnl_notifications = %pnl_notifications
 
 const commands_string_format = {
 	"ACTION": "[i]%s[/i]",
@@ -34,6 +35,8 @@ func start():
 	lb_chat.install_effect(sprite_effect)
 	pnl_connect.main = main
 	pnl_connect.start()
+	pnl_notifications.main = main
+	pnl_notifications.start()
 
 
 var badge_id = 0

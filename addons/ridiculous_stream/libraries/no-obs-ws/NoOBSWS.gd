@@ -36,8 +36,10 @@ func connect_to_obsws(port: int, password: String = "") -> void:
 		log.e("Websocket password missing.")
 		return
 	_ws = WebSocketPeer.new()
-	_ws.connect_to_url(WS_URL % port)
-	_auth_required.connect(_authenticate.bind(password))
+	var err := _ws.connect_to_url(WS_URL % port)
+	if err == OK:
+		_auth_required.connect(_authenticate.bind(password))
+		print("NoOBSWS: connected")
 
 
 func make_generic_request(request_type: String, request_data: Dictionary = {}) -> RequestResponse:
@@ -83,7 +85,12 @@ func make_batch_request(halt_on_failure: bool = false, execution_type: Enums.Req
 	return batch_request
 
 
-func _process(_delta: float) -> void:
+var tick = 0
+var tick_freq = 0.2
+func _process(d: float) -> void:
+	tick += d
+	if tick < tick_freq: return
+	tick = 0
 	if is_instance_valid(_ws):
 		_poll_socket()
 

@@ -36,8 +36,8 @@ func start():
 
 func add_commands() -> void:
 	main.twitcher.commands.add_command("copilot", copilot_action.bind(Cmd.HELP))
-	main.twitcher.commands.add_command("code", copilot_action.bind(Cmd.CODE), -1, 1)
-	main.twitcher.commands.add_command("replace", copilot_action.bind(Cmd.REPLACE), -1, 1)
+	main.twitcher.commands.add_command("code", copilot_action.bind(Cmd.CODE), 1)
+	main.twitcher.commands.add_command("replace", copilot_action.bind(Cmd.REPLACE), 1)
 	main.twitcher.commands.add_command("goto", copilot_action.bind(Cmd.GOTO), 1, 1)
 	main.twitcher.commands.add_command("enter", copilot_action.bind(Cmd.ENTER))
 	main.twitcher.commands.add_command("erase", copilot_action.bind(Cmd.ERASE))

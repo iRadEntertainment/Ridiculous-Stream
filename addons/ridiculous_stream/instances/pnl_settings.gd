@@ -24,11 +24,19 @@ func populate():
 
 
 func reload_panels():
-	for pnl in [%pnl_rs_settings, %pnl_test, %pnl_twitch_user_list, %pnl_twitch_user_fields, %pnl_rewards]:
+	for pnl in get_panels_to_reload(self):
 		if pnl is PanelContainer:
 			pnl.main = main
 			if pnl.has_method("start"):
 				pnl.start()
+func get_panels_to_reload(node: Node) -> Array:
+	var pnls = []
+	for child in node.get_children():
+		if child.has_method("start"):
+			pnls.append(child)
+		if child.get_child_count() > 0:
+			pnls.append_array( get_panels_to_reload(child) )
+	return pnls
 
 
 func connect_tab_buttons_to_tab_container():

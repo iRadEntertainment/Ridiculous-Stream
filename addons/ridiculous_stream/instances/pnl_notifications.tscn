@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://bhjtpi0nfv415"]
+
+[ext_resource type="Script" path="res://addons/ridiculous_stream/instances/pnl_notifications.gd" id="1_ur0i4"]
+[ext_resource type="PackedScene" uid="uid://cokx3oev2rafs" path="res://addons/ridiculous_stream/instances/notification_vetting_reward.tscn" id="2_n01tf"]
+[ext_resource type="AudioStream" uid="uid://csll4dlyotttm" path="res://addons/ridiculous_stream/local_res/sfx_alert_wawawa.wav" id="3_jlx5b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6pqa5"]
+
+[node name="pnl_notifications" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_6pqa5")
+script = ExtResource("1_ur0i4")
+
+[node name="scroll" type="ScrollContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="vb" type="VBoxContainer" parent="scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="notification_vetting_reward" parent="scroll/vb" instance=ExtResource("2_n01tf")]
+layout_mode = 2
+
+[node name="notification_vetting_reward2" parent="scroll/vb" instance=ExtResource("2_n01tf")]
+layout_mode = 2
+
+[node name="notification_vetting_reward3" parent="scroll/vb" instance=ExtResource("2_n01tf")]
+layout_mode = 2
+
+[node name="notification_vetting_reward4" parent="scroll/vb" instance=ExtResource("2_n01tf")]
+layout_mode = 2
+
+[node name="sfx_notif" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("3_jlx5b")
+volume_db = -18.909

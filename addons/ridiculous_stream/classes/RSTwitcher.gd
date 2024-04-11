@@ -69,11 +69,11 @@ func setup():
 	TwitchSetting.cache_cheermote = RSExternalLoader.get_config_path() + "cheermotes"
 	TwitchSetting.cache_emote = RSExternalLoader.get_config_path() + "emotes"
 	
-	TwitchSetting.broadcaster_id = str(RSSettings.broadcaster_id)
-	TwitchSetting.client_id = RSSettings.client_id
-	TwitchSetting.client_secret = RSSettings.client_secret
-	TwitchSetting.authorization_flow = RSSettings.authorization_flow
-	TwitchSetting.irc_username = RSSettings.user_login
+	#TwitchSetting.broadcaster_id = str(RSSettings.broadcaster_id)
+	#TwitchSetting.client_id = RSSettings.client_id
+	#TwitchSetting.client_secret = RSSettings.client_secret
+	#TwitchSetting.authorization_flow = RSSettings.authorization_flow
+	#TwitchSetting.irc_username = RSSettings.user_login
 	#RSSettings.assign_scopes_to_project_settings()
 	#RSSettings.assign_eventsub_to_project_settings()
 	set_broadcaster_id_for_all_eventsub(RSSettings.broadcaster_id)

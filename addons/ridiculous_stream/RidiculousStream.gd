@@ -64,6 +64,8 @@ func add_nodes():
 	custom.start()
 	loader.main = self
 	vetting = RSVetting.new()
+	vetting.main = self
+	vetting.start()
 	# --- tree nodes
 	shoutout_mng = RSShoutoutMng.new()
 	shoutout_mng.main = self
@@ -95,7 +97,7 @@ func hot_reload_pnl_settings():
 func reload_dock():
 	if dock:
 		remove_control_from_docks(dock)
-		dock.free()
+		dock.queue_free()
 	dock = RSGlobals.dock_pack.instantiate()
 	dock.main = self
 	add_control_to_dock(DOCK_SLOT_RIGHT_BL, dock)
@@ -128,10 +130,10 @@ func load_rs_settings():
 	
 func save_rs_settings():
 	print("Saving settings from RSMain")
-	RSSettings.client_id = ProjectSettings.get_setting("twitch/auth/client_id")
-	RSSettings.client_secret = ProjectSettings.get_setting("twitch/auth/client_secret")
-	RSSettings.authorization_flow = ProjectSettings.get_setting("twitch/auth/authorization_flow")
-	RSSettings.broadcaster_id = ProjectSettings.get_setting("twitch/auth/broadcaster_id")
+	#RSSettings.client_id = ProjectSettings.get_setting("twitch/auth/client_id")
+	#RSSettings.client_secret = ProjectSettings.get_setting("twitch/auth/client_secret")
+	#RSSettings.authorization_flow = ProjectSettings.get_setting("twitch/auth/authorization_flow")
+	#RSSettings.broadcaster_id = ProjectSettings.get_setting("twitch/auth/broadcaster_id")
 	loader.save_settings()
 
 
@@ -159,7 +161,7 @@ func exit_twitcher():
 
 
 func _exit_tree() -> void:
-	save_rs_settings()
+	#save_rs_settings()
 	exit_twitcher()
 	if http_request: http_request.queue_free()
 	if dock:

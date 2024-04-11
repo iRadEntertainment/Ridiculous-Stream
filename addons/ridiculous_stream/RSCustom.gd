@@ -48,13 +48,13 @@ func on_channel_points_redeemed(data : RSTwitchEventData):
 		"open browser history": open_browser_history()
 		"Activate CoPilot for 5min": activate_copilot(300)
 		"remove the cig break overlay": toggle_cig_overlay()
-		"Give advice": give_advice(data)
+		"Give advice": main.vetting.custom_rewards_vetting(give_advice, data)
 		"Get advice": get_advice(data)
 		"Shut down stream": alert_on_stop_streaming(data.username)
 		"Raid kani_dev": raid_kani(data.username)
 		"Force raid a random streamer": raid_a_random_streamer_from_the_user_list()
-		"Impersonate iRadDev": impersonate_iRad(data)
-		"Change Stream Title": change_stream_title(data)
+		"Impersonate iRadDev": main.vetting.custom_rewards_vetting(impersonate_iRad, data)
+		"Change Stream Title": main.vetting.custom_rewards_vetting(change_stream_title, data)
 func on_followed(data : RSTwitchEventData):
 	pass
 func on_raided(data : RSTwitchEventData):

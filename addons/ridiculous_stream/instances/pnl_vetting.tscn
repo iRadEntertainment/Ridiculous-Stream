@@ -1,0 +1,102 @@
+[gd_scene load_steps=6 format=3 uid="uid://cwbekbjfcqjml"]
+
+[ext_resource type="Script" path="res://addons/ridiculous_stream/instances/pnl_vetting.gd" id="1_2dfew"]
+[ext_resource type="Texture2D" uid="uid://b2mtooi658yq0" path="res://addons/ridiculous_stream/ui/sprites/loading.png" id="2_2s25a"]
+[ext_resource type="Texture2D" uid="uid://bhau4fpfk2m1v" path="res://addons/ridiculous_stream/ui/sprites/ico_warn.png" id="2_mc2ay"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oxlas"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.168627, 0.211765, 0.266667, 0.945098)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4jllv"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.129412, 0.14902, 0.180392, 1)
+
+[node name="pnl_vetting" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2dfew")
+
+[node name="split" type="VSplitContainer" parent="."]
+layout_mode = 2
+
+[node name="pnl_info" type="PanelContainer" parent="split"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_oxlas")
+
+[node name="vb" type="VBoxContainer" parent="split/pnl_info"]
+layout_mode = 2
+
+[node name="top" type="PanelContainer" parent="split/pnl_info/vb"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4jllv")
+
+[node name="hb" type="HBoxContainer" parent="split/pnl_info/vb/top"]
+layout_mode = 2
+
+[node name="btn_reload" type="Button" parent="split/pnl_info/vb/top/hb"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("2_2s25a")
+icon_alignment = 1
+expand_icon = true
+
+[node name="lb" type="Label" parent="split/pnl_info/vb/top/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "user"
+horizontal_alignment = 1
+
+[node name="ico" type="TextureRect" parent="split/pnl_info/vb/top/hb"]
+modulate = Color(0.776471, 0.72549, 0, 1)
+custom_minimum_size = Vector2(14, 14)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("2_mc2ay")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="warn_count" type="SpinBox" parent="split/pnl_info/vb/top/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+allow_greater = true
+alignment = 1
+
+[node name="scroll" type="ScrollContainer" parent="split/pnl_info/vb"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="infolist" type="GridContainer" parent="split/pnl_info/vb/scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 2
+
+[node name="pnl_list" type="PanelContainer" parent="split"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_oxlas")
+
+[node name="scroll" type="ScrollContainer" parent="split/pnl_list"]
+layout_mode = 2
+
+[node name="userlist" type="VBoxContainer" parent="split/pnl_list/scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[connection signal="pressed" from="split/pnl_info/vb/top/hb/btn_reload" to="." method="_on_btn_reload_pressed"]

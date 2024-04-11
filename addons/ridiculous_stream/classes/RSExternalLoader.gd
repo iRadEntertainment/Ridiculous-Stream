@@ -2,7 +2,6 @@
 extends Resource
 class_name RSExternalLoader
 
-
 var cached = {}
 var main : RSMain
 
@@ -18,7 +17,7 @@ func save_settings() -> void:
 
 func save_to_json(file_path: String, variant: Variant) -> void:
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
-	file.store_string(JSON.stringify(variant))
+	file.store_string(JSON.stringify(variant, "\t"))
 	file.close()
 func load_json(file_path: String) -> Variant:
 	var file = FileAccess.open(file_path, FileAccess.READ)
