@@ -7,7 +7,7 @@ var main : RSMain
 
 
 func start():
-	pass
+		pass
 
 func open_silent_newground_page():
 	OS.shell_open("https://silentground.newgrounds.com/")
@@ -42,13 +42,4 @@ func _on_btn_load_image_pressed():
 			url = user.profile_image_url
 	var tex := await main.loader.load_texture_from_url(url)
 	%prev_load_image.texture = tex
-
-
-
-
-
-
-
-
-
 

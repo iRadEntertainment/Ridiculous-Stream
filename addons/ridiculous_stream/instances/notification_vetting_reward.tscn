@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://cokx3oev2rafs"]
+[gd_scene load_steps=11 format=3 uid="uid://cokx3oev2rafs"]
 
 [ext_resource type="FontFile" uid="uid://d0nn8s6iks32j" path="res://addons/ridiculous_stream/ui/jetbrains_mono_ttf/JetBrainsMono-Bold.ttf" id="1_6idbc"]
 [ext_resource type="Script" path="res://addons/ridiculous_stream/instances/notification_vetting_reward.gd" id="2_xw4nt"]
+[ext_resource type="FontFile" uid="uid://c54hb15wffrfy" path="res://addons/ridiculous_stream/ui/jetbrains_mono_ttf/JetBrainsMono-Thin.ttf" id="3_o38ho"]
 [ext_resource type="Texture2D" uid="uid://c0ftqqm0pd0hw" path="res://addons/ridiculous_stream/ui/sprites/ico_tick_double.png" id="3_vej0d"]
 [ext_resource type="Texture2D" uid="uid://838cfol1rq3b" path="res://addons/ridiculous_stream/ui/sprites/ico_tick.png" id="4_yjwsg"]
 [ext_resource type="Texture2D" uid="uid://bhau4fpfk2m1v" path="res://addons/ridiculous_stream/ui/sprites/ico_warn.png" id="5_b7qhp"]
@@ -38,13 +39,13 @@ modulate = Color(0.215686, 0.878431, 0.701961, 1)
 layout_mode = 2
 text = "Custom Reward title"
 
-[node name="msg" type="TextEdit" parent="vb"]
+[node name="msg" type="Label" parent="vb"]
 unique_name_in_owner = true
+modulate = Color(0.533333, 0.713726, 0.866667, 1)
 layout_mode = 2
-text = "very long message here because we need to discuss if the message is multiple lines long. It usually isn't but just in case you know"
-context_menu_enabled = false
-wrap_mode = 1
-scroll_fit_content_height = true
+theme_override_fonts/font = ExtResource("3_o38ho")
+text = "message long message"
+autowrap_mode = 3
 
 [node name="hb" type="HBoxContainer" parent="vb"]
 layout_mode = 2
