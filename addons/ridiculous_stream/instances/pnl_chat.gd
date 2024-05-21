@@ -50,8 +50,8 @@ func _on_chat_message(_channel: String, from_user: String, message: String, tags
 
 func put_chat(username: String, message: String, _tags: TwitchTags.PrivMsg):
 	var tags := TwitchTags.Message.from_priv_msg(_tags)
-	var badges = await tags.get_badges() as Array[SpriteFrames];
-	var emotes = await tags.get_emotes() as Array[TwitchIRC.EmoteLocation];
+	# var badges = await tags.get_badges() as Array[SpriteFrames];
+	# var emotes = await tags.get_emotes() as Array[TwitchIRC.EmoteLocation];
 	var color = tags.get_color();
 	if color.is_empty():
 		color = RSGlobals.DEFAULT_RIGID_LABEL_COLOR
