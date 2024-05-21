@@ -2,8 +2,6 @@ extends RefCounted
 
 class_name TwitchTags
 
-var main : RSMain
-
 ## A normal user
 const USER_TYPE_NORMA := &""
 ## A Twitch administrator
@@ -27,18 +25,14 @@ const MSG_ID_BITSBADGETIER := &"bitsbadgetier";
 #region TagWrapper
 
 class Message extends RefCounted:
-	func _init(_main : RSMain):
-		self.main = _main
-
 	var color: String;
 	var badges: String;
 	var emotes: String;
 	var room_id: String;
 	var raw: Variant;
-	var main: RSMain
 
-	static func from_priv_msg(tag: PrivMsg, _main : RSMain) -> Message:
-		var msg = Message.new(_main);
+	static func from_priv_msg(tag: PrivMsg) -> Message:
+		var msg = Message.new();
 		msg.color = tag.color;
 		msg.badges = tag.badges;
 		msg.emotes = tag.emotes;
@@ -53,7 +47,7 @@ class Message extends RefCounted:
 		var badge_composite : Array[String] = [];
 		for badge in badges.split(",", false):
 			badge_composite.append(badge);
-		var result = await(main.twitcher.get_badges(badge_composite, room_id))
+		var result = await(TwitchService.get_badges(badge_composite, room_id))
 		var sprite_frames : Array[SpriteFrames] = [];
 		for sprite_frame in result.values():
 			sprite_frames.append(sprite_frame);
@@ -71,7 +65,7 @@ class Message extends RefCounted:
 					emotes_to_load.append(data[0]);
 		locations.sort_custom(Callable(TwitchIRC.EmoteLocation, "smaller"));
 
-		var emotes: Dictionary = await main.twitcher.icon_loader.get_emotes(emotes_to_load);
+		var emotes: Dictionary = await TwitchService.icon_loader.get_emotes(emotes_to_load);
 		for emote_location: TwitchIRC.EmoteLocation in locations:
 			emote_location.sprite_frames = emotes[emote_location.id];
 
@@ -84,8 +78,6 @@ class Message extends RefCounted:
 class BaseTags:
 	var _raw: String;
 	var _unmapped: Dictionary = {};
-	var twitch_service: TwitchService;
-	
 
 	func parse_tags(tag_string: String, output: Object) -> void:
 		_raw = tag_string;

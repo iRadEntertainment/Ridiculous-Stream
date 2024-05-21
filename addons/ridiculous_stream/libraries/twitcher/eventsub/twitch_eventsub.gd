@@ -149,7 +149,7 @@ func _data_received(data : PackedByteArray) -> void:
 
 	eventsub_messages[id] = timestamp;
 	last_keepalive = Time.get_ticks_msec();
-		
+
 	match metadata.message_type:
 		"session_welcome":
 			var welcome_message = TwitchWelcomeMessage.new(message_json);
@@ -157,8 +157,10 @@ func _data_received(data : PackedByteArray) -> void:
 			session_id_received.emit(session.id);
 			message_received.emit(welcome_message);
 		"session_keepalive":
+			# Notification from server that the connection is still alive
 			var keep_alive_message = TwitchKeepaliveMessage.new(message_json);
 			message_received.emit(keep_alive_message);
+			pass;
 		"session_reconnect":
 			var reconnect_message = TwitchReconnectMessage.new(message_json);
 			message_received.emit(reconnect_message);

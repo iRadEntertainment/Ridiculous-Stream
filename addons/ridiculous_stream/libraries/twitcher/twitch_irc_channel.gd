@@ -5,8 +5,6 @@ extends Node
 ## Usefull when using multiple channels otherwise TwitchIRC has everything you need
 class_name TwitchIrcChannel
 
-var main : RSMain
-
 ## when a chat message in this channel got received
 signal message_received(from_user: String, message: String, tags: TwitchTags.Message);
 
@@ -36,9 +34,8 @@ var room_state: TwitchTags.Roomstate:
 var joined: bool;
 var irc: TwitchIRC;
 
-func _init(_main : RSMain) -> void:
-	main = _main
-	irc = main.twitcher.irc as TwitchIRC;
+func _init() -> void:
+	irc = TwitchService.irc as TwitchIRC;
 
 func _ready() -> void:
 	irc.received_privmsg.connect(_on_message_received);
@@ -53,7 +50,7 @@ func _exit_tree() -> void:
 
 func _on_message_received(channel: String, from_user: String, message: String, tags: TwitchTags.PrivMsg):
 	if channel_name != channel: return;
-	var message_tag = TwitchTags.Message.from_priv_msg(tags, main);
+	var message_tag = TwitchTags.Message.from_priv_msg(tags);
 	message_received.emit(from_user, message, message_tag);
 
 func _on_roomstate_received(channel: String, tags: TwitchTags.Roomstate):
@@ -68,7 +65,7 @@ func _on_userstate_received(channel: String, tags: TwitchTags.Userstate):
 
 func chat(message: String) -> void:
 	await is_joined();
-	main.twitcher.chat(message, channel_name);
+	TwitchService.chat(message, channel_name);
 
 func is_joined() -> void:
 	if not joined: await has_joined;

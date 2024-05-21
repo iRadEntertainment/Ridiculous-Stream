@@ -37,14 +37,14 @@ signal connected_to_twitch
 
 func start() -> void:
 	setup()
-	http_client_manager = HttpClientManager.new(main)
+	http_client_manager = HttpClientManager.new()
 	add_child(http_client_manager)
 	#---------------
 	log = TwitchLogger.new(TwitchSetting.LOGGER_NAME_SERVICE)
 	log.i("Setup")
-	auth = TwitchAuth.new(main)
+	auth = await TwitchAuth.new()
 	api = TwitchRestAPI.new(auth)
-	icon_loader = TwitchIconLoader.new(api, main)
+	icon_loader = TwitchIconLoader.new(api, http_client_manager)
 	eventsub = TwitchEventsub.new(api)
 	eventsub_debug = TwitchEventsub.new(api, false)
 	irc = TwitchIRC.new(auth)
@@ -205,7 +205,7 @@ func get_badges(badge: Array[String], channel_id: String = "global", scale: int 
 	return await icon_loader.get_badges(badge, channel_id);
 
 func _init_cheermotes() -> void:
-	cheer_repository = await TwitchCheerRepository.new(api, main);
+	cheer_repository = await TwitchCheerRepository.new(api, http_client_manager);
 
 ## Returns the complete parsed data out of a cheer word.
 func get_cheer_tier(cheer_word: String,

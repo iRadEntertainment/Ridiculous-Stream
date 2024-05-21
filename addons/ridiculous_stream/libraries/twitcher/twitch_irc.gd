@@ -2,7 +2,6 @@ extends RefCounted
 
 class_name TwitchIRC
 
-var main : RSMain
 var log: TwitchLogger = TwitchLogger.new(TwitchSetting.LOGGER_NAME_IRC);
 
 ## Sent when the bot or moderator removes all messages from the chat room or removes all messages for the specified user.
@@ -153,7 +152,7 @@ func _on_connection_state_changed(state: WebSocketPeer.State):
 
 ## Sends the login message for authorization pupose and sets an username
 func _login() -> void:
-	client.send_text("PASS oauth:%s" % await auth.get_token());
+	client.send_text("PASS oauth:%s" % await auth.get_access_token());
 	_send("NICK " + TwitchSetting.irc_username);
 
 ## Callback after a login try was made with the result value as parameter
@@ -242,6 +241,7 @@ func _send_message_to_channel(channel_name: String, message: String) -> void:
 		var username = channel.user_state.display_name;
 		# Convert the tags in a dirty way
 		var tag = TwitchTags.PrivMsg.new(channel.user_state._raw);
+		tag.room_id = channel.room_state.room_id;
 		received_privmsg.emit(channel_name, username, message, tag);
 
 ## Sends a string message to Twitch.
@@ -308,10 +308,9 @@ func _handle_message(parsed_message : ParsedMessage) -> void:
 			var userstate_tags = TwitchTags.Userstate.new(parsed_message.tags);
 			var channel_name = parsed_message.channel;
 			received_usernotice.emit(channel_name, userstate_tags);
-			
-			if channel_maps.has(channel_name):
-				var channel = channel_maps[channel_name] as ChannelData;
-				channel.user_state = userstate_tags;
+
+			var channel = channel_maps[channel_name] as ChannelData;
+			channel.user_state = userstate_tags;
 
 		"WHISPER":
 			var whisper_tags = TwitchTags.Whisper.new(parsed_message.tags);
@@ -342,10 +341,10 @@ func _handle_cmd_state(command: String, channel_name: String, tags: Dictionary) 
 	log.i("Channel updated %s" % channel_name);
 
 func _create_channel(channel_name: String) -> TwitchIrcChannel:
-	var channel = TwitchIrcChannel.new(main);
+	var channel = TwitchIrcChannel.new();
 	channel.channel_name = channel_name;
 	channel_maps[channel_name] = channel;
-	main.twitcher.twitch_service.add_child(channel);
+	Engine.get_main_loop().root.add_child(channel);
 	return channel;
 
 ## Tracks the channel.
@@ -373,7 +372,7 @@ func _handle_cmd_notice(info: String) -> bool:
 	elif info == "You don't have permission to perform that action":
 		log.i("No permission. Attempting to obtain new token.");
 		await auth.refresh_token();
-		if auth.is_authenticated():
+		if await auth.is_authenticated():
 			_login();
 			return true;
 		else:

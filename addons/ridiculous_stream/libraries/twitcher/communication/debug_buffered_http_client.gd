@@ -2,8 +2,7 @@ extends Control
 
 @onready var clients: Tree = %Clients
 
-var main : RSMain
-
+var http_client_manager : HttpClientManager
 ## Key: url as String | value: TreeItem
 var url_map : Dictionary = {};
 ## Key: BufferedHTTPClient | value: TreeItem
@@ -11,15 +10,14 @@ var client_map : Dictionary = {};
 ## Key: RequestData | value: TreeItem
 var request_map : Dictionary = {};
 
-
-func _init(_main : RSMain):
-	main = _main
+func _init(_http_client_manager: HttpClientManager) -> void:
+	http_client_manager = _http_client_manager
 
 func _ready() -> void:
-	main.twitcher.http_client_manager.client_added.connect(_new_client);
-	main.twitcher.http_client_manager.client_closed.connect(_close_client);
-	for host in main.twitcher.http_client_manager.http_client_map:
-		for client in main.twitcher.http_client_manager.http_client_map[host]:
+	http_client_manager.client_added.connect(_new_client);
+	http_client_manager.client_closed.connect(_close_client);
+	for host in http_client_manager.http_client_map:
+		for client in http_client_manager.http_client_map[host]:
 			_new_client(client);
 
 func _new_client(client: BufferedHTTPClient):

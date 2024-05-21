@@ -3,7 +3,7 @@ extends RefCounted
 ## Will load badges, icons and profile images
 class_name TwitchIconLoader
 
-var main : RSMain
+var http_client_manager: HttpClientManager
 
 ## Will be sent when the emotes and badges got preloaded
 signal preload_done;
@@ -29,9 +29,9 @@ var _cached_images : Array[SpriteFrames] = [];
 
 var static_image_transformer = TwitchImageTransformer.new();
 
-func _init(twitch_api : TwitchRestAPI, _main : RSMain) -> void:
-	main = _main
+func _init(twitch_api : TwitchRestAPI, _http_client_manager : HttpClientManager) -> void:
 	api = twitch_api;
+	http_client_manager = _http_client_manager;
 
 func do_preload():
 	var broadcaster_id = TwitchSetting.broadcaster_id;
@@ -91,11 +91,10 @@ func get_emotes_by_definition(emote_definitions : Array[TwitchEmoteDefinition]) 
 	for emote_definition: TwitchEmoteDefinition in emote_definitions:
 		var cache_path: String = emote_definition.get_cache_path();
 		var spriteframe_path: String = emote_definition.get_cache_path_spriteframe();
-		
 		if ResourceLoader.has_cached(spriteframe_path):
 			response[emote_definition] = ResourceLoader.load(spriteframe_path);
 			continue;
-		
+
 		if not TwitchSetting.image_transformer.is_supporting_animation():
 			emote_definition.type_static();
 
@@ -105,7 +104,6 @@ func get_emotes_by_definition(emote_definitions : Array[TwitchEmoteDefinition]) 
 		requests[emote_definition] = request;
 
 	for emote_definition: TwitchEmoteDefinition in requests:
-
 		var cache_path: String = emote_definition.get_cache_path();
 		var spriteframe_path: String = emote_definition.get_cache_path_spriteframe();
 		var request = requests[emote_definition];
@@ -124,11 +122,10 @@ func get_emotes_by_definition(emote_definitions : Array[TwitchEmoteDefinition]) 
 
 func _load_emote(emote_definition : TwitchEmoteDefinition) -> BufferedHTTPClient.RequestData:
 	var request_path = "/emoticons/v2/%s/%s/%s/%1.1f" % [emote_definition.id, emote_definition._type, emote_definition._theme, emote_definition._scale];
-	var client = main.twitcher.http_client_manager.get_client(TwitchSetting.twitch_image_cdn_host);
+	var client = http_client_manager.get_client(TwitchSetting.twitch_image_cdn_host);
 	return client.request(request_path, HTTPClient.METHOD_GET, BufferedHTTPClient.HEADERS, "");
 
 func _map_emotes(result: Variant) -> Dictionary:
-	if not result: return {}
 	var mappings : Dictionary = {};
 	var emotes : Array = result.get("data");
 	if emotes == null:
@@ -222,12 +219,11 @@ func _load_badge(badge_data: BadgeData) -> BufferedHTTPClient.RequestData:
 
 	var base_url = TwitchSetting.twitch_image_cdn_host;
 	var request_path = cached_badges[channel_id][badge_set]["versions"][badge_id]["image_url_%sx" % scale].trim_prefix(base_url);
-	var client = main.twitcher.http_client_manager.get_client(base_url);
+	var client = http_client_manager.get_client(base_url);
 	return client.request(request_path, HTTPClient.METHOD_GET, BufferedHTTPClient.HEADERS, "");
 
 ## Maps the badges into a dict of category / versions / badge_id
 func _cache_badges(result: Variant) -> Dictionary:
-	if not result: return {}
 	var mappings : Dictionary = {};
 	var badges : Array = result["data"];
 	for badge in badges:

@@ -5,20 +5,15 @@ extends Node
 ## already configured in the settings or manually subscribed.
 class_name TwitchEventListener
 
-var main : RSMain
-
 ## Called when the event got received
 signal received(data: Dictionary)
 
 @export var subscription: TwitchSubscriptions.Subscriptions;
 var subscription_name: String;
 
-func _init(_main : RSMain):
-	main = _main
-
 func _ready() -> void:
 	assert(subscription != null);
-	var event_sub = main.twitcher.eventsub as TwitchEventsub;
+	var event_sub = TwitchService.eventsub as TwitchEventsub;
 	event_sub.event.connect(_on_received);
 	var all_subs = TwitchSubscriptions.get_all();
 	subscription_name = all_subs[subscription].value;
