@@ -2,6 +2,9 @@
 extends Resource
 class_name RSExternalLoader
 
+var HOST_PARSER = RegEx.create_from_string("(https://.*?)/")
+
+
 var cached = {}
 var main : RSMain
 
@@ -66,11 +69,12 @@ func load_texture_from_url(url : String, use_cached := true) -> ImageTexture:
 		return cached[url]
 	var file_type = url.get_extension()
 	if not file_type in ["png", "jpeg", "jpg", "bmp", "webp", "svg"]: return
-	if main.http_request.is_processing():
-		await main.http_request.request_completed
-	main.http_request.request(url)
-	var data = await main.http_request.request_completed
-	var image_buffer = data[3]
+	var host_result : RegExMatch = HOST_PARSER.search(url);
+	var host = host_result.get_string(1);
+	var client := main.twitcher.http_client_manager.get_client(host)
+	var request := client.request(url, HTTPClient.METHOD_GET, BufferedHTTPClient.HEADERS, "")
+	var response := await client.wait_for_request(request)
+	var image_buffer = response.response_data
 	var tex_image := Image.new()
 	match file_type:
 		"png": tex_image.load_png_from_buffer(image_buffer)
