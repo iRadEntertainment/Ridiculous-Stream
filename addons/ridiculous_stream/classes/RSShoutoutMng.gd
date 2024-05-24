@@ -48,9 +48,9 @@ func add_shoutout(user : RSTwitchUser):
 	if user in queued_user_shoutout:
 		print("RSShoutoutMng: %s is already in the queue!"%[user.display_name])
 		return
-	if user in already_shoutout_list:
-		print("RSShoutoutMng: %s already got a shoutout today!"%[user.display_name])
-		return
+	# if user in already_shoutout_list:
+	# 	print("RSShoutoutMng: %s already got a shoutout today!"%[user.display_name])
+	# 	return
 	queued_user_shoutout.append(user)
 	set_process(true)
 
