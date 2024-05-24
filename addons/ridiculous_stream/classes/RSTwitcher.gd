@@ -270,7 +270,7 @@ func gather_user_info(username : String) -> RSTwitchUser:
 func get_live_streamers_data(user_names_or_ids : Array = []) -> Dictionary:
 	if not is_connected_to_twitch:
 		return {}
-	
+
 	if user_names_or_ids.is_empty():
 		for key in main.known_users.keys():
 			var user : RSTwitchUser = main.known_users[key]
@@ -293,7 +293,7 @@ func get_live_streamers_data(user_names_or_ids : Array = []) -> Dictionary:
 				ids.append(str(user_name_id))
 			
 			if count > max_user_query:
-				var res := await api.get_streams(ids, names, [], "", [], 0, "", "")
+				var res := await api.get_streams(ids, names, [], "live", [], 1, "", "")
 				res
 				for stream : TwitchStream in res.data:
 					live_streamers_data[stream.user_login] = stream
