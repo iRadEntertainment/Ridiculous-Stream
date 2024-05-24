@@ -16,7 +16,6 @@ var twitcher : RSTwitcher
 var no_obs_ws : NoOBSWS
 
 var shoutout_mng : RSShoutoutMng
-var physics_space_rid : RID #TODO: remove?
 var custom : RSCustom
 var copilot : RSCoPilot
 var vetting : RSVetting
