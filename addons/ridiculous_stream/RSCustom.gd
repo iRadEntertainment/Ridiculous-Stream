@@ -10,7 +10,8 @@ var physics_space_rid: RID
 var screen_shader : RSShaders
 var wheel_of_random : RSWheelOfRandom
 
-
+const STREAM_OVERLAY_SCENE = "Stream Overlays"
+const STREAM_OVERLAY_VIDEOS = "Overlay videos"
 
 func start() -> void:
 	log = RSLogger.new(RSSettings.LOGGER_NAME_CUSTOM)
@@ -35,7 +36,14 @@ func add_commands() -> void:
 	log.i("Command added to the handler.")
 
 func on_chat(_channel_name: String, _username: String, _message: String, _tags: TwitchTags.PrivMsg):
-	pass
+	if _username.to_lower() in ["pandacoder", "iraddev"]:
+		if _message.find("https://") != -1 or _message.find("http://") != -1:
+			var item_id = await main.no_obs_ws.get_scene_item_id(STREAM_OVERLAY_VIDEOS, "Panda_no")
+			print("Item Id: ", item_id)
+			main.no_obs_ws.set_item_enabled(STREAM_OVERLAY_VIDEOS, item_id, false)
+			await main.get_tree().process_frame
+			main.no_obs_ws.set_item_enabled(STREAM_OVERLAY_VIDEOS, item_id, true)
+
 
 func on_channel_points_redeemed(data : RSTwitchEventData):
 	log.i("Channel points redeemed. %s -> %s" % [data.username, data.reward_title] )
@@ -192,21 +200,9 @@ func start_screen_shader(fx_type := RSShaders.FxType.CRT, duration := 5.0):
 
 
 func toggle_cig_overlay():
-	var request_type = "GetSceneItemId"
-	var request_data = {"scene_name": "Big screen", "source_name": "BRB_text"}
-	var request = main.no_obs_ws.make_generic_request(request_type, request_data)
-	await request.response_received
-	var response = request.message.get_data()
-	var item_id = response.response_data.scene_item_id
-	request_type = "GetSceneItemEnabled"
-	request_data = {"scene_name": "Big screen", "scene_item_id": item_id}
-	request = main.no_obs_ws.make_generic_request(request_type, request_data)
-	await request.response_received
-	response = request.message.get_data()
-	var scene_item_enabled = response.response_data.scene_item_enabled
-	request_type = "SetSceneItemEnabled"
-	request_data = {"scene_name": "Big screen", "scene_item_id": item_id, "scene_item_enabled": !scene_item_enabled}
-	main.no_obs_ws.make_generic_request(request_type, request_data)
+	var item_id = await main.no_obs_ws.get_scene_item_id(STREAM_OVERLAY_SCENE, "BRB_text")
+	var scene_item_enabled = await main.no_obs_ws.get_item_enabled(STREAM_OVERLAY_SCENE, item_id)
+	main.no_obs_ws.set_item_enabled(STREAM_OVERLAY_SCENE, item_id, !scene_item_enabled)
 
 
 
@@ -220,12 +216,7 @@ func alert_on_stop_streaming(username):
 
 
 func stop_streaming():
-	# obs_frontend_streaming_stop
-	var request_type = "StopStream"
-	var request_data = {}
-	var request = main.no_obs_ws.make_generic_request(request_type, request_data)
-	await request.response_received
-	print(request.message)
+	main.no_obs_ws.stop_stream()
 
 
 func raid_kani(username : String):
@@ -273,5 +264,6 @@ func change_stream_title(data : RSTwitchEventData):
 
 
 func iRad_follow_somebody(data : RSTwitchEventData):
-	main.twitcher.api
+	pass
+	# main.twitcher.api.get_followed_channels(
 	
