@@ -12,7 +12,8 @@ var live_data : TwitchStream
 
 @onready var pnl_info = %pnl_info
 @onready var pnl_live : PanelContainer = %pnl_live
-@onready var stream_title : Button = %stream_title
+@onready var stream_title : Label = %stream_title
+@onready var btn_stream_title : Button = %btn_stream_title
 @onready var stream_thumbnail : TextureRect = %stream_thumbnail
 @onready var stream_time : Label = %stream_time
 @onready var stream_viewer_count : Label = %stream_viewer_count
@@ -80,14 +81,14 @@ func update_live_fields():
 		return
 	
 	stream_title.text = live_data.title
-	stream_title.disabled = false
+	btn_stream_title.disabled = false
 	stream_viewer_count.text = str(live_data.viewer_count)
 	var thumbnail_url = live_data.thumbnail_url.format({"width": 640, "height": 360})
 	stream_thumbnail.texture = await main.loader.load_texture_from_url(thumbnail_url, false)
 
 func reset_pnl_live():
 	stream_title.text = "Stream title"
-	stream_title.disabled = true
+	btn_stream_title.disabled = true
 	stream_viewer_count.text = "0"
 	stream_thumbnail.texture = null
 
@@ -105,7 +106,8 @@ func process_stream_time_elapsed():
 	var system_unix = Time.get_unix_time_from_system()
 	var stream_start_unix = Time.get_unix_time_from_datetime_string(live_data.started_at)
 	var time_elapsed_string = Time.get_datetime_string_from_unix_time((system_unix - stream_start_unix), true)
-	stream_time.text = time_elapsed_string.split(" ")[1]
+	if stream_time:
+		stream_time.text = time_elapsed_string.split(" ")[1]
 
 
 func _process(_d):

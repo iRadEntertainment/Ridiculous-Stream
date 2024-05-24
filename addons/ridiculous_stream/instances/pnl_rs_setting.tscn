@@ -116,6 +116,10 @@ vertical_alignment = 1
 layout_mode = 2
 text = "Connect OBS"
 
+[node name="btn_obs_req_api" type="Button" parent="vb/scr/vb"]
+layout_mode = 2
+text = "Open OBS WS request docs"
+
 [connection signal="pressed" from="vb/scr/vb/btn_open_data_dir" to="." method="_on_data_dir_pressed"]
 [connection signal="pressed" from="vb/scr/vb/btn_open_user_dir" to="." method="_on_btn_open_user_dir_pressed"]
 [connection signal="pressed" from="vb/scr/vb/btn_reload_twitcher" to="." method="_on_btn_reload_twitcher_pressed"]
@@ -124,3 +128,4 @@ text = "Connect OBS"
 [connection signal="pressed" from="vb/scr/vb/btn_open_cache_emotes_dir" to="." method="_on_btn_open_cache_emotes_dir_pressed"]
 [connection signal="pressed" from="vb/scr/vb/btn_open_cache_cheer_emotes_dir" to="." method="_on_btn_open_cache_cheer_emotes_dir_pressed"]
 [connection signal="pressed" from="vb/scr/vb/btn_obs_connect" to="." method="_on_btn_obs_connect_pressed"]
+[connection signal="pressed" from="vb/scr/vb/btn_obs_req_api" to="." method="_on_btn_obs_req_api_pressed"]

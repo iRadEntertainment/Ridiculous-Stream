@@ -26,3 +26,7 @@ func _on_btn_open_cache_cheer_emotes_dir_pressed():
 
 func _on_btn_obs_connect_pressed():
 	main.no_obs_ws.connect_to_obsws(int(RSSettings.obs_websocket_port), RSSettings.obs_websocket_password)
+
+
+func _on_btn_obs_req_api_pressed() -> void:
+	OS.shell_open("https://github.com/obsproject/obs-websocket/blob/master/docs/generated/protocol.md#triggermediainputaction")

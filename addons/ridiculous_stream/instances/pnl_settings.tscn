@@ -113,7 +113,9 @@ size_flags_stretch_ratio = 0.4
 
 [node name="pnl_rs_settings" parent="vb/hb/tabs/pnl_settings/hb/split" instance=ExtResource("1_7lr6v")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="VSplitContainer" type="VSplitContainer" parent="vb/hb/tabs/pnl_settings/hb/split"]
 layout_mode = 2
