@@ -11,13 +11,12 @@ var enabled : bool;
 var debug: bool;
 var color: String;
 
-func _init(ctx_name: String) -> void:
-	context_name = ctx_name;
-	color = string_to_hex_color(ctx_name);
-	TwitchLoggerManager.register(self);
+func _init(_context_name: String) -> void:
+	context_name = _context_name;
+	color = string_to_hex_color(_context_name);
 
 func is_enabled() -> bool:
-	return enabled;
+	return TwitchSetting.is_log_enabled(context_name)
 
 func set_enabled(status: bool) -> void:
 	enabled = status;
