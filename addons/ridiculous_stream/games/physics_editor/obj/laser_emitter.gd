@@ -1,7 +1,7 @@
 @tool
 extends Node2D
 
-var duration = 10
+var duration = 30
 var physics_scene : RSPhysics
 var tw : Tween
 var physics_space_rid : RID
@@ -19,12 +19,18 @@ func play():
 	query.collide_with_bodies = true
 	query.collision_mask = 1+2+4+8+16+32
 	
-	#physics_scene.add_collider_to_space($ray.get_collider_rid())
+	#physics_scene.add_collider_to_space(%ray.get_collider_rid())
+	var passes = 5
+	var angle = PI/2.85
 	set_process(true)
-	tw = create_tween()
+	tw = create_tween().bind_node(self)
 	tw.set_ease(Tween.EASE_IN_OUT)
-	tw.set_trans(Tween.TRANS_SPRING)
-	tw.tween_property(self, "rotation", 3*TAU, duration)
+	tw.set_trans(Tween.TRANS_EXPO)
+	tw.tween_property(self, "rotation", angle, duration/passes)
+	tw.tween_property(self, "rotation", -angle, duration/passes)
+	tw.tween_property(self, "rotation", angle, duration/passes)
+	tw.tween_property(self, "rotation", -angle, duration/passes)
+	tw.tween_property(self, "rotation", 0, duration/passes)
 	await tw.finished
 	queue_free()
 
@@ -38,14 +44,14 @@ func replay():
 func _process(delta):
 	var firing = not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
 	
-	query.from = $ray.global_position
-	query.to = $ray.global_position + $ray.target_position.rotated(rotation)
+	query.from = %ray.global_position
+	query.to = %ray.global_position + %ray.target_position.rotated(rotation)
 	var coll_dic : Dictionary = space.intersect_ray(query)
 	var colliding = !coll_dic.is_empty()
 	
-	$line.visible = colliding#firing
-	$line.points[1] = $ray.target_position
-	$impact_particles.emitting = colliding and firing
+	%line.visible = colliding#firing
+	%line.points[1] = %ray.target_position
+	%impact_particles.emitting = colliding and firing
 	
 	if colliding and firing:
 		var impact_pos = coll_dic.position
@@ -53,9 +59,9 @@ func _process(delta):
 		var n_angle = n.angle()
 		var coll = coll_dic.collider
 		
-		$line.points[1].y = (impact_pos - global_position).length()
-		$impact_particles.global_position = impact_pos
-		$impact_particles.global_rotation = n_angle + PI/2
+		%line.points[1].y = (impact_pos - %line.global_position).length()
+		%impact_particles.global_position = impact_pos
+		%impact_particles.global_rotation = n_angle + PI/2
 		
 		if coll.has_method("destroy"):
 			coll.destroy()

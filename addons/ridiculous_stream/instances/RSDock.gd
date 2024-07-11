@@ -39,10 +39,5 @@ func _on_btn_reload_pressed():
 	main.call_deferred("reload_dock")
 # TEST: remove test stuff
 func _on_btn_test_stuff_pressed():
-	for user in main.known_users:
-		print(main.known_users.display_name)
-	#var followers : int = await main.twitcher.get_follower_count()
-	#var mods : Array[TwitchUserModerator] = await main.twitcher.get_moderators()
-	#print("Followers: ", followers)
-	#print("Mods: ", mods.size())
+	main.custom.play_doit()
 	

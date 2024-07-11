@@ -29,6 +29,10 @@ config/icon="res://icon.png"
 
 buses/default_bus_layout=""
 
+[dotnet]
+
+project/assembly_name="Ridiculous Stream"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/ridiculous_coding/plugin.cfg", "res://addons/ridiculous_stream/plugin.cfg")

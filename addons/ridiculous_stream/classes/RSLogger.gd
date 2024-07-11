@@ -22,7 +22,7 @@ func set_suffix(s: String) -> void:
 
 ## log a message on info level
 func i(text: String):
-	if is_enabled(): print("[%s%s] %s" % [context_name, suffix, text])
+	if is_enabled(): print_rich("[%s%s] %s" % [context_name, suffix, text])
 
 ## log a message on error level
 func e(text: String):

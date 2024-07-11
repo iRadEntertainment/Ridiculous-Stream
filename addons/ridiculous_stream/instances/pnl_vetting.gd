@@ -37,6 +37,7 @@ func populate_vetting_info(user: String):
 		child.queue_free()
 	
 	var rewards = main.vetting.user_vetting_list[user]["rewards"]
+	print(main.vetting.user_vetting_list[user])
 	for title in rewards.keys():
 		var status = rewards[title]
 		var lb = Label.new()
@@ -47,11 +48,11 @@ func populate_vetting_info(user: String):
 		
 		var opt = OptionButton.new()
 		opt.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		for i in RSVetting.Responses.size():
+		for i in [RSVetting.Responses.ACCEPT_ALL, RSVetting.Responses.DECLINE_ALL]:
 			var key = RSVetting.Responses.keys()[i]
 			opt.add_item(key, i)
 		
-		opt.select(status)
+		opt.select(opt.get_item_index(status))
 		infolist.add_child(opt)
 
 

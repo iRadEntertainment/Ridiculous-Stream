@@ -10,8 +10,8 @@ var physics_space_rid: RID
 var screen_shader : RSShaders
 var wheel_of_random : RSWheelOfRandom
 
-const STREAM_OVERLAY_SCENE = "Stream Overlays"
-const STREAM_OVERLAY_VIDEOS = "Overlay videos"
+const STREAM_OVERLAY_SCENE = "Overlay Stream"
+# const STREAM_OVERLAY_VIDEOS = "Overlay Videos"
 
 func start() -> void:
 	log = RSLogger.new(RSSettings.LOGGER_NAME_CUSTOM)
@@ -36,13 +36,11 @@ func add_commands() -> void:
 	log.i("Command added to the handler.")
 
 func on_chat(_channel_name: String, _username: String, _message: String, _tags: TwitchTags.PrivMsg):
-	if _username.to_lower() in ["pandacoder", "iraddev"]:
+	if "!pandano" in _message:
+		main.no_obs_ws.restart_media("Panda_no")
+	if _username.to_lower() in ["pandacoder"]:
 		if _message.find("https://") != -1 or _message.find("http://") != -1:
-			var item_id = await main.no_obs_ws.get_scene_item_id(STREAM_OVERLAY_VIDEOS, "Panda_no")
-			print("Item Id: ", item_id)
-			main.no_obs_ws.set_item_enabled(STREAM_OVERLAY_VIDEOS, item_id, false)
-			await main.get_tree().process_frame
-			main.no_obs_ws.set_item_enabled(STREAM_OVERLAY_VIDEOS, item_id, true)
+			main.no_obs_ws.restart_media("Panda_no")
 
 
 func on_channel_points_redeemed(data : RSTwitchEventData):
@@ -63,6 +61,7 @@ func on_channel_points_redeemed(data : RSTwitchEventData):
 		"Force raid a random streamer": raid_a_random_streamer_from_the_user_list()
 		"Impersonate iRadDev": main.vetting.custom_rewards_vetting(impersonate_iRad, data)
 		"Change Stream Title": main.vetting.custom_rewards_vetting(change_stream_title, data)
+		"Do it!": play_doit()
 func on_followed(data : RSTwitchEventData):
 	pass
 func on_raided(data : RSTwitchEventData):
@@ -72,6 +71,8 @@ func on_subscribed(data : RSTwitchEventData):
 func on_cheered(data : RSTwitchEventData):
 	pass
 
+func play_doit():
+	main.no_obs_ws.restart_media("do_it_%s.mp4" % randi_range(1,3))
 
 func impersonate_iRad(data : RSTwitchEventData):
 	var channel = data.user_input.split(" ", false, 1)[0].to_lower()

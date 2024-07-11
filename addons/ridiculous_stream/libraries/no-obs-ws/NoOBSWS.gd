@@ -113,6 +113,12 @@ func stop_stream() -> void:
 	var request = main.no_obs_ws.make_generic_request(request_type, request_data)
 	await request.response_received
 
+func restart_media(media_name) -> void:
+	var request_type = "TriggerMediaInputAction"
+	var request_data = {"input_name": media_name, "media_action": "OBS_WEBSOCKET_MEDIA_INPUT_ACTION_RESTART"}
+	var request = main.no_obs_ws.make_generic_request(request_type, request_data)
+	await request.response_received
+
 var tick = 0
 var tick_freq = 0.2
 func _process(d: float) -> void:
@@ -143,7 +149,8 @@ func _poll_socket() -> void:
 
 func _handle_packet(packet: PackedByteArray) -> void:
 	var message = NoOBSMessage.from_json(packet.get_string_from_utf8())
-	log.i("got message with code %s"%message.op_code)
+	if message.op_code != 5:
+		log.i("got message with code %s"%message.op_code)
 	_handle_message(message)
 
 

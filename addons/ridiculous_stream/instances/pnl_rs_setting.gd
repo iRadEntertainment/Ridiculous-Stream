@@ -29,4 +29,4 @@ func _on_btn_obs_connect_pressed():
 
 
 func _on_btn_obs_req_api_pressed() -> void:
-	OS.shell_open("https://github.com/obsproject/obs-websocket/blob/master/docs/generated/protocol.md#triggermediainputaction")
+	OS.shell_open("https://github.com/obsproject/obs-websocket/blob/master/docs/generated/protocol.md#requests")

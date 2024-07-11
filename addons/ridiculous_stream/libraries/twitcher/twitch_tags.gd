@@ -2,6 +2,10 @@ extends RefCounted
 
 class_name TwitchTags
 
+static var http_client_manager: HttpClientManager;
+static var icon_loader: TwitchIconLoader;
+
+
 ## A normal user
 const USER_TYPE_NORMA := &""
 ## A Twitch administrator
@@ -22,8 +26,11 @@ const MSG_ID_RAID := &"raid";
 const MSG_ID_UNRAID := &"unraid";
 const MSG_ID_RITUAL := &"ritual";
 const MSG_ID_BITSBADGETIER := &"bitsbadgetier";
-#region TagWrapper
 
+static func _static_init() -> void:
+	pass
+
+#region TagWrapper
 class Message extends RefCounted:
 	var color: String;
 	var badges: String;
